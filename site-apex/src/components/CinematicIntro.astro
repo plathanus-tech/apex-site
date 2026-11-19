@@ -1,0 +1,151 @@
+---
+import { Button } from '@ds';
+import { DEMO_URL, generalBenefits } from '../data/site';
+---
+<section class="intro" data-intro aria-labelledby="hero-title">
+  <div class="stage" data-stage>
+    <!--
+      Vídeo "apexhub": a câmera sai da lateral do piloto e termina na visão dele, atrás do volante.
+      A rolagem controla o tempo do vídeo. O arquivo só é carregado quando o movimento é permitido;
+      sem movimento (ou sem JS) fica apenas o quadro inicial (poster).
+    -->
+    <div class="layer" data-layer>
+      <video
+        class="video" data-video muted playsinline preload="none" tabindex="-1" aria-hidden="true"
+        poster="/video/apexhub-poster.webp" width="1280" height="720"
+      ></video>
+    </div>
+
+    <div class="shade" aria-hidden="true" data-shade></div>
+    <div class="dim" aria-hidden="true" data-dim></div>
+    <div class="glow" aria-hidden="true" data-glow></div>
+
+    <div class="hero-copy wrap" data-hero-copy>
+      <h1 id="hero-title" class="hero-title">
+        <span class="line"><span data-hero-line>Guiando <span class="grad">eventos</span></span></span>
+        <span class="line"><span data-hero-line>automotivos ao</span></span>
+        <span class="line"><span data-hero-line><span class="grad">ápice</span> da&nbsp;emoção</span></span>
+      </h1>
+      <p class="lead" data-hero-in>
+        O Apex é a plataforma para organizar eventos e gerenciar <br class="br-d" />reservas no universo do automobilismo
+      </p>
+      <div class="ctas" data-hero-in>
+        <Button href={DEMO_URL}>Solicitar demonstração</Button>
+      </div>
+    </div>
+
+    <!-- Telas grandes com movimento: título e benefícios na perspectiva do piloto (senão, seção "Por que o Apex" em grade) -->
+    <div class="pov-head wrap" data-pov-head>
+      <div>
+        <h2 class="title">Uma plataforma para eventos e reservas com mais controle</h2>
+      </div>
+      <p class="lead">Eventos e reservas em um só lugar, com a identidade da sua empresa.</p>
+    </div>
+    <ol class="pov-tunnel" data-pov-tunnel>
+      {generalBenefits.map((b, i) => (
+        <li class={`pov-card pc${i + 1}`} data-pov-card>
+          <span class="material-symbols-outlined ico" aria-hidden="true">{b.icon}</span>
+          <h3>{b.title}</h3>
+          <p class="text">{b.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="cockpit-copy" data-cockpit-copy aria-hidden="true">Agora você está no comando</p>
+    <p class="scroll-hint" data-scroll-hint aria-hidden="true">
+      <span>Role</span><span class="material-symbols-outlined">expand_more</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .intro { position: relative; background: var(--scene-bg); }
+  .stage { position: relative; height: 100svh; min-height: 560px; overflow: hidden; isolation: isolate; }
+  .layer { position: absolute; inset: 0; overflow: hidden; }
+  .video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; will-change: transform, opacity; background: var(--scene-bg); }
+
+  .shade {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      linear-gradient(90deg, color-mix(in oklab, var(--scene-bg) 92%, transparent) 0%, color-mix(in oklab, var(--scene-bg) 55%, transparent) 42%, transparent 72%),
+      linear-gradient(0deg, color-mix(in oklab, var(--scene-bg) 80%, transparent) 0%, transparent 38%);
+  }
+  /* Sem brilho laranja no fim da cena: o vídeo se dissolve direto no fundo escuro */
+  .glow { display: none;
+    position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+    background: radial-gradient(60vmax 40vmax at var(--gx, 50%) var(--gy, 30%), var(--scene-glow), transparent 70%);
+  }
+
+  .hero-copy {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: var(--site-header-h);
+    pointer-events: none;
+  }
+  .hero-copy > * { pointer-events: auto; }
+  /* Quebra de linha só no desktop: "reservas no universo…" vai para a segunda linha */
+  .br-d { display: none; }
+  @media (min-width: 900px) { .br-d { display: inline; } }
+  .hero-title {
+    margin: 0; font: var(--site-display); letter-spacing: var(--site-display-tracking);
+    max-width: 20ch;
+  }
+  .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+  .line > span { display: inline-block; will-change: transform; }
+  .grad {
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-red));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .ctas { display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-top: var(--spacing-xl); }
+
+  /* Benefícios na perspectiva do piloto (só ativos com a classe is-pov, definida em intro.ts) */
+  .pov-head, .pov-tunnel { display: none; }
+  .intro.is-pov .pov-head {
+    display: grid; gap: var(--spacing-xl); align-items: end; position: absolute; z-index: 3;
+    inset: calc(var(--site-header-h) + var(--spacing-lg)) 0 auto 0; pointer-events: none;
+  }
+  @media (min-width: 960px) { .intro.is-pov .pov-head { grid-template-columns: 1.2fr 1fr; } .intro.is-pov .pov-head .lead { justify-self: end; max-width: 32ch; } }
+  .pov-head .title { font: var(--site-title); letter-spacing: var(--site-title-tracking); max-width: 14ch; }
+  .pov-head .lead { margin: 0; }
+  .intro.is-pov .pov-tunnel { display: block; position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; list-style: none; perspective: 1000px; perspective-origin: 50% 36%; pointer-events: none; }
+  .pov-card { position: absolute; width: min(400px, 30vw); display: grid; gap: var(--spacing-md); align-content: start; will-change: transform, opacity; }
+  /* Contraste: o vídeo inteiro escurece de forma uniforme (.dim) e o texto leva uma sombra suave, sem manchas */
+  .dim { position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none; display: none;
+    background: color-mix(in oklab, var(--scene-bg) 62%, transparent); }
+  .intro.is-pov .dim { display: block; }
+  .pov-card { text-shadow: 0 0 var(--spacing-lg) color-mix(in oklab, var(--scene-bg) 90%, transparent), 0 0 var(--spacing-xs) color-mix(in oklab, var(--scene-bg) 70%, transparent); }
+  /* Pistas previsíveis: todos saem do horizonte e passam alternando esquerda e direita */
+  .pc1, .pc3, .pc5 { left: 37%; top: 55%; }
+  .pc2, .pc4 { left: 63%; top: 55%; }
+  .pov-card .ico { font-size: var(--spacing-3xl); color: var(--color-brand-500); }
+  .pov-card h3 { margin: 0; font: var(--site-subtitle); letter-spacing: var(--site-subtitle-tracking); text-wrap: balance; }
+  .pov-card .text { margin: 0; font: var(--site-lead); color: var(--scene-fg); }
+
+  .cockpit-copy {
+    position: absolute; z-index: 2; left: 50%; bottom: 14%; margin: 0; opacity: 0; transform: translateX(-50%);
+    font: var(--site-title); letter-spacing: var(--site-title-tracking); text-transform: uppercase; text-align: center;
+    width: min(90vw, 18ch); text-shadow: 0 var(--spacing-xs) var(--spacing-xl) var(--scene-bg);
+  }
+  .scroll-hint {
+    position: absolute; z-index: 2; right: var(--site-gutter); bottom: var(--spacing-lg); margin: 0;
+    display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
+    font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--scene-fg-muted);
+  }
+  @media (max-width: 720px) {
+    .shade { background: linear-gradient(0deg, color-mix(in oklab, var(--scene-bg) 90%, transparent) 0%, color-mix(in oklab, var(--scene-bg) 45%, transparent) 55%, transparent 100%); }
+    .hero-copy { justify-content: flex-end; padding-bottom: calc(var(--spacing-4xl) + var(--spacing-lg)); }
+    .hero-title { max-width: none; }
+    .scroll-hint { display: none; }
+  }
+  @media (max-height: 760px) {
+    .scroll-hint { display: none; }
+    .hero-title { font: var(--font-weight-semibold) clamp(32px, 9vh, 96px)/0.95 var(--font-display); }
+    .hero-copy .lead { margin-top: var(--spacing-md); }
+    .ctas { margin-top: var(--spacing-lg); }
+  }
+  @media (max-width: 720px) and (max-height: 760px) { .hero-copy { padding-bottom: var(--spacing-2xl); } }
+  /* Sem movimento: só o Hero estático (poster); sem frase da transição nem brilho */
+  @media (prefers-reduced-motion: reduce) {
+    .cockpit-copy, .scroll-hint, .glow, .pov-head, .pov-tunnel { display: none; }
+  }
+</style>

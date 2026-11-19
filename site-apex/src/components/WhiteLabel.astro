@@ -1,0 +1,109 @@
+---
+import { Badge, Button } from '@ds';
+import { QUOTE_URL } from '../data/site';
+---
+<section class="wl" id="sua-marca" data-wl aria-labelledby="wl-title">
+  <div class="wl-stage" data-wl-stage>
+    <div class="wl-head wrap">
+      <h2 id="wl-title" class="title">
+        <span data-wl-t1>A plataforma é do Apex</span>
+        <span class="accent" data-wl-t2>A experiência é da sua marca</span>
+      </h2>
+      <p class="lead">O seu público acessa páginas com a identidade da sua marca, não a do Apex.</p>
+    </div>
+
+    <div class="wl-scene wrap">
+      <!-- A página da sua marca, com logo, cor e imagem escolhidos por você -->
+        <figure class="win page-frame" data-wl-page>
+          <div class="win-bar"><i></i><i></i><i></i><span class="bar-label">Página da sua marca (exemplo)</span></div>
+          <div class="page-viewport">
+            <div class="page-scroll" data-wl-scroll>
+              <img
+                src="/images/landing-page-padrao.webp" width="900" height="3245" loading="lazy" decoding="async"
+                alt="Exemplo de página da marca de um kartódromo, com logo, cor, reservas e eventos"
+              />
+              <!-- Destaques sobre a própria página: o que a marca escolhe -->
+              <span class="mark mark-image" data-wl-mark aria-hidden="true"><i class="chip">Sua imagem</i></span>
+              <span class="mark mark-logo" data-wl-mark aria-hidden="true"><i class="chip">Seu logo</i></span>
+              <span class="mark mark-color" data-wl-mark aria-hidden="true"><i class="chip">Sua cor</i></span>
+            </div>
+          </div>
+        </figure>
+
+      <div class="options" data-wl-options>
+        <p class="options-title">Duas formas de ter a página da sua marca</p>
+        <article class="opt">
+          <h3>Modelo pronto com a sua marca</h3>
+          <p>O modelo do Apex se adapta ao seu logo, à sua cor e à imagem de capa que você escolher.</p>
+        </article>
+        <article class="opt">
+          <div class="opt-head"><h3>Página sob medida</h3><Badge status="brand">Sob orçamento</Badge></div>
+          <p>Precisa de algo diferente? Desenvolvemos páginas personalizadas para a sua operação. Fale com a gente para receber um orçamento.</p>
+          <Button href={QUOTE_URL} variant="outline">Solicitar orçamento</Button>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Seção clara (gray-50): textos escuros; barra da janela e cards de opção mantêm o visual escuro */
+  .wl { position: relative; background: var(--color-gray-50); color: var(--color-gray-900);
+    --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-200); }
+  .win-bar, .opt { color: var(--color-gray-50); --scene-fg: var(--color-gray-50); --scene-fg-muted: var(--color-gray-300); --scene-line: var(--color-gray-600); }
+  .wl-stage { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: var(--spacing-2xl); padding-block: clamp(64px, 10vw, 140px); overflow: clip; }
+  @media (min-width: 900px) { .wl-stage { padding-block: 100px; } }
+  .wl-head .title { font-size: clamp(32px, 4.2vw, 64px); }
+  .wl-head .title span { display: block; }
+
+  /* Estático (padrão, mobile, telas baixas, sem movimento): a página da marca e, ao lado (ou abaixo), as duas opções dela */
+  .wl-scene { display: grid; gap: var(--spacing-lg); align-items: start; }
+  @media (min-width: 700px) { .wl-scene { grid-template-columns: 1.25fr 1fr; column-gap: var(--spacing-xl); } }
+  .options { display: grid; gap: var(--spacing-md); }
+  .options-title { margin: 0; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--color-gray-900); }
+
+  .win { border-radius: var(--radius-card); overflow: hidden; border: var(--border-width-thin) solid var(--scene-line); box-shadow: var(--shadow-2xl); margin: 0; background: var(--color-gray-white); }
+  .win-bar { display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-sm) var(--spacing-md); background: var(--color-gray-800); }
+  .win-bar i { width: var(--spacing-sm); height: var(--spacing-sm); border-radius: var(--radius-full); background: var(--color-gray-600); }
+  .bar-label { margin-left: var(--spacing-sm); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--scene-fg-muted); }
+
+  .page-frame { display: flex; flex-direction: column; }
+  .page-viewport { position: relative; height: clamp(260px, 40svh, 420px); overflow: hidden; }
+  .page-scroll { position: relative; will-change: transform; }
+  .page-scroll img { display: block; width: 100%; height: auto; }
+
+  /* Destaques: contorno sobre o próprio elemento da página (posições em % da imagem), com um rótulo preso ao canto */
+  .mark { position: absolute; border: 2px solid var(--color-brand-500); border-radius: var(--radius-control-sm);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand-500) 28%, transparent); pointer-events: none; }
+  .chip { position: absolute; font-style: normal; white-space: nowrap; padding: var(--spacing-2xs) var(--spacing-sm); border-radius: var(--radius-pill);
+    background: var(--color-brand-500); color: var(--color-gray-50); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); font-weight: var(--font-weight-label); text-transform: uppercase; }
+  .mark-logo { left: 4.6%; top: 0.22%; width: 9.8%; height: 1.05%; }
+  .mark-logo .chip { left: calc(100% + var(--spacing-sm)); top: 50%; transform: translateY(-50%); }
+  .mark-color { left: 4.4%; top: 9.2%; width: 15.4%; height: 1.05%; }
+  .mark-color .chip { left: calc(100% + var(--spacing-sm)); top: 50%; transform: translateY(-50%); }
+  .mark-image { left: 1.2%; top: 1.9%; width: 97.6%; height: 11.4%; border-style: dashed; box-shadow: none; }
+  .mark-image .chip { right: var(--spacing-sm); top: var(--spacing-sm); }
+
+  .opt { display: grid; gap: var(--spacing-md); align-content: start; justify-items: start; padding: clamp(var(--spacing-md), 2vw, var(--spacing-xl));
+    border: var(--border-width-thin) solid var(--scene-line); border-radius: var(--radius-card); background: var(--color-gray-800); }
+  .opt h3 { margin: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  .opt p { margin: 0; color: var(--scene-fg-muted); }
+  .opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-sm); }
+  .opt :global(.btn) { margin-top: var(--spacing-md); }
+
+  /* Modo animado (desktop com movimento): a página da marca rola sozinha; as opções dela entram depois */
+  .wl.is-animated .wl-stage { height: 100svh; padding-block: calc(var(--site-header-h) + var(--spacing-md)) var(--spacing-xl); gap: var(--spacing-xl); }
+  .wl.is-animated .wl-scene { align-items: center; column-gap: var(--spacing-2xl); }
+  .wl.is-animated .page-frame { height: clamp(300px, 52svh, 460px); }
+  .wl.is-animated .page-viewport { flex: 1; height: auto; }
+  /* Telas médias: o texto de apoio sai da cena fixa para a animação caber */
+  @media (max-height: 859px) { .wl.is-animated .wl-head .lead { display: none; } }
+  /* Notebooks de tela baixa: cabeçalho e página mais compactos para a cena caber em uma tela */
+  @media (max-height: 759px) {
+    .wl.is-animated .wl-stage { padding-block: calc(var(--site-header-h) + var(--spacing-sm)) var(--spacing-md); gap: var(--spacing-md); }
+    .wl.is-animated .wl-head .title { font-size: clamp(24px, 3.4vw, 40px); }
+    .wl.is-animated .page-frame { height: clamp(220px, 50svh, 380px); }
+    .wl.is-animated .opt { padding: var(--spacing-lg); gap: var(--spacing-sm); }
+    .wl.is-animated .options { gap: var(--spacing-sm); }
+  }
+</style>

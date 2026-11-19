@@ -1,0 +1,130 @@
+/* ════════════════════════════════════════════════════════════════
+   BRAND — APEX
+   Único arquivo de identidade do projeto (ver TOKENS.md).
+   Cores, fontes, radius e caixa do botão vêm do Color Style Guide do Apex.
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─── Cores da marca ─────────────────────────────────────────── */
+  --brand-primary:   #FF8211;                  /* $orange-brandcolor */
+  --brand-secondary: var(--brand-primary);     /* sem secundária definida */
+
+  /* Demais cores institucionais do guia (referência; sem uso definido nos componentes) */
+  --brand-grey:  #DADADA;                      /* $grey-brandcolor  */
+  --brand-red:   #F21C00;                      /* $red-brandcolor   */
+  --brand-black: #0B0B0B;                      /* $black-brandcolor */
+
+  /* ─── Cores de apoio (Semantic Color do guia) ────────────────── */
+  --support-blue:   #4070F4;   /* $support-01 · Message     */
+  --support-green:  #0BB07B;   /* $support-02 · Success     */
+  --support-yellow: #FFAD0D;   /* $support-03 · Warning     */
+  --support-red:    #F03D3D;   /* $support-04 · Error       */
+  --support-info:   #3C4C70;   /* $support-05 · Information */
+
+  /* ─── Fontes ─────────────────────────────────────────────────── */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* ─── Border radius ──────────────────────────────────────────── */
+  --radius-scale: 1;   /* controles (botão, campos) = 8px */
+
+  /* ─── Botão ──────────────────────────────────────────────────── */
+  --button-text-transform: uppercase;
+}
+
+/* Sobrescritas das escalas de tokens.css. Especificidade maior (:root:root)
+   porque tokens.css é carregado depois deste arquivo. */
+:root:root {
+  /* Escala de cinza do guia (Grayscale) → gray-50…900; gray-950 = $black-brandcolor */
+  --color-gray-50:  #F7F7F7;   /* $gray-10  */
+  --color-gray-100: #E9EBEA;   /* $gray-20  */
+  --color-gray-200: #D6DCDA;   /* $gray-30  */
+  --color-gray-300: #BFCDC7;   /* $gray-40  */
+  --color-gray-400: #99A9A2;   /* $gray-50  */
+  --color-gray-500: #73817B;   /* $gray-60  */
+  --color-gray-600: #4A5A54;   /* $gray-70  */
+  --color-gray-700: #303E38;   /* $gray-80  */
+  --color-gray-800: #222C28;   /* $gray-90  */
+  --color-gray-900: #05100C;   /* $black-100 */
+  --color-gray-950: var(--brand-black);
+
+  /* Escalas semânticas geradas a partir das cores de apoio */
+  --color-blue-50: color-mix(in oklab, var(--support-blue) 8%, white);
+  --color-blue-100: color-mix(in oklab, var(--support-blue) 16%, white);
+  --color-blue-200: color-mix(in oklab, var(--support-blue) 32%, white);
+  --color-blue-300: color-mix(in oklab, var(--support-blue) 52%, white);
+  --color-blue-400: color-mix(in oklab, var(--support-blue) 76%, white);
+  --color-blue-500: var(--support-blue);
+  --color-blue-600: color-mix(in oklab, var(--support-blue) 82%, black);
+  --color-blue-700: color-mix(in oklab, var(--support-blue) 64%, black);
+  --color-blue-800: color-mix(in oklab, var(--support-blue) 46%, black);
+  --color-blue-900: color-mix(in oklab, var(--support-blue) 30%, black);
+  --color-blue-950: color-mix(in oklab, var(--support-blue) 18%, black);
+
+  --color-green-50: color-mix(in oklab, var(--support-green) 8%, white);
+  --color-green-100: color-mix(in oklab, var(--support-green) 16%, white);
+  --color-green-200: color-mix(in oklab, var(--support-green) 32%, white);
+  --color-green-300: color-mix(in oklab, var(--support-green) 52%, white);
+  --color-green-400: color-mix(in oklab, var(--support-green) 76%, white);
+  --color-green-500: var(--support-green);
+  --color-green-600: color-mix(in oklab, var(--support-green) 82%, black);
+  --color-green-700: color-mix(in oklab, var(--support-green) 64%, black);
+  --color-green-800: color-mix(in oklab, var(--support-green) 46%, black);
+  --color-green-900: color-mix(in oklab, var(--support-green) 30%, black);
+  --color-green-950: color-mix(in oklab, var(--support-green) 18%, black);
+
+  --color-yellow-50: color-mix(in oklab, var(--support-yellow) 8%, white);
+  --color-yellow-100: color-mix(in oklab, var(--support-yellow) 16%, white);
+  --color-yellow-200: color-mix(in oklab, var(--support-yellow) 32%, white);
+  --color-yellow-300: color-mix(in oklab, var(--support-yellow) 52%, white);
+  --color-yellow-400: color-mix(in oklab, var(--support-yellow) 76%, white);
+  --color-yellow-500: var(--support-yellow);
+  --color-yellow-600: color-mix(in oklab, var(--support-yellow) 82%, black);
+  --color-yellow-700: color-mix(in oklab, var(--support-yellow) 64%, black);
+  --color-yellow-800: color-mix(in oklab, var(--support-yellow) 46%, black);
+  --color-yellow-900: color-mix(in oklab, var(--support-yellow) 30%, black);
+  --color-yellow-950: color-mix(in oklab, var(--support-yellow) 18%, black);
+
+  --color-red-50: color-mix(in oklab, var(--support-red) 8%, white);
+  --color-red-100: color-mix(in oklab, var(--support-red) 16%, white);
+  --color-red-200: color-mix(in oklab, var(--support-red) 32%, white);
+  --color-red-300: color-mix(in oklab, var(--support-red) 52%, white);
+  --color-red-400: color-mix(in oklab, var(--support-red) 76%, white);
+  --color-red-500: var(--support-red);
+  --color-red-600: color-mix(in oklab, var(--support-red) 82%, black);
+  --color-red-700: color-mix(in oklab, var(--support-red) 64%, black);
+  --color-red-800: color-mix(in oklab, var(--support-red) 46%, black);
+  --color-red-900: color-mix(in oklab, var(--support-red) 30%, black);
+  --color-red-950: color-mix(in oklab, var(--support-red) 18%, black);
+
+}
+
+/* Botão primário: sempre o laranja da marca (token brand) com texto gray-50, nos temas claro e escuro.
+   Decisão do projeto. Contraste do texto ≈ 2,3:1 (abaixo de 4,5:1, WCAG 1.4.3). Pendência registrada.
+   [data-theme][data-theme] cobre também o <body> do Storybook, que redefine os tokens do tema escuro. */
+:root:root,
+[data-theme][data-theme] {
+  --color-action-primary:         var(--color-brand-500);
+  --color-action-primary-hover:   var(--color-brand-600);
+  --color-action-primary-pressed: var(--color-brand-700);
+  --color-on-action-primary:         var(--color-gray-50);
+  --color-on-action-primary-hover:   var(--color-gray-50);
+  --color-on-action-primary-pressed: var(--color-gray-50);
+}
+
+/* Status "info" usa $support-05 (Information), não o azul de links/mensagens */
+:root:root {
+  --color-status-info-bg: color-mix(in oklab, var(--support-info) 10%, white);
+  --color-status-info-fg: var(--support-info);
+}
+:root[data-theme="dark"] {
+  --color-status-info-bg: color-mix(in oklab, var(--support-info) 30%, black);
+  --color-status-info-fg: color-mix(in oklab, var(--support-info) 40%, white);
+}
+
+/* Destrutivo: mais próximo do $support-04 (Error); texto branco ≈ 5:1 */
+:root:not([data-theme="dark"]) {
+  --color-action-error:         var(--color-red-600);
+  --color-action-error-hover:   var(--color-red-700);
+  --color-action-error-pressed: var(--color-red-800);
+}

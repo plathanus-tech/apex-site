@@ -1,0 +1,24 @@
+/* Tokens específicos do site (composições em tela cheia). Os valores visuais do DS continuam em tokens.css. */
+:root {
+  --site-gutter: clamp(16px, 5vw, 64px);
+  --site-max: 1280px;
+  --site-header-h: 72px;
+
+  /* Display fluido (acima dos --text-heading-* do DS) */
+  --site-display: var(--font-weight-semibold) clamp(44px, min(9.5vw, 14vh), 112px)/0.95 var(--font-display);
+  --site-display-tracking: -0.03em;
+  --site-title: var(--font-weight-semibold) clamp(32px, 5.2vw, 64px)/1 var(--font-display);
+  --site-title-tracking: -0.02em;
+  --site-subtitle: var(--font-weight-semibold) clamp(28px, 3.6vw, 56px)/1 var(--font-display);
+  --site-subtitle-tracking: -0.02em;
+  --site-lead: var(--font-weight-body) clamp(16px, 1.5vw, 20px)/1.55 var(--font-body);
+  --site-kicker: var(--font-weight-semibold) 13px/1 var(--font-display);
+  --site-kicker-tracking: 0.18em;
+
+  /* Cena cinematográfica */
+  --scene-bg: var(--color-gray-950);
+  --scene-fg: var(--color-gray-50);
+  --scene-fg-muted: color-mix(in oklab, var(--color-gray-50) 72%, transparent);
+  --scene-line: color-mix(in oklab, var(--color-gray-50) 16%, transparent);
+  --scene-glow: color-mix(in oklab, var(--brand-primary) 55%, transparent);
+}

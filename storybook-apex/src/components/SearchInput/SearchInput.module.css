@@ -1,0 +1,3 @@
+/* Esconde o "x" nativo do navegador: o componente usa o próprio botão de limpar */
+.root :global(input[type="search"])::-webkit-search-cancel-button,
+.root :global(input[type="search"])::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }

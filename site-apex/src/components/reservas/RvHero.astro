@@ -1,0 +1,53 @@
+---
+import { Button } from '@ds';
+import Win from '../eventos/Win.astro';
+import { hero } from '../../data/reservas';
+---
+<section class="hero" aria-labelledby="rv-hero-title">
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="copy">
+      <h1 id="rv-hero-title" class="h1">{hero.title}</h1>
+      <p class="lead">{hero.lead}</p>
+      <div class="cta"><Button href="#contato">{hero.cta}</Button></div>
+    </div>
+
+    <!-- Só o sistema: a tela real da agenda de reservas, grande -->
+    <div class="stage">
+      <div class="screen">
+        <Win label="Agenda de reservas">
+          <img src="/images/rv-agenda-hero.webp" width="1400" height="693" fetchpriority="high" decoding="async"
+            alt="Agenda de reservas do Apex: menu com pistas, categorias, baterias e horário de funcionamento, e o calendário do mês com as sessões de cada dia" />
+        </Win>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Quanto a tela da agenda avança sobre a seção seguinte (só no desktop) */
+  :global(:root) { --rv-overlap: 0px; }
+  @media (min-width: 900px) { :global(:root) { --rv-overlap: calc(min(1120px, 100vw - 2 * var(--site-gutter)) * 0.2); } }
+
+  .hero { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; text-align: center;
+    padding: calc(var(--site-header-h) + var(--spacing-3xl)) 0 var(--spacing-3xl); background: var(--scene-bg); isolation: isolate; }
+  .glow { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(52vmax 28vmax at 50% 70%, color-mix(in oklab, var(--color-brand-500) 16%, transparent), transparent 70%); }
+  .copy { display: grid; justify-items: center; }
+  .h1 { margin: 0; max-width: 30ch; font: var(--site-title); font-size: clamp(32px, 4.4vw, 60px); letter-spacing: var(--site-title-tracking); text-wrap: balance; }
+  .lead { max-width: 52ch; }
+  .cta { margin-top: var(--spacing-xl); }
+
+  .stage { position: relative; max-width: 1120px; margin: var(--spacing-3xl) auto 0; text-align: left; }
+  .screen { position: relative; width: 92%; margin: 0 auto; }
+  .screen :global(.win) { aspect-ratio: auto; }
+  .screen :global(.body img) { height: auto; }
+
+  /* Desktop: a tela avança sobre a seção de baixo, e o fundo desce em gradiente até a cor dela */
+  @media (min-width: 900px) {
+    .screen { width: 88%; margin-bottom: calc(var(--rv-overlap) * -1); }
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--rv-overlap) + 140px); z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, transparent, var(--color-gray-800)); }
+  }
+</style>

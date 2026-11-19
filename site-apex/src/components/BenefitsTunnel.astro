@@ -1,0 +1,103 @@
+---
+import { generalBenefits } from '../data/site';
+
+// Raios de luz a partir do ponto de fuga: o "túnel" por onde a câmera avança
+function rng(seed: number) {
+  return () => {
+    seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rand = rng(11);
+const CX = 500, CY = 300;
+const rays = Array.from({ length: 150 }, () => {
+  const a = rand() * Math.PI * 2;
+  const r1 = 20 + rand() * 90;
+  const r2 = r1 + 80 + rand() * 480;
+  return {
+    x1: +(CX + Math.cos(a) * r1).toFixed(1), y1: +(CY + Math.sin(a) * r1).toFixed(1),
+    x2: +(CX + Math.cos(a) * r2).toFixed(1), y2: +(CY + Math.sin(a) * r2).toFixed(1),
+    o: +(0.1 + rand() * 0.6).toFixed(2), w: +(0.6 + rand() * 1.1).toFixed(1), hot: rand() > 0.74,
+  };
+});
+---
+<section class="approach" id="beneficios" data-approach aria-labelledby="ben-title">
+  <div class="stage" data-approach-stage>
+    <!-- Túnel de luz: a câmera avança em direção ao ponto de fuga -->
+    <svg class="field" data-field viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {rays.map((r) => (
+        <line x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2} stroke-width={r.w} stroke-linecap="round" stroke-opacity={r.o}
+          class={r.hot ? 'ray hot' : 'ray'} vector-effect="non-scaling-stroke" />
+      ))}
+    </svg>
+
+    <header class="head wrap" data-intro>
+      <div>
+        <p class="kicker">Por que o Apex</p>
+        <h2 id="ben-title" class="title">Uma plataforma para eventos e reservas com mais controle.</h2>
+      </div>
+      <p class="lead">Eventos e reservas em um só lugar, com a identidade da sua empresa.</p>
+    </header>
+
+    <!-- Cada benefício vem de encontro à câmera, em profundidade -->
+    <ol class="tunnel" data-tunnel>
+      {generalBenefits.map((b, i) => (
+        <li class={`card c${i + 1}`} data-card>
+          <span class="material-symbols-outlined ico" aria-hidden="true">{b.icon}</span>
+          <p class="num"><span class="tick" aria-hidden="true"></span>{String(i + 1).padStart(2, '0')}</p>
+          <h3>{b.title}</h3>
+          <p class="text">{b.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="hint" data-hint aria-hidden="true">Role para avançar</p>
+    <p class="placeholder-tag note wrap">Texto-base a validar com o time do Apex</p>
+  </div>
+</section>
+
+<style>
+  .approach { position: relative; background: var(--scene-bg); }
+  .ray { stroke: var(--color-gray-300); }
+  .ray.hot { stroke: var(--color-brand-500); }
+
+  /* Modo estático (padrão, mobile, telas baixas, sem movimento): título e cartões em grade */
+  .stage { position: relative; overflow: clip; isolation: isolate; padding-block: clamp(64px, 10vw, 140px); }
+  .field { position: absolute; inset: 0 0 auto 0; width: 100%; height: min(60%, 560px); z-index: -1; opacity: 0.22; pointer-events: none; overflow: visible;
+    -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent); mask-image: linear-gradient(180deg, #000 50%, transparent); }
+  .head { display: grid; gap: var(--spacing-xl); margin-bottom: var(--spacing-3xl); }
+  .head .title { max-width: 18ch; }
+  .head .lead { margin: 0; }
+  .tunnel { list-style: none; margin: 0 auto; padding: 0; width: min(var(--site-max), 100% - 2 * var(--site-gutter)); display: grid; gap: var(--spacing-xl); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { display: grid; align-content: start; gap: var(--spacing-sm); border-top: var(--border-width-thin) solid var(--scene-line); padding-top: var(--spacing-lg); }
+  .ico { font-size: var(--spacing-2xl); color: var(--color-brand-500); }
+  .num { margin: 0; display: flex; align-items: center; gap: var(--spacing-sm); font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); color: var(--color-brand-400); }
+  .num .tick { width: var(--spacing-lg); height: var(--spacing-2xs); background: var(--color-brand-500); }
+  .card h3 { margin: 0; font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); }
+  .text { margin: 0; color: var(--scene-fg-muted); }
+  .hint { display: none; }
+  .note { margin-top: var(--spacing-2xl); }
+
+  /* Modo túnel (desktop com movimento): a câmera avança e os benefícios vêm de encontro */
+  .approach.is-animated .stage { height: 100svh; padding: 0; }
+  .approach.is-animated .field { inset: 0; height: 100%; opacity: 1; -webkit-mask-image: none; mask-image: none; z-index: 0; }
+  .approach.is-animated .tunnel { position: absolute; inset: 0; width: auto; margin: 0; display: block; perspective: 1000px; perspective-origin: 50% 50%; z-index: 1; pointer-events: none; }
+  .approach.is-animated .card { position: absolute; width: min(440px, 34vw); border: 0; padding: 0; gap: var(--spacing-md); will-change: transform, opacity; }
+  /* Halo escuro atrás do texto: as linhas de luz passam por trás sem prejudicar a leitura */
+  .approach.is-animated .card::before { content: ''; position: absolute; z-index: -1; inset: -30% -34%; background: radial-gradient(closest-side, color-mix(in oklab, var(--scene-bg) 97%, transparent) 62%, transparent 100%); }
+  .approach.is-animated .card > * { position: relative; }
+  /* Pistas previsíveis: todos saem do centro e passam alternando esquerda e direita */
+  .approach.is-animated .c1, .approach.is-animated .c3, .approach.is-animated .c5 { left: 27%; top: 54%; }
+  .approach.is-animated .c2, .approach.is-animated .c4 { left: 73%; top: 54%; }
+  .approach.is-animated .card .ico { font-size: var(--spacing-3xl); }
+  .approach.is-animated .card h3 { font: var(--site-subtitle); letter-spacing: var(--site-subtitle-tracking); text-wrap: balance; }
+  .approach.is-animated .card .text { font: var(--site-lead); }
+
+  .approach.is-animated .head { position: absolute; z-index: 2; inset: calc(var(--site-header-h) + var(--spacing-lg)) 0 auto 0; margin: 0; align-items: end; }
+  @media (min-width: 960px) { .approach.is-animated .head { grid-template-columns: 1.2fr 1fr; } .approach.is-animated .head .lead { justify-self: end; max-width: 32ch; } }
+  .approach.is-animated .head .title { font: var(--site-title); letter-spacing: var(--site-title-tracking); max-width: 14ch; }
+  .approach.is-animated .hint { display: block; position: absolute; z-index: 3; left: 50%; bottom: var(--spacing-lg); transform: translateX(-50%); margin: 0; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--scene-fg-muted); }
+  .approach.is-animated .note { display: none; }
+</style>

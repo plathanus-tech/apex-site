@@ -1,0 +1,61 @@
+---
+import { modalities } from '../data/site';
+// compact: versão mais baixa para páginas internas (a Home usa o tamanho padrão)
+const { compact = false } = Astro.props;
+---
+<section class={`mod section${compact ? ' compact' : ''}`} id={compact ? undefined : 'modalidades'} aria-labelledby="mod-title">
+  <div class="wrap">
+    <h2 id="mod-title" class="title">Do kart ao automobilismo virtual</h2>
+    <p class="lead sub">Diferentes modalidades, uma plataforma para organizar e gerenciar eventos automobilísticos.</p>
+
+    <ul class="grid">
+      {modalities.items.map((m) => (
+        <li class="card">
+          <img
+            src={`/images/${m.image}-1000.webp`}
+            srcset={`/images/${m.image}-640.webp 640w, /images/${m.image}-1000.webp 1000w`}
+            sizes="(min-width: 1100px) 25vw, (min-width: 600px) 50vw, 100vw"
+            width="1000" height="563" alt="" loading="lazy" decoding="async"
+            style={m.position ? `object-position: ${m.position}` : undefined}
+          />
+          <div class="caption">
+            <span class="name">{m.name}</span>
+            {m.note && <span class="note">{m.note}</span>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sub { margin: var(--spacing-md) 0 0; max-width: 56ch; }
+  .grid { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; display: grid; gap: var(--spacing-md); grid-template-columns: 1fr; }
+  @media (min-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card { position: relative; overflow: hidden; aspect-ratio: 16 / 9; border-radius: var(--radius-card);
+    border: var(--border-width-thin) solid var(--scene-line); background: var(--color-gray-900); }
+  @media (max-width: 599px) { .card { aspect-ratio: 2 / 1; } }
+  @media (min-width: 1100px) { .card { aspect-ratio: 1 / 1; } }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* Degradê escuro sutil na base, para o nome ficar legível sobre a foto */
+  .card::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, color-mix(in oklab, var(--scene-bg) 88%, transparent) 0%, color-mix(in oklab, var(--scene-bg) 40%, transparent) 30%, transparent 55%); }
+  .caption { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; display: grid; gap: var(--spacing-xs); padding: var(--spacing-lg); }
+  .caption::before { content: ''; width: var(--spacing-lg); height: var(--spacing-2xs); background: var(--color-brand-500); }
+  .name { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  .note { font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); color: var(--scene-fg-muted); }
+  /* Transição em gradiente vinda da seção anterior (gray-800) para o fundo da cena */
+  .mod { background: linear-gradient(180deg, var(--color-gray-800) 0%, var(--scene-bg) 260px); }
+  /* Home (sem compact): no desktop, 20px de espaço no topo, logo depois da seção da plataforma */
+  @media (min-width: 900px) { .mod:not(.compact) { padding-top: 20px; } }
+  /* Página de Eventos: segunda metade do gradiente (180px), suave, que continua o da seção de cima */
+  .compact { background: linear-gradient(180deg, color-mix(in oklab, var(--scene-bg) 50%, var(--color-gray-800)) 0, color-mix(in oklab, var(--scene-bg) 84.4%, var(--color-gray-800)) 90px, var(--scene-bg) 180px); }
+  .compact { padding-block: 64px; }
+  @media (min-width: 900px) { .compact { padding-block: 72px; } }
+  .compact .grid { margin-top: var(--spacing-2xl); }
+  .compact .card { aspect-ratio: 16 / 9; }
+  @media (min-width: 1100px) { .compact .card { aspect-ratio: 4 / 3; } }
+  @media (max-width: 599px) { .compact .card { aspect-ratio: 2 / 1; } }
+</style>

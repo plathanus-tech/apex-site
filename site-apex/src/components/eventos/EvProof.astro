@@ -1,0 +1,69 @@
+---
+import NextEvents from './NextEvents.astro';
+import { proof, events } from '../../data/eventos';
+---
+<section class="pf section" aria-labelledby="pf-title">
+  <div class="wrap">
+    <h2 id="pf-title" class="title">{proof.title}</h2>
+
+    <!-- Banners de eventos reais: uma linha no desktop; no celular a faixa rola devagar sozinha (a segunda cópia é só para o laço) -->
+    <div class="viewport">
+      <div class="run">
+        <ul class="banners">
+          {proof.banners.map((b) => (
+            <li><img src={`/images/eventos-reais/${b.id}.webp`} alt={b.name} width="800" height="414" loading="lazy" decoding="async" /></li>
+          ))}
+        </ul>
+        <ul class="banners dup" aria-hidden="true">
+          {proof.banners.map((b) => (
+            <li><img src={`/images/eventos-reais/${b.id}.webp`} alt="" width="800" height="414" loading="lazy" decoding="async" /></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Indicadores (placeholders) -->
+    <dl class="stats">
+      {proof.stats.map((s) => (
+        <div class="stat"><dd>{s.value}</dd><dt>{s.label}</dt></div>
+      ))}
+    </dl>
+
+  </div>
+</section>
+
+<!-- Próximos eventos: escolhe sozinho entre o evento em destaque (1 evento) e os cards com busca (vários) -->
+<NextEvents events={events} gradient />
+
+<style>
+  .pf { background: var(--color-gray-800); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* Banners dos eventos: faixa que rola devagar no celular/tablet e uma linha de cinco no desktop */
+  .viewport { margin-top: var(--spacing-3xl); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  .run { display: flex; width: max-content; animation: rv-run 50s linear infinite; }
+  .viewport:hover .run { animation-play-state: paused; }
+  .banners { list-style: none; margin: 0; padding: 0 var(--spacing-md) 0 0; display: flex; flex: none; gap: var(--spacing-md); }
+  .banners li { flex: none; width: 260px; overflow: hidden; border-radius: var(--radius-control); border: var(--border-width-thin) solid var(--scene-line); background: var(--color-gray-900); }
+  .banners img { display: block; width: 100%; height: auto; aspect-ratio: 800 / 414; object-fit: cover; }
+  @keyframes rv-run { to { transform: translateX(-50%); } }
+  @media (min-width: 1000px) {
+    .viewport { overflow: visible; -webkit-mask-image: none; mask-image: none; }
+    .run { display: block; width: auto; animation: none; }
+    .banners { display: grid; grid-template-columns: repeat(5, 1fr); padding: 0; }
+    .banners li { width: auto; }
+    .banners.dup { display: none; }
+  }
+  /* Sem movimento: sem laço, a faixa fica parada e pode ser rolada com o dedo */
+  @media (prefers-reduced-motion: reduce) {
+    .viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .run { animation: none; }
+    .banners.dup { display: none; }
+  }
+
+  .stats { margin: var(--spacing-2xl) 0 0; display: grid; gap: var(--spacing-lg); }
+  @media (min-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-xl); } }
+  .stat { display: flex; flex-direction: column-reverse; padding-block: var(--spacing-md); }
+  .stat dd { margin: 0; font: var(--site-title); letter-spacing: var(--site-title-tracking); color: var(--color-brand-500); }
+  .stat dt { color: var(--scene-fg-muted); text-transform: uppercase; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); margin-bottom: var(--spacing-sm); }
+
+</style>

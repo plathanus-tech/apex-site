@@ -1,0 +1,71 @@
+---
+import { modalities } from '../../data/reservas';
+const { main, others } = modalities;
+---
+<section class="md section" aria-labelledby="md-title">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h2 id="md-title" class="title">{modalities.title}</h2>
+      </div>
+      <p class="lead">{modalities.lead}</p>
+    </div>
+
+    <!-- O kart é o destaque; carros e outras experiências aparecem menores, como prova de versatilidade -->
+    <div class="board">
+      <figure class="card main">
+        <img src={`/images/${main.image}-1000.webp`} srcset={`/images/${main.image}-640.webp 640w, /images/${main.image}-1000.webp 1000w`}
+          sizes="(min-width: 900px) 58vw, 100vw" width="1000" height="563" loading="lazy" decoding="async" alt={main.alt} />
+        <figcaption>
+          <span class="name">{main.name}</span>
+          <span class="txt">{main.text}</span>
+          <span class="tags"><b>Indoor</b><b>Outdoor</b></span>
+        </figcaption>
+      </figure>
+
+      <div class="side">
+        {others.map((o) => (
+          <figure class="card small">
+            <img src={`/images/${o.image}-640.webp`} width="640" height="360" loading="lazy" decoding="async" alt={o.alt} />
+            <figcaption><span class="name sm">{o.name}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <p class="sizes"><span class="line" aria-hidden="true"></span>{modalities.sizes}<span class="line" aria-hidden="true"></span></p>
+  </div>
+</section>
+
+<style>
+  .md { background: var(--color-gray-800); }
+  .head { display: grid; gap: var(--spacing-lg); align-items: end; }
+  .head .lead { margin: 0; max-width: 44ch; }
+  @media (min-width: 900px) { .head { grid-template-columns: 1.2fr 1fr; gap: var(--spacing-3xl); } }
+
+  .board { margin-top: var(--spacing-3xl); display: grid; gap: var(--spacing-md); }
+  @media (min-width: 900px) { .board { grid-template-columns: 1.6fr 1fr; gap: var(--spacing-lg); } }
+  .side { display: grid; gap: var(--spacing-md); }
+  @media (min-width: 900px) { .side { gap: var(--spacing-lg); grid-template-rows: 1fr 1fr; } }
+
+  .card { position: relative; margin: 0; overflow: hidden; border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line); background: var(--color-gray-900); }
+  .card img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.06); }
+  .main { aspect-ratio: 4 / 3; }
+  @media (min-width: 900px) { .main { aspect-ratio: auto; min-height: 420px; } }
+  .small { aspect-ratio: 16 / 9; }
+  @media (min-width: 900px) { .small { aspect-ratio: auto; } }
+  .card::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, color-mix(in oklab, var(--scene-bg) 90%, transparent) 0%, color-mix(in oklab, var(--scene-bg) 25%, transparent) 45%, transparent 70%); }
+  figcaption { position: absolute; z-index: 1; left: var(--spacing-lg); right: var(--spacing-lg); bottom: var(--spacing-lg); display: grid; gap: var(--spacing-2xs); }
+  .name { font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); }
+  .name.sm { font: var(--text-body-m); font-weight: var(--font-weight-label); }
+  .name::before { content: ''; display: block; width: var(--spacing-lg); height: var(--spacing-2xs); margin-bottom: var(--spacing-xs); background: var(--color-brand-500); }
+  .txt { color: var(--color-gray-300); max-width: 44ch; font: var(--text-body-s); }
+  .tags { display: flex; gap: var(--spacing-xs); margin-top: var(--spacing-xs); }
+  .tags b { padding: var(--spacing-2xs) var(--spacing-md); border: var(--border-width-thin) solid var(--color-brand-500); border-radius: var(--radius-pill);
+    color: var(--color-brand-400); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); text-transform: uppercase; font-weight: var(--font-weight-regular); }
+
+  .sizes { margin: var(--spacing-2xl) 0 0; display: flex; align-items: center; gap: var(--spacing-md); color: var(--scene-fg-muted); font: var(--text-body-s); }
+  .line { flex: 1; height: 1px; background: var(--scene-line); }
+  @media (max-width: 599px) { .sizes { text-align: center; } }
+</style>

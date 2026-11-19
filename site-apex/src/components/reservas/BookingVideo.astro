@@ -1,0 +1,37 @@
+---
+import Win from '../eventos/Win.astro';
+---
+<!-- Gravação real do site de reservas: escolha do horário, dados dos participantes, pagamento e confirmação -->
+<div class="vid" data-booking-video>
+  <Win label="Site de reservas do estabelecimento">
+    <video
+      muted loop playsinline preload="metadata" poster="/videos/reservas-online-poster.webp"
+      width="1600" height="912" aria-label="Gravação do site de reservas: o cliente escolhe o dia e o horário, informa os participantes, paga e recebe a confirmação da reserva"
+    >
+      <source src="/videos/reservas-online.mp4" type="video/mp4" />
+    </video>
+  </Win>
+</div>
+
+<style>
+  .vid :global(.win) { box-shadow: var(--shadow-2xl); }
+  .vid video { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 912; background: var(--color-gray-white); }
+</style>
+
+<script>
+  // Toca só enquanto está visível; com "reduzir movimento" fica parado no quadro de abertura, com controles
+  const root = document.querySelector<HTMLElement>('[data-booking-video]');
+  const video = root?.querySelector('video');
+  if (root && video) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      video.controls = true;
+    } else {
+      const io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      }, { threshold: 0.4 });
+      io.observe(video);
+    }
+  }
+</script>

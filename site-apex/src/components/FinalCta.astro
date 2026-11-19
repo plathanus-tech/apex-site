@@ -1,0 +1,32 @@
+---
+import ContactForm from './ContactForm';
+import CtaCircuit from './CtaCircuit.astro';
+import { CONTACT_ENDPOINT, contactSolutions } from '../data/site';
+---
+<section class="cta" id="demonstracao" aria-labelledby="cta-title">
+  <CtaCircuit />
+  <div class="wrap inner">
+    <div class="copy">
+      <h2 id="cta-title" class="cta-title">Leve a gestão do seu negócio mais longe com o Apex</h2>
+      <p class="lead">Conheça nossas soluções para organização de eventos e gestão de reservas. Escolha uma ou ambas e fale com nossa equipe.</p>
+    </div>
+    <div class="panel">
+      <ContactForm client:visible endpoint={CONTACT_ENDPOINT} solutions={contactSolutions} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { position: relative; overflow: clip; padding-block: clamp(80px, 12vw, 180px); isolation: isolate;
+    background: radial-gradient(60vmax 30vmax at 50% 100%, var(--scene-glow), transparent 70%), var(--scene-bg); }
+  /* Celular: 20px a mais entre o card do formulário e o fim da seção (onde a pista termina) */
+  @media (max-width: 899px) { .cta { padding-bottom: calc(clamp(80px, 12vw, 180px) + 20px); } }
+  @media (min-width: 900px) { .cta { padding-block: 100px; } }
+  .inner { display: grid; gap: var(--spacing-3xl); align-items: start; }
+  @media (min-width: 960px) { .inner { grid-template-columns: 1fr minmax(420px, 540px); gap: var(--spacing-4xl); } }
+  .cta-title { margin: 0; font: var(--site-title); letter-spacing: var(--site-title-tracking); max-width: 16ch; text-wrap: balance; }
+  .copy .lead { margin-top: var(--spacing-md); max-width: 44ch; }
+  .panel { padding: var(--spacing-xl); border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line);
+    background: var(--color-bg-surface); box-shadow: var(--shadow-2xl); }
+  @media (max-width: 520px) { .panel { padding: var(--spacing-lg); } }
+</style>

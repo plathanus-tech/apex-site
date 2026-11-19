@@ -1,0 +1,49 @@
+---
+import { generalBenefits } from '../data/site';
+---
+<section class="benefits section" id="beneficios" aria-labelledby="ben-title">
+  <div class="wrap grid">
+    <div class="intro" data-reveal>
+      <p class="kicker">Por que o Apex</p>
+      <h2 id="ben-title" class="title">Uma plataforma para eventos e reservas com mais controle</h2>
+      <p class="placeholder-tag">Texto-base a validar com o time do Apex</p>
+    </div>
+
+    <ol class="list">
+      {generalBenefits.map((b, i) => (
+        <li class="item" data-reveal>
+          <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="body">
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </div>
+          <span class="material-symbols-outlined ico" aria-hidden="true">{b.icon}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: var(--spacing-3xl); align-items: start; }
+  @media (min-width: 960px) {
+    .grid { grid-template-columns: 1fr 1.2fr; gap: var(--spacing-4xl); }
+    .intro { position: sticky; top: calc(var(--site-header-h) + var(--spacing-xl)); }
+  }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: var(--spacing-lg); align-items: center;
+    padding-block: var(--spacing-xl); border-top: var(--border-width-thin) solid var(--scene-line);
+    transition: background-color var(--transition-normal);
+  }
+  .item:last-child { border-bottom: var(--border-width-thin) solid var(--scene-line); }
+  .item:hover { background: color-mix(in oklab, var(--color-gray-50) 4%, transparent); }
+  .num { font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); color: var(--color-brand-500); }
+  .body h3 { font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); margin: 0; }
+  .body p { margin: var(--spacing-xs) 0 0; color: var(--scene-fg-muted); }
+  .ico { font-size: var(--spacing-2xl); color: var(--color-brand-400); }
+  @media (max-width: 720px) {
+    .body h3 { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+    .ico { font-size: var(--spacing-xl); }
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+import { Button, Badge } from '@ds';
+import EventCard from './EventCard.astro';
+import EventSearch from './EventSearch';
+import { statusLabel, type EventItem } from '../../data/eventos';
+
+/**
+ * Próximos eventos, com duas apresentações:
+ *  - "single": um evento em destaque (imagem grande e informações ao lado). É a escolha automática quando há só um evento.
+ *  - "grid": até 3 cards, com busca e link para a lista completa.
+ * Em "auto" (padrão) a variante vem do número de eventos abertos; "single" e "grid" forçam uma delas (usado na prévia /v2pe).
+ */
+interface Props { events: EventItem[]; variant?: 'auto' | 'single' | 'grid'; gradient?: boolean; note?: string; }
+const { events, variant = 'auto', gradient = false, note } = Astro.props;
+const open = events.filter((e) => e.status !== 'encerrado');
+const mode = variant === 'auto' ? (open.length <= 1 ? 'single' : 'grid') : variant;
+const featured = open[0] ?? events[0];
+const next = open.slice(0, 3);
+const tone = (e: EventItem) => (e.status === 'abertas' ? 'success' : e.status === 'breve' ? 'warning' : 'neutral');
+---
+<section class:list={['pn', 'section', { gradient }]} aria-labelledby="pn-title">
+  <div class="wrap">
+    <div class="next">
+      <div class:list={['nhead', { solo: mode === 'single' }]}>
+        <h2 id="pn-title" class="nh">Próximos eventos</h2>
+        {mode === 'grid' && <div class="search"><EventSearch client:visible /></div>}
+      </div>
+
+      {mode === 'single' && featured && (
+        <article class="feat">
+          <a class="fimg" href={featured.href} tabindex="-1" aria-hidden="true">
+            {featured.image
+              ? <img src={featured.image} alt="" loading="lazy" decoding="async" />
+              : <span class="ph"><span class="material-symbols-outlined">image</span><span>[Imagem do evento]</span></span>}
+          </a>
+          <div class="fbody">
+            <Badge status={tone(featured)}>{statusLabel[featured.status]}</Badge>
+            <h3 class="ftitle">{featured.title}</h3>
+            <ul class="fmeta">
+              <li><span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>{featured.dates}</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">flag</span>{featured.venue}</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">location_on</span>{featured.place}</li>
+            </ul>
+            <div class="fcta"><Button href={featured.href}>Ver evento</Button></div>
+          </div>
+        </article>
+      )}
+
+      {mode === 'grid' && (
+        <>
+          <ul class="cards">
+            {next.map((e) => (<li><EventCard event={e} /></li>))}
+          </ul>
+          <div class="all"><Button href="/eventos/todos" variant="outline">Ver todos os eventos</Button></div>
+        </>
+      )}
+    </div>
+    {note && <p class="placeholder-tag">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .pn { background: var(--scene-bg); }
+  /* Transição em gradiente vinda da seção anterior (gray-800) para o fundo da cena */
+  .pn.gradient { background: linear-gradient(180deg, var(--color-gray-800) 0%, var(--scene-bg) 260px); }
+  .nhead { display: grid; gap: var(--spacing-md); align-items: end; }
+  @media (min-width: 800px) { .nhead { grid-template-columns: 1fr minmax(320px, 440px); gap: var(--spacing-xl); } .nhead.solo { grid-template-columns: 1fr; } }
+  .nhead .nh { margin: 0; font: var(--text-heading-4); letter-spacing: var(--text-heading-4-tracking); }
+  .cards { list-style: none; margin: var(--spacing-xl) 0 0; padding: 0; display: grid; gap: var(--spacing-md); }
+  @media (min-width: 800px) { .cards { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg); } }
+  .all { margin-top: var(--spacing-xl); display: flex; justify-content: center; }
+
+  /* Um evento só: imagem grande à esquerda e as informações ao lado */
+  .feat { margin-top: var(--spacing-xl); display: grid; gap: var(--spacing-lg); padding: var(--spacing-md); border: var(--border-width-thin) solid var(--scene-line);
+    border-radius: var(--radius-card); background: var(--color-gray-900); }
+  @media (min-width: 800px) { .feat { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--spacing-2xl); padding: var(--spacing-lg); align-items: center; } }
+  .fimg { display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-control); overflow: hidden; background: var(--color-gray-800); }
+  .fimg img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ph { height: 100%; display: grid; place-content: center; justify-items: center; gap: var(--spacing-2xs); color: var(--scene-fg-muted); font: var(--text-caption-s); border: 1px dashed var(--color-gray-600); border-radius: var(--radius-control); }
+  .ph .material-symbols-outlined { font-size: var(--spacing-2xl); color: var(--color-brand-500); }
+  .fbody { display: grid; gap: var(--spacing-md); justify-items: start; align-content: center; padding-inline: var(--spacing-xs); padding-bottom: var(--spacing-xs); }
+  .ftitle { margin: 0; font: var(--text-heading-4); letter-spacing: var(--text-heading-4-tracking); }
+  .fmeta { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-sm); color: var(--scene-fg-muted); font: var(--text-body-m); }
+  .fmeta li { display: flex; align-items: center; gap: var(--spacing-sm); }
+  .fmeta .material-symbols-outlined { font-size: var(--font-size-xl); color: var(--scene-fg); flex: none; }
+  .fcta { margin-top: var(--spacing-sm); }
+</style>

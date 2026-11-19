@@ -1,0 +1,290 @@
+---
+import { Button } from '@ds';
+import { hero } from '../../data/eventos';
+
+// Três telas reais do painel, na ordem da navegação: lista de eventos → informações do evento → financeiro
+const screens = [
+  { n: 1, src: '/images/hero-eventos.webp', w: 1912, h: 902, alt: 'Painel do Apex Eventos: lista de eventos, com a imagem, as datas, o local e a situação das inscrições de cada um' },
+  { n: 2, src: '/images/hero-info.webp', w: 1915, h: 847, alt: 'Painel do Apex Eventos: informações do evento, com o nome e a imagem do banner' },
+  { n: 3, src: '/images/hero-financeiro.webp', w: 1900, h: 901, alt: 'Painel do Apex Eventos: financeiro do evento, com as entradas, os ajustes e taxas e o total a receber' },
+];
+---
+<section class="hero" aria-labelledby="ev-hero-title" data-ev-hero>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="wrap inner">
+    <!-- Conteúdo comercial -->
+    <div class="copy">
+      <h1 id="ev-hero-title" class="h1">
+        <span class="s1">Seu evento, do planejamento à realização.</span>
+        <span class="s2">Tudo em um só lugar.</span>
+      </h1>
+      <p class="lead">{hero.text}</p>
+      <div class="cta"><Button href="#contato">{hero.cta}</Button></div>
+
+      <ul class="diffs">
+        {hero.differentials.map((d) => (
+          <li>
+            <span class="ibox" aria-hidden="true"><span class="material-symbols-outlined">{d.icon}</span></span>
+            <span class="txt">{d.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Produto: o painel real, grande e sem moldura de janela, navegando entre as telas (lista → informações → financeiro) -->
+    <div class="product">
+      <div class="halo" aria-hidden="true"></div>
+      <div class="stack" data-stack>
+        <div class="frame" data-panel>
+          <div class="shot" data-shot>
+            {screens.map((s, i) => (
+              <img
+                class={i === 0 ? 'scr on' : 'scr'} data-scr={s.n} src={s.src} width={s.w} height={s.h} alt={s.alt}
+                decoding="async" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined}
+              />
+            ))}
+
+            <!-- Estado de "passar o mouse" sobre o que será clicado (posições em % da tela) -->
+            <span class="hov" data-hov="1" style="left:21%;top:42.6%;width:75.8%;height:24.6%"></span>
+            <span class="hov tab" data-hov="2" style="left:93.2%;top:12.6%;width:6.8%;height:7.6%"></span>
+
+            <!-- Destaques discretos: o contorno do card "Total a receber" mostra de onde sai o número ampliado -->
+            <span class="ring" data-ring="2" style="left:21.6%;top:26.8%;width:51.2%;height:9.2%"></span>
+            <span class="ring src" data-ring="3" style="left:72.2%;top:27.2%;width:24.9%;height:19.2%"></span>
+
+            <!-- Indicador de carregamento da página, como numa navegação real -->
+            <span class="nav" data-nav aria-hidden="true"></span>
+
+            <!-- Cursor da demonstração (decorativo) -->
+            <div class="cur" data-cursor aria-hidden="true">
+              <span class="ripple" data-ripple></span>
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.7 3-1.4-3.1-6.6 6.3-.3z" fill="#fff" stroke="#0b0f0d" stroke-width="1.4" stroke-linejoin="round" /></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- "Total a receber" ampliado: nasce em cima do próprio card da tela Financeiro e se afasta dele (pedaço exato do print) -->
+        <div class="zoom" data-zoom aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Quanto do painel (~23% da altura, a altura do item "Categorias" do menu) invade a seção de baixo, que começa em gray-800 nessa linha */
+  :global(:root) { --ev-overlap: calc(min(1120px, 100vw - 2 * var(--site-gutter)) * 0.125); }
+  .hero { position: relative; z-index: 2; overflow: clip; padding-top: calc(var(--site-header-h) + var(--spacing-3xl)); padding-bottom: var(--spacing-3xl); background: var(--scene-bg); }
+  .glow { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(40vmax 28vmax at 76% 45%, color-mix(in oklab, var(--color-brand-500) 8%, transparent), transparent 70%); }
+  .inner { position: relative; z-index: 1; max-width: 1360px; display: grid; gap: var(--spacing-3xl); align-items: center; }
+
+  /* Conteúdo (mobile e tablet: texto à esquerda, painel abaixo) */
+  .h1 { margin: 0; font: var(--site-subtitle); font-size: clamp(28px, 7vw, 40px); letter-spacing: var(--site-subtitle-tracking); text-wrap: balance; }
+  .h1 span { display: block; }
+  .s2 { color: var(--color-brand-500); }
+  .lead { max-width: 44ch; margin-top: var(--spacing-lg); }
+  .cta { margin-top: var(--spacing-xl); }
+
+  .diffs { list-style: none; margin: var(--spacing-2xl) 0 0; padding: var(--spacing-xl) 0 0; display: grid; gap: var(--spacing-lg); border-top: var(--border-width-thin) solid var(--scene-line); }
+  @media (min-width: 700px) and (max-width: 999px) { .diffs { grid-template-columns: repeat(3, 1fr); } }
+  .diffs li { display: flex; align-items: center; gap: var(--spacing-md); }
+  .ibox { flex: none; width: var(--spacing-2xl); height: var(--spacing-2xl); border-radius: var(--radius-control); display: grid; place-items: center;
+    background: color-mix(in oklab, var(--color-brand-500) 14%, transparent); border: var(--border-width-thin) solid color-mix(in oklab, var(--color-brand-500) 40%, transparent); }
+  .ibox .material-symbols-outlined { font-size: var(--font-size-2xl); color: var(--color-brand-500); }
+  .txt { font: var(--text-body-s); font-weight: var(--font-weight-label); color: var(--scene-fg); max-width: 24ch; text-align: left; }
+
+  /* Desktop: título centralizado em cima e a interface abaixo, bem larga */
+  @media (min-width: 1000px) {
+    .hero { padding-top: calc(var(--site-header-h) + var(--spacing-4xl)); padding-bottom: 0; overflow-x: clip; overflow-y: visible; }
+    .glow { background: radial-gradient(60vmax 34vmax at 50% 0%, color-mix(in oklab, var(--color-brand-500) 16%, transparent), transparent 70%),
+                        radial-gradient(40vmax 26vmax at 50% 78%, color-mix(in oklab, var(--color-brand-500) 9%, transparent), transparent 70%); }
+    .inner { gap: var(--spacing-3xl); justify-items: center; }
+    .copy { display: grid; justify-items: center; text-align: center; }
+    .h1 { font-size: clamp(36px, 3.9vw, 56px); line-height: 1.04; }
+    .lead { max-width: 56ch; margin-inline: auto; }
+    .cta { margin-top: var(--spacing-xl); }
+    .diffs { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-md) var(--spacing-2xl); margin-top: var(--spacing-xl); padding-top: 0; border-top: 0; }
+    .ibox { width: var(--spacing-xl); height: var(--spacing-xl); }
+    .ibox .material-symbols-outlined { font-size: var(--font-size-xl); }
+    /* Degradê de transição: o fundo escuro do Hero vai ficando gray-800 até a linha onde começa a seção de baixo */
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 300px; z-index: 0; pointer-events: none;
+      background: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--color-gray-800) 55%, transparent) 55%, var(--color-gray-800) 100%); }
+    .product { width: min(1120px, 100%); padding-bottom: 0; margin-bottom: calc(var(--ev-overlap) * -1); }
+  }
+
+  /* Produto */
+  .product { position: relative; padding-block: var(--spacing-md) var(--spacing-xl); }
+  .halo { position: absolute; inset: 10% 4% 4% 4%; pointer-events: none; border-radius: 50%; filter: blur(80px);
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-500) 26%, transparent), transparent); opacity: 0.4; }
+  .stack { position: relative; }
+  /* Uma única camada discreta atrás do painel, só para dar profundidade */
+  .stack::before { content: ''; position: absolute; inset: 0; z-index: 0; border-radius: var(--radius-card); background: color-mix(in oklab, var(--color-gray-900) 80%, transparent);
+    border: var(--border-width-thin) solid var(--scene-line); transform: translateY(-10px) scale(0.975); opacity: 0.55; }
+  @media (max-width: 999px) { .stack::before { display: none; } }
+
+  /* Painel sem moldura de janela: só um contorno fino e uma sombra suave */
+  .frame { position: relative; z-index: 1; overflow: hidden; border-radius: var(--radius-card); background: var(--color-gray-white);
+    border: var(--border-width-thin) solid color-mix(in oklab, var(--color-gray-50) 16%, transparent);
+    box-shadow: 0 30px 60px -28px rgb(0 0 0 / 0.85), 0 0 60px -20px color-mix(in oklab, var(--color-brand-500) 22%, transparent); }
+  .shot { position: relative; aspect-ratio: 1912 / 902; overflow: hidden; }
+  .scr { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top left; opacity: 0; }
+  .scr.on { opacity: 1; }
+
+  /* Estado de hover e destaques (discretos) */
+  .hov { position: absolute; border-radius: var(--radius-control-sm); background: color-mix(in oklab, var(--color-brand-500) 7%, transparent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-brand-500) 35%, transparent); opacity: 0; pointer-events: none; }
+  .hov.tab { border-radius: 0; background: color-mix(in oklab, var(--color-brand-500) 10%, transparent); box-shadow: inset 0 -2px 0 var(--color-brand-500); }
+  .ring { position: absolute; border: 1.5px solid var(--color-brand-500); border-radius: var(--radius-control-sm); opacity: 0; pointer-events: none; }
+  .ring.src { border-width: 2px; box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand-500) 22%, transparent); }
+  .nav { position: absolute; left: 0; top: 0; z-index: 3; width: 100%; height: 2px; background: var(--color-brand-500); transform: scaleX(0); transform-origin: left; opacity: 0; pointer-events: none; }
+
+  /* Total a receber ampliado: começa exatamente sobre o card de origem (left/top/width definidos no script) */
+  .zoom { position: absolute; z-index: 5; left: 72.2%; top: 27.2%; width: 24.9%; aspect-ratio: 470 / 170; border-radius: var(--radius-control-sm); border: 2px solid var(--color-brand-500);
+    box-shadow: 0 18px 36px -16px #000; opacity: 0; pointer-events: none; background-color: var(--color-gray-white); background-repeat: no-repeat;
+    background-image: url('/images/hero-financeiro.webp'); background-position: 96.3% 33.9%; background-size: 404.3% auto; }
+
+  /* Cursor e indicação de clique */
+  .cur { position: absolute; left: 86%; top: 24%; z-index: 4; opacity: 0; pointer-events: none; will-change: left, top; filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.35)); }
+  .cur svg { display: block; transform-origin: 4px 3px; }
+  .ripple { position: absolute; left: 4px; top: 3px; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 2px solid var(--color-brand-500);
+    background: color-mix(in oklab, var(--color-brand-500) 25%, transparent); opacity: 0; }
+</style>
+
+<script>
+  import { animate } from 'motion';
+
+  /**
+   * Demonstração da navegação real pelo painel: o cursor vai até um evento da lista (que ganha o estado de hover) e clica →
+   * barra de carregamento e a tela de informações do evento → cursor vai até a aba Financeiro e clica → financeiro: o card
+   * "Total a receber" é contornado e o número ampliado nasce em cima dele e se afasta, para ficar claro de onde ele saiu →
+   * fica visível alguns segundos → recomeça após uma pausa curta.
+   * Só roda com a Hero visível e com a aba ativa. Com movimento reduzido: sem cursor nem animação, mostra o Financeiro parado.
+   */
+  const root = document.querySelector<HTMLElement>('[data-ev-hero]');
+  if (root) {
+    const shot = root.querySelector<HTMLElement>('[data-shot]')!;
+    const frame = root.querySelector<HTMLElement>('[data-panel]')!;
+    const imgs = Array.from(root.querySelectorAll<HTMLElement>('[data-scr]'));
+    const cursor = root.querySelector<HTMLElement>('[data-cursor]')!;
+    const ripple = root.querySelector<HTMLElement>('[data-ripple]')!;
+    const arrow = cursor.querySelector<SVGElement>('svg')!;
+    const rings = Array.from(root.querySelectorAll<HTMLElement>('[data-ring]'));
+    const hovs = Array.from(root.querySelectorAll<HTMLElement>('[data-hov]'));
+    const nav = root.querySelector<HTMLElement>('[data-nav]')!;
+    const zoom = root.querySelector<HTMLElement>('[data-zoom]')!;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const glide = [0.45, 0.05, 0.2, 1] as const;
+    const out = [0.22, 1, 0.36, 1] as const;
+
+    // Posições do cursor em % da tela mostrada (início, evento da lista, aba Financeiro)
+    const START = { x: 86, y: 24 };
+    const EVENT = { x: 52, y: 46.7 };
+    const TAB = { x: 96.6, y: 16.2 };
+    // Número ampliado: nasce sobre o card "Total a receber" e vai para uma área livre abaixo dele
+    const ZSRC = { left: 72.2, top: 27.2, width: 24.9 };
+    const ZEND = { left: 70.2, top: 49, width: 29.6 };
+    const place = (p: { left: number; top: number; width: number }) => {
+      zoom.style.left = `${p.left}%`; zoom.style.top = `${p.top}%`; zoom.style.width = `${p.width}%`;
+    };
+
+    const showNow = (n: number) => {
+      imgs.forEach((i) => { i.style.opacity = Number(i.dataset.scr) === n ? '1' : '0'; i.style.zIndex = '1'; });
+      rings.concat(hovs).forEach((r) => (r.style.opacity = '0'));
+      place(ZEND);
+      zoom.style.opacity = n === 3 ? '1' : '0';
+    };
+
+    let token = 0; // cada nova parada/ciclo incrementa; ciclos antigos se interrompem
+    let timers: number[] = [];
+    const sleep = (ms: number) => new Promise<void>((res) => { const t = window.setTimeout(res, ms); timers.push(t); });
+    const stop = () => { token++; timers.forEach((t) => window.clearTimeout(t)); timers = []; };
+
+    // A tela nova aparece por cima da anterior (que continua opaca até o fim), sem deixar o fundo branco aparecer no meio da troca
+    const swap = async (n: number, dur: number, delay = 0) => {
+      const incoming = imgs.find((i) => Number(i.dataset.scr) === n)!;
+      imgs.forEach((i) => (i.style.zIndex = i === incoming ? '2' : '1'));
+      incoming.style.opacity = '0';
+      await animate(incoming, { opacity: 1 }, { duration: dur, ease: 'easeInOut', delay }).finished;
+      incoming.style.opacity = '1';
+      imgs.forEach((i) => { if (i !== incoming) i.style.opacity = '0'; });
+    };
+
+    // Navegação: barra de carregamento rápida + troca de conteúdo com crossfade curto (a barra lateral é igual nas telas)
+    const navigate = (n: number, dur = 0.45) => {
+      animate(nav, { scaleX: [0, 0.85, 1], opacity: [1, 1, 0] }, { duration: dur + 0.25, ease: 'easeOut' });
+      swap(n, dur, 0.12);
+      hovs.forEach((h) => animate(h, { opacity: 0 }, { duration: 0.2 }));
+      zoom.style.opacity = '0';
+    };
+    const move = (to: { x: number; y: number }, from: { x: number; y: number }, dur: number) => {
+      // Trajetória levemente curva: passa por um ponto intermediário deslocado
+      const mx = (from.x + to.x) / 2 + (to.y - from.y) * 0.08;
+      const my = (from.y + to.y) / 2 - Math.abs(to.x - from.x) * 0.06;
+      return animate(cursor, { left: [`${from.x}%`, `${mx}%`, `${to.x}%`], top: [`${from.y}%`, `${my}%`, `${to.y}%`] }, { duration: dur, ease: glide }).finished;
+    };
+    const hover = (n: number) => animate(hovs.filter((h) => h.dataset.hov === String(n)), { opacity: 1 }, { duration: 0.25 });
+    const click = async () => {
+      animate(arrow, { scale: [1, 0.86, 1] }, { duration: 0.22, ease: 'easeOut' });
+      animate(ripple, { opacity: [0.9, 0], scale: [0.3, 1.5] }, { duration: 0.55, ease: 'easeOut' });
+      await sleep(240);
+    };
+    const pulse = (n: number) => animate(rings.filter((r) => r.dataset.ring === String(n)), { opacity: [0, 1, 1, 0] }, { duration: 1.5, ease: 'easeOut' });
+
+    // Financeiro: contorna o card de origem e o número ampliado "sai" dele até a posição final
+    const liftTotal = async (alive: () => boolean) => {
+      const srcRing = rings.find((r) => r.dataset.ring === '3')!;
+      animate(srcRing, { opacity: [0, 1] }, { duration: 0.35 });
+      await sleep(700); if (!alive()) return;
+      place(ZSRC);
+      zoom.style.opacity = '1';                                    // aparece exatamente sobre o card (parece o próprio card)
+      await sleep(120); if (!alive()) return;
+      await animate(zoom, { left: [`${ZSRC.left}%`, `${ZEND.left}%`], top: [`${ZSRC.top}%`, `${ZEND.top}%`], width: [`${ZSRC.width}%`, `${ZEND.width}%`] },
+        { duration: 0.9, ease: out }).finished;
+      place(ZEND);
+      animate(srcRing, { opacity: 0 }, { duration: 0.6, delay: 0.5 });
+    };
+
+    async function cycle(my: number) {
+      const alive = () => my === token;
+      showNow(1);
+      cursor.style.opacity = '0';
+      cursor.style.left = `${START.x}%`;
+      cursor.style.top = `${START.y}%`;
+      await sleep(1000); if (!alive()) return;                   // 1. lista de eventos, parada
+      animate(cursor, { opacity: 1 }, { duration: 0.35 });
+      await move(EVENT, START, 1.2); if (!alive()) return;       // cursor até um evento
+      hover(1); await sleep(320); await click(); if (!alive()) return;  // hover e clique
+      navigate(2);                                               // 2. informações do evento
+      pulse(2);
+      await sleep(1800); if (!alive()) return;
+      await move(TAB, EVENT, 1.2); if (!alive()) return;         // cursor até a aba Financeiro
+      hover(2); await sleep(280); await click(); if (!alive()) return; // hover e clique
+      navigate(3);                                               // 3. financeiro
+      animate(cursor, { opacity: 0 }, { duration: 0.5, delay: 0.4 });
+      await sleep(500); if (!alive()) return;
+      await liftTotal(alive); if (!alive()) return;              // número ampliado sai do card
+      await sleep(2600); if (!alive()) return;                   // permanece alguns segundos
+      animate(zoom, { opacity: 0 }, { duration: 0.4 });
+      swap(1, 0.6); // reinicia
+      await sleep(1500);
+    }
+
+    async function loop() {
+      stop();
+      const my = token;
+      while (my === token) { await cycle(my); }
+    }
+
+    if (reduce) {
+      showNow(3);   // movimento reduzido: o Financeiro parado, com o total a receber ampliado
+    } else {
+      frame.style.opacity = '0';
+      animate(frame, { opacity: [0, 1], y: [16, 0] }, { duration: 0.8, ease: out, delay: 0.1 });
+      // Só anima com a Hero visível e a aba ativa (leve para a página e para a bateria)
+      let visible = false;
+      const sync = () => { if (visible && !document.hidden) loop(); else stop(); };
+      new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; sync(); }, { threshold: 0.35 }).observe(shot);
+      document.addEventListener('visibilitychange', sync);
+    }
+  }
+</script>

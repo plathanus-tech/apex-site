@@ -1,0 +1,67 @@
+/* Calculadora do "Por evento": bloco escuro em grafite, com o repasse estimado em destaque */
+.sim { color: var(--color-gray-50); --scene-fg: var(--color-gray-50); --scene-fg-muted: var(--color-gray-300); --scene-line: var(--color-gray-600);
+  display: grid; gap: var(--spacing-lg); padding: clamp(var(--spacing-lg), 2.4vw, var(--spacing-xl)); border-radius: var(--radius-card);
+  border: var(--border-width-thin) solid var(--scene-line); background: var(--color-gray-800); box-shadow: var(--shadow-2xl); }
+
+.header { display: grid; gap: var(--spacing-2xs); }
+.title { margin: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); color: var(--color-gray-50); }
+.lead { margin: 0; font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); color: var(--scene-fg-muted); }
+
+/* Forma de pagamento e quem paga as taxas, lado a lado quando há espaço */
+.choices { display: grid; gap: var(--spacing-md); }
+
+/* Quero receber / Quero cobrar */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); }
+/* Celular: os dois primeiros lado a lado e o terceiro na largura toda, para os rótulos não quebrarem */
+.mode:nth-child(3) { grid-column: 1 / -1; }
+@media (min-width: 520px) { .modes { grid-template-columns: repeat(3, 1fr); } .mode:nth-child(3) { grid-column: auto; } }
+.mode { height: var(--control-height-md); cursor: pointer; font: var(--text-button-s); letter-spacing: var(--text-button-s-tracking); color: var(--color-gray-300);
+  background: transparent; border: var(--border-width-thin) solid var(--color-gray-600); border-radius: var(--radius-control); transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast); }
+.mode:hover { color: var(--color-gray-50); border-color: var(--color-gray-400); }
+.mode[aria-pressed='true'] { color: var(--color-gray-50); border-color: var(--color-brand-500); background: color-mix(in oklab, var(--color-brand-500) 16%, transparent); }
+.mode:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+/* Os sliders são o foco: valor grande acima de cada um (também editável, para quem quer digitar) e trilho mais grosso */
+.fields { display: grid; gap: var(--spacing-xl); }
+.control { display: grid; gap: var(--spacing-sm); }
+.head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--spacing-md); }
+.head label { font: var(--text-body-s); font-weight: var(--font-weight-label); color: var(--scene-fg-muted); }
+.money { display: inline-flex; align-items: baseline; gap: var(--spacing-2xs); font: var(--text-heading-6); color: var(--scene-fg-muted); }
+.value { min-width: 0; padding: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); font-variant-numeric: tabular-nums;
+  color: var(--color-gray-50); text-align: right; background: transparent; border: 0; border-bottom: var(--border-width-thin) dashed var(--color-gray-500); border-radius: 0; outline: none; }
+.value:hover { border-bottom-color: var(--color-gray-300); }
+.value:focus-visible { border-bottom: 2px solid var(--color-brand-500); }
+
+/* Controle deslizante: trilho preenchido até a posição (--p), sincronizado com o valor acima */
+.range { -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: var(--radius-pill); cursor: pointer; margin: var(--spacing-xs) 0 0;
+  background: linear-gradient(90deg, var(--color-brand-500) var(--p, 0%), var(--color-gray-600) var(--p, 0%)); }
+.range:focus-visible { outline: 2px solid var(--color-brand-400); outline-offset: 8px; }
+.range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--color-gray-50); border: 5px solid var(--color-brand-500); box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-brand-500) 25%, transparent); }
+.range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--color-gray-50); border: 5px solid var(--color-brand-500); box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-brand-500) 25%, transparent); }
+.ends { display: flex; justify-content: space-between; font: var(--text-caption-s); color: var(--scene-fg-muted); font-variant-numeric: tabular-nums; }
+
+/* Resultado: área em destaque com o repasse líquido em laranja */
+.result { padding: var(--spacing-lg); border-radius: var(--radius-card); background: color-mix(in oklab, var(--color-brand-500) 8%, var(--color-gray-900));
+  border: var(--border-width-thin) solid color-mix(in oklab, var(--color-brand-500) 45%, transparent); }
+.resultLabel { margin: 0; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--scene-fg-muted); }
+.net { margin: var(--spacing-xs) 0 var(--spacing-md); font: var(--site-title); font-size: clamp(32px, 4vw, 48px); letter-spacing: var(--site-title-tracking);
+  font-variant-numeric: tabular-nums; color: var(--color-brand-400); }
+
+/* Modo "Quero receber": valor desejado e, em destaque, quanto cobrar */
+.sub { margin: var(--spacing-2xs) 0 var(--spacing-md); font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); font-variant-numeric: tabular-nums; color: var(--color-gray-50); }
+.sub span { font: var(--text-body-s); color: var(--scene-fg-muted); }
+.note { margin: calc(var(--spacing-md) * -1 + var(--spacing-xs)) 0 var(--spacing-md); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--scene-fg-muted); }
+
+.feeVal { display: grid; justify-items: end; color: var(--color-red-400); }
+.feeVal small { font: var(--text-caption-s); font-weight: var(--font-weight-regular); color: var(--scene-fg-muted); }
+
+.rows { margin: 0; display: grid; }
+.key dt { color: var(--scene-fg); font-weight: var(--font-weight-bold, 700); }
+.key dd { color: var(--color-brand-400); font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--spacing-md); padding-block: var(--spacing-xs); }
+.row + .row { border-top: var(--border-width-thin) solid var(--scene-line); }
+.row dt { color: var(--scene-fg-muted); font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); }
+.row dd { margin: 0; font: var(--text-body-s); font-weight: var(--font-weight-bold, 700); letter-spacing: var(--text-body-s-tracking); font-variant-numeric: tabular-nums; text-align: right; flex: none; }
+
+.hint { margin: var(--spacing-sm) 0 0; font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--scene-fg-muted); }

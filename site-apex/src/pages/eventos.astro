@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Modalities from '../components/Modalities.astro';
+import FaqAccordion from '../components/FaqAccordion';
+import EvHero from '../components/eventos/EvHero.astro';
+import EvCompare from '../components/eventos/EvCompare.astro';
+import EvJourney from '../components/eventos/EvJourney.astro';
+import EvAthlete from '../components/eventos/EvAthlete.astro';
+import EvFeatures from '../components/eventos/EvFeatures.astro';
+import EvSizes from '../components/eventos/EvSizes.astro';
+import EvProof from '../components/eventos/EvProof.astro';
+import EvPricing from '../components/eventos/EvPricing.astro';
+import EvCta from '../components/eventos/EvCta.astro';
+import { faq } from '../data/eventos';
+---
+<Base
+  title="Apex Eventos | Gestão de eventos automobilísticos"
+  description="Organize inscrições, acompanhe vendas e gerencie a operação dos seus eventos automobilísticos com o Apex. Você só paga quando vende."
+>
+  <EvHero />
+  <EvCompare />
+  <EvJourney />
+  <EvAthlete />
+  <EvFeatures />
+  <Modalities compact />
+  <EvSizes />
+  <EvProof />
+  <EvPricing />
+
+  <section class="faq section" id="faq" aria-labelledby="ev-faq-title">
+    <div class="wrap grid">
+      <h2 id="ev-faq-title" class="title">Perguntas frequentes</h2>
+      <FaqAccordion client:visible items={faq} />
+    </div>
+  </section>
+
+  <EvCta />
+</Base>
+
+<style>
+  .faq { background: var(--color-gray-800); }
+  /* Títulos das seções desta página: um pouco menores que na Home (até 48px, antes até 64px) */
+  :global(main .title), :global(main .cta-title) { font-size: clamp(28px, 3.4vw, 48px); }
+  .grid { display: grid; gap: var(--spacing-2xl); align-items: start; }
+  @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.6fr; gap: var(--spacing-4xl); } }
+</style>
+
+<script>
+  import '../scripts/micro';
+</script>

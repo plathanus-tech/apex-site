@@ -1,0 +1,51 @@
+/* ── Benefícios: a câmera avança por um túnel e cada benefício vem de encontro ─ */
+mm.add('(prefers-reduced-motion: no-preference) and (min-width: 900px) and (min-height: 640px)', () => {
+  const root = document.querySelector<HTMLElement>('[data-approach]');
+  const stage = root?.querySelector<HTMLElement>('[data-approach-stage]');
+  const field = root?.querySelector<HTMLElement>('[data-field]');
+  const intro = root?.querySelector<HTMLElement>('[data-intro]');
+  const hint = root?.querySelector<HTMLElement>('[data-hint]');
+  const cards = root ? Array.from(root.querySelectorAll<HTMLElement>('[data-card]')) : [];
+  if (!root || !stage || !field || !intro || cards.length < 5) return;
+
+  root.classList.add('is-animated');
+  gsap.set(field, { scale: 0.6, autoAlpha: 0.2, transformOrigin: '50% 50%' });
+  gsap.set(cards, { xPercent: -50, yPercent: -50, z: -3200, autoAlpha: 0 });
+
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: { trigger: stage, start: 'top top', end: () => `+=${window.innerHeight * 6}`, pin: true, scrub: 0.6, anticipatePin: 1 },
+  });
+
+  // 1. O título fica em cima, parado, antes de começar a rodar; depois sai de cena
+  const START = 0.7;
+  tl.to({}, { duration: START })
+    .to(intro, { autoAlpha: 0, y: -28, duration: 0.5, ease: 'power2.in' }, START)
+    .to(hint, { autoAlpha: 0, duration: 0.3 }, START);
+
+  // 2. O túnel de luz acelera: a câmera avança em direção ao ponto de fuga
+  tl.to(field, { autoAlpha: 0.5, duration: 0.6 }, START)
+    .to(field, { scale: 7, ease: 'power1.in', duration: 7 }, START);
+
+  // 3. Cada benefício sai do centro, passa pela câmera e some, um logo atrás do outro
+  const SPAN = 2.8; // tempo que cada cartão leva do fundo até passar pela câmera
+  const GAP = 0.9; // intervalo entre um cartão e o próximo
+  const T0 = START + 0.5;
+  cards.forEach((card, i) => {
+    const s = T0 + i * GAP;
+    tl.to(card, { z: 700, duration: SPAN }, s)
+      .to(card, { autoAlpha: 1, duration: 0.9 }, s)
+      .to(card, { autoAlpha: 0, duration: 0.55 }, s + SPAN - 0.55);
+  });
+
+  // 4. Fim: o último benefício passa e as linhas se apagam; nada se repete
+  const end = T0 + (cards.length - 1) * GAP + SPAN;
+  tl.to(field, { autoAlpha: 0, duration: 0.6 }, end - 0.6)
+    .to({}, { duration: 0.1 }, end);
+
+  return () => {
+    root.classList.remove('is-animated');
+    gsap.set([field, intro, hint, ...cards], { clearProps: 'all' });
+  };
+});
+

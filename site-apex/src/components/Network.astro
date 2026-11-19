@@ -1,0 +1,47 @@
+---
+import { Badge, Button } from '@ds';
+import { network } from '../data/site';
+---
+<section class="net section" id="clientes" aria-labelledby="net-title">
+  <div class="wrap">
+    <h2 id="net-title" class="title">Alguns dos eventos e estabelecimentos que rodam no Apex</h2>
+
+    <ul class="list">
+      {network.items.map((item) => (
+        <li class={`item${item.status === 'Evento encerrado' ? ' past' : ''}`} data-reveal>
+          <span class="name">{item.name}</span>
+          <Badge status={item.kind === 'kartodromo' ? 'neutral' : item.status === 'Evento encerrado' ? 'neutral' : 'brand'} dot={item.status !== 'Evento encerrado'}>{item.status}</Badge>
+          <span class="links">
+            <Button href={item.href} variant="ghost">{item.kind === 'kartodromo' ? 'Site' : 'Evento'} <span class="material-symbols-outlined icon" aria-hidden="true">north_east</span></Button>
+          </span>
+        </li>
+      ))}
+    </ul>
+    <p class="more">e muitos outros eventos e estabelecimentos</p>
+    <p class="placeholder-tag">Lista de exemplo (fictícia). Em eventos, o link leva à página do evento; em kartódromos, ao site do estabelecimento (white label ou próprio), onde também é possível reservar.</p>
+  </div>
+</section>
+
+<style>
+  .list { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; }
+  .item {
+    display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: var(--spacing-lg);
+    padding-block: var(--spacing-xl); border-top: var(--border-width-thin) solid var(--scene-line);
+    transition: background-color var(--transition-normal);
+  }
+  /* A lista esmaece a partir do 5º item: é uma amostra, não o total */
+  .item:nth-child(5) > * { opacity: 0.42; }
+  .item:nth-child(6) > * { opacity: 0.2; }
+  .item:nth-child(5) { border-top-color: color-mix(in oklab, var(--scene-line) 42%, transparent); }
+  .item:nth-child(6) { border-top-color: color-mix(in oklab, var(--scene-line) 20%, transparent); }
+  .more { margin: 0; padding-top: var(--spacing-md); color: var(--scene-fg-muted); font: var(--text-body-m); }
+  .item:hover { background: color-mix(in oklab, var(--color-gray-50) 4%, transparent); }
+  .name { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  .past .name { color: var(--scene-fg-muted); }
+  .links { display: flex; gap: var(--spacing-xs); }
+  .links :global(.icon) { font-size: var(--font-size-lg); }
+  @media (max-width: 720px) {
+    .item { grid-template-columns: 1fr; gap: var(--spacing-sm); }
+    .name { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  }
+</style>

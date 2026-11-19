@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventExplorer from '../../components/eventos/EventExplorer';
+import { events } from '../../data/eventos';
+---
+<Base
+  title="Todos os eventos | Apex"
+  description="Veja os eventos automobilísticos organizados com o Apex e busque o que você quer disputar, com filtros por estado, período, categoria e modalidade."
+>
+  <section class="top wrap">
+    <h1 class="title">Todos os eventos</h1>
+    <p class="lead">Encontre seu próximo evento e escolha onde e quando acelerar.</p>
+  </section>
+
+  <!-- A lista fica sobre fundo claro, como dentro do sistema do Apex (tema claro do design system só nesta área) -->
+  <section class="list" data-theme="light">
+    <div class="wrap">
+      <EventExplorer client:load events={events} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top { padding-top: calc(var(--site-header-h) + var(--spacing-3xl)); padding-bottom: var(--spacing-3xl); }
+  .list { background: var(--color-gray-50); color: var(--color-gray-900); padding-block: var(--spacing-xl) 100px; min-height: 60svh;
+    --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-300); }
+</style>
+
+<script is:inline>
+  document.body.classList.add('menus-light');
+</script>

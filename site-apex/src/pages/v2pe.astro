@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import NextEvents from '../components/eventos/NextEvents.astro';
+import { events } from '../data/eventos';
+// Prévia interna (não indexada) das duas apresentações de "Próximos eventos": com 1 evento e com vários
+---
+<Base title="Prévia: Próximos eventos" description="Prévia interna das variantes da seção Próximos eventos." noindex>
+  <div class="pv wrap">
+    <p class="kicker">Prévia interna</p>
+    <p class="tag">Variante 1: quando há apenas um evento (evento em destaque)</p>
+  </div>
+  <NextEvents events={events} variant="single" />
+
+  <div class="pv pv2 wrap">
+    <p class="tag">Variante 2: quando há vários eventos (cards, busca e "Ver todos")</p>
+  </div>
+  <NextEvents events={events} variant="grid" />
+</Base>
+
+<style>
+  .pv { padding-top: calc(var(--site-header-h) + var(--spacing-xl)); }
+  .pv2 { padding-top: var(--spacing-3xl); }
+  .tag { margin: 0; font: var(--text-body-m); color: var(--scene-fg-muted); }
+</style>

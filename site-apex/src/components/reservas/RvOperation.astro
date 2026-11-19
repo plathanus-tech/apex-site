@@ -1,0 +1,53 @@
+---
+import { operation } from '../../data/reservas';
+---
+<section class="op section" aria-labelledby="op-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="op-title" class="title">{operation.title}</h2>
+      <p class="lead">{operation.lead}</p>
+    </div>
+
+    <!-- Os recursos como uma cadeia: cada um alimenta o próximo, até chegar nas reservas -->
+    <ol class="chain">
+      {operation.chain.map((c, i) => (
+        <li class:list={{ last: i === operation.chain.length - 1 }}>
+          <span class="node" aria-hidden="true"></span>
+          <strong class="nm">{c.title}</strong>
+          <span class="tx">{c.text}</span>
+          {c.then && <span class="then"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>{c.then}</span>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Seção clara (gray-50): textos escuros */
+  .op { background: var(--color-gray-50); color: var(--color-gray-900);
+    --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-300); }
+  .head { display: grid; gap: var(--spacing-lg); align-items: end; }
+  .head .lead { margin: 0; max-width: 46ch; }
+  @media (min-width: 900px) { .head { grid-template-columns: 1.1fr 1fr; gap: var(--spacing-3xl); } }
+
+  .chain { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; display: grid; gap: var(--spacing-xl); }
+  .chain li { position: relative; display: grid; gap: var(--spacing-2xs); align-content: start; padding-left: calc(16px + var(--spacing-md)); }
+  .node { position: absolute; left: 0; top: 4px; z-index: 1; width: 16px; height: 16px; border-radius: 50%; background: var(--color-gray-50); border: 3px solid var(--color-brand-500); }
+  .nm { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  .tx { color: var(--color-gray-600); font: var(--text-body-m); max-width: 28ch; }
+  .then { display: inline-flex; align-items: center; gap: var(--spacing-xs); margin-top: var(--spacing-xs); color: var(--color-brand-600); font: var(--text-body-s); font-weight: var(--font-weight-label); }
+  .then .material-symbols-outlined { font-size: var(--spacing-lg); }
+  .last .node { background: var(--color-brand-500); box-shadow: 0 0 0 5px color-mix(in oklab, var(--color-brand-500) 25%, transparent); }
+  .last .nm { color: var(--color-gray-900); }
+
+  /* Celular/tablet: lista vertical; a linha liga cada ponto ao próximo e termina em Reservas */
+  .chain li:not(:last-child)::before { content: ''; position: absolute; left: 7px; top: 12px; height: calc(100% + var(--spacing-xl)); width: 2px; background: var(--color-gray-300); }
+
+  /* Desktop: cadeia na horizontal, em largura total */
+  @media (min-width: 900px) {
+    .chain { grid-template-columns: repeat(5, 1fr); gap: var(--spacing-lg); }
+    .chain li { padding-left: 0; padding-top: calc(16px + var(--spacing-md)); }
+    .node { top: 0; }
+    .chain li:not(:last-child)::before { left: 8px; top: 7px; width: calc(100% + var(--spacing-lg)); height: 2px; }
+  }
+</style>

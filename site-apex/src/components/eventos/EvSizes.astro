@@ -1,0 +1,57 @@
+---
+import { sizes } from '../../data/eventos';
+---
+<section class="sz section" aria-labelledby="sz-title">
+  <div class="wrap">
+    <h2 id="sz-title" class="title">{sizes.title}</h2>
+
+    <ul class="cards">
+      {sizes.items.map((s) => (
+        <li class="card">
+          <div class="photo">
+            <img
+              src={`/images/${s.image}-1000.webp`}
+              srcset={`/images/${s.image}-640.webp 640w, /images/${s.image}-1000.webp 1000w`}
+              sizes="(min-width: 900px) 33vw, 100vw" width="1000" height="625" loading="lazy" decoding="async" alt={s.alt}
+            />
+          </div>
+          <div class="body">
+            <span class="bar" aria-hidden="true"></span>
+            <h3>{s.name}</h3>
+            <p>{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="one"><span class="line" aria-hidden="true"></span>A mesma plataforma, do evento mais simples ao mais completo<span class="line" aria-hidden="true"></span></p>
+  </div>
+</section>
+
+<style>
+  /* Seção clara (gray-50): título e frase escuros; os cards mantêm as cores escuras próprias */
+  .sz { background: var(--color-gray-50); color: var(--color-gray-900);
+    --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-200); }
+  .cards { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; display: grid; gap: var(--spacing-lg); }
+  @media (min-width: 900px) { .cards { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg); } }
+
+  .card { display: flex; flex-direction: column; overflow: hidden; border: var(--border-width-thin) solid var(--scene-line); border-radius: var(--radius-card); background: var(--color-gray-900);
+    transition: border-color var(--transition-normal); }
+  .card:hover { border-color: color-mix(in oklab, var(--color-brand-500) 60%, var(--scene-line)); }
+
+  /* Fotografia com tratamento escuro e brilho laranja discreto */
+  .photo { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--color-gray-800); }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.72) contrast(1.08) saturate(0.95); }
+  .photo::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(0deg, var(--color-gray-900) 0%, color-mix(in oklab, var(--color-gray-900) 35%, transparent) 38%, transparent 70%),
+                radial-gradient(70% 60% at 90% 0%, color-mix(in oklab, var(--color-brand-500) 24%, transparent), transparent 70%); }
+
+  .body { display: grid; gap: var(--spacing-sm); align-content: start; flex: 1; padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl); }
+  .bar { width: var(--spacing-xl); height: 3px; border-radius: var(--radius-pill); background: var(--color-brand-500); }
+  .body h3 { margin: 0; font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); color: var(--color-gray-50); }
+  .body p { margin: 0; color: var(--color-gray-300); max-width: 34ch; }
+
+  .one { margin: var(--spacing-2xl) 0 0; display: flex; align-items: center; gap: var(--spacing-md); color: var(--scene-fg-muted); font: var(--text-body-s); }
+  .line { flex: 1; height: 1px; background: var(--scene-line); }
+  @media (max-width: 599px) { .one { text-align: center; } }
+</style>

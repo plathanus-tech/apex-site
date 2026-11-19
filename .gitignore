@@ -1,0 +1,16 @@
+# Só o site e o design system que ele usa (o alias @ds aponta para storybook-apex/src)
+/*
+!/.gitignore
+!/README.md
+!/site-apex
+!/storybook-apex
+
+node_modules/
+dist/
+.astro/
+storybook-static/
+.claude/
+.DS_Store
+*.log
+.env
+.env.*

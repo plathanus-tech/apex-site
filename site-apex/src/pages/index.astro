@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import CinematicIntro from '../components/CinematicIntro.astro';
+import Solutions from '../components/Solutions.astro';
+import Benefits from '../components/Benefits.astro';
+import WhiteLabel from '../components/WhiteLabel.astro';
+import Platform from '../components/Platform.astro';
+import Modalities from '../components/Modalities.astro';
+import Proof from '../components/Proof.astro';
+import Network from '../components/Network.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+<Base
+  title="Apex | Plataforma para eventos e reservas no automobilismo"
+  description="O Apex é a plataforma para organizar eventos e gerenciar reservas no universo do automobilismo. Solicite uma demonstração."
+>
+  <CinematicIntro />
+  <Benefits />
+  <Solutions />
+  <WhiteLabel />
+  <Platform />
+  <Modalities />
+  <Proof />
+  <Network />
+  <Faq />
+  <FinalCta />
+</Base>
+
+<script>
+  import '../scripts/intro';
+  import '../scripts/sections';
+  import '../scripts/micro';
+</script>

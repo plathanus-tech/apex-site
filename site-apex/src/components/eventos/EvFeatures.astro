@@ -1,0 +1,167 @@
+---
+import { features } from '../../data/eventos';
+const [gestao, operacao, marca, pagamentos] = features.items;
+// Valores dos recortes de interface abaixo são exemplos ilustrativos (não são dados reais)
+const bars = [38, 52, 44, 66, 58, 80, 72, 92];
+---
+<section class="ft section" aria-labelledby="ft-title">
+  <div class="wrap">
+    <h2 id="ft-title" class="title">{features.title}</h2>
+
+    <div class="bento">
+      <!-- 1. Gestão e resultados: recorte compacto de painel com indicadores -->
+      <article class="tile t-gestao">
+        <div class="head">
+          <span class="material-symbols-outlined ico" aria-hidden="true">{gestao.icon}</span>
+          <h3>{gestao.title}</h3>
+          <p>{gestao.text}</p>
+        </div>
+        <div class="vis dash" role="img" aria-label="Exemplo ilustrativo de painel com indicadores de inscrições, vendas e eventos">
+          <ul class="kpis" aria-hidden="true">
+            <li><span class="k-label">Inscrições</span><strong>248</strong></li>
+            <li><span class="k-label">Vendas</span><strong>R$ 37.200</strong></li>
+            <li><span class="k-label">Eventos</span><strong>6</strong></li>
+          </ul>
+          <div class="chart" aria-hidden="true">
+            {bars.map((h) => <i style={`height:${h}%`}></i>)}
+          </div>
+          <span class="sample">Dados ilustrativos</span>
+        </div>
+      </article>
+
+      <!-- 2. Controle operacional: categorias e fotos da operação -->
+      <article class="tile t-op">
+        <div class="head">
+          <span class="material-symbols-outlined ico" aria-hidden="true">{operacao.icon}</span>
+          <h3>{operacao.title}</h3>
+          <p>{operacao.text}</p>
+        </div>
+        <div class="vis opvis">
+          <ul class="chips">
+            <li>Pneus</li><li>Abastecimento</li><li>Fornecedores</li>
+          </ul>
+          <div class="trio" aria-hidden="true">
+            <span class="ph"><img src="/images/ops-mecanica.webp" width="588" height="318" loading="lazy" decoding="async" alt="" /></span>
+            <span class="ph"><img src="/images/ops-pneu.webp" width="588" height="318" loading="lazy" decoding="async" alt="" /></span>
+            <span class="ph"><img src="/images/ops-capacetes.webp" width="588" height="318" loading="lazy" decoding="async" alt="" /></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. White label: prévia compacta de uma página com marca própria -->
+      <article class="tile t-wl">
+        <div class="head">
+          <span class="material-symbols-outlined ico" aria-hidden="true">{marca.icon}</span>
+          <h3>{marca.title}</h3>
+          <p>{marca.text}</p>
+        </div>
+        <div class="vis browser">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="page"><img src="/images/landing-page-padrao.webp" width="900" height="3245" loading="lazy" decoding="async"
+            alt="Exemplo de página de evento com a identidade visual do organizador" /></div>
+        </div>
+      </article>
+
+      <!-- 4. Pagamentos e repasses: pagamento aprovado e o valor no painel financeiro (Pix em até 24 horas) -->
+      <article class="tile t-pay">
+        <div class="head">
+          <span class="material-symbols-outlined ico" aria-hidden="true">{pagamentos.icon}</span>
+          <h3>{pagamentos.title}</h3>
+          <p>{pagamentos.text}</p>
+        </div>
+        <div class="vis flow" role="img" aria-label="Exemplo ilustrativo: pagamento aprovado de R$ 150,00 seguido do valor de R$ 145,50 no painel financeiro, já descontada a taxa de 3%">
+          <div class="step" aria-hidden="true">
+            <span class="s-top"><span class="material-symbols-outlined s-ic">credit_card</span>Inscrição</span>
+            <strong class="amount">R$ 150,00</strong>
+            <span class="badge ok"><span class="material-symbols-outlined">check_circle</span>Pagamento aprovado</span>
+          </div>
+          <span class="material-symbols-outlined arrow" aria-hidden="true">arrow_forward</span>
+          <div class="step" aria-hidden="true">
+            <span class="s-top"><span class="material-symbols-outlined s-ic">account_balance</span>Painel financeiro</span>
+            <strong class="amount">R$ 145,50</strong>
+            <span class="badge go"><span class="material-symbols-outlined">schedule</span>Pix: em até 24 h</span>
+          </div>
+          <p class="why" aria-hidden="true">Repasse menor por causa da taxa de 3%: R$ 150,00 − R$ 4,50 = R$ 145,50</p>
+          <span class="sample">Exemplo ilustrativo</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fim da seção: o gradiente para "Do kart ao automobilismo virtual" começa aqui (180px) e termina do outro lado, no meio dele */
+  .ft { background: linear-gradient(180deg, var(--color-gray-800) calc(100% - 180px), color-mix(in oklab, var(--scene-bg) 15.6%, var(--color-gray-800)) calc(100% - 90px), color-mix(in oklab, var(--scene-bg) 50%, var(--color-gray-800)) 100%); }
+  .bento { margin-top: var(--spacing-3xl); display: grid; gap: var(--spacing-md); grid-template-columns: 1fr; }
+  @media (min-width: 900px) {
+    .bento { grid-template-columns: repeat(12, 1fr); gap: var(--spacing-lg); }
+    .t-gestao { grid-column: span 7; }
+    .t-op { grid-column: span 5; }
+    .t-wl { grid-column: span 5; }
+    .t-pay { grid-column: span 7; }
+  }
+
+  .tile { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: var(--spacing-lg); padding: var(--spacing-xl);
+    border: var(--border-width-thin) solid var(--scene-line); border-radius: var(--radius-card); background: var(--color-gray-900); }
+  .head { display: grid; gap: var(--spacing-xs); align-content: start; }
+  .tile h3 { margin: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+  .tile p { margin: 0; color: var(--scene-fg-muted); max-width: 52ch; }
+  .ico { font-size: var(--spacing-2xl); color: var(--color-brand-500); margin-bottom: var(--spacing-xs); }
+
+  /* Área visual: mesma altura em todos os cards (cerca de 40% do card) */
+  .vis { position: relative; margin-top: auto; height: 184px; overflow: hidden; border-radius: var(--radius-control);
+    border: var(--border-width-thin) solid var(--scene-line); background: var(--scene-bg); }
+  .sample { position: absolute; right: var(--spacing-sm); bottom: var(--spacing-xs); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--scene-fg-muted); opacity: 0.8; }
+
+  /* 1. Painel: indicadores e gráfico de barras */
+  .dash { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); padding: var(--spacing-md); }
+  .kpis { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-xs); align-content: center; }
+  .kpis li { display: flex; align-items: baseline; justify-content: space-between; gap: var(--spacing-sm); padding-block: var(--spacing-2xs);
+    border-bottom: var(--border-width-thin) solid var(--scene-line); }
+  .kpis li:last-child { border-bottom: 0; }
+  .k-label { font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--scene-fg-muted); }
+  .kpis strong { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); color: var(--color-gray-50); font-variant-numeric: tabular-nums; }
+  .chart { display: flex; align-items: flex-end; gap: var(--spacing-xs); padding-bottom: var(--spacing-md); }
+  .chart i { flex: 1; border-radius: var(--radius-control-sm) var(--radius-control-sm) 0 0;
+    background: linear-gradient(0deg, color-mix(in oklab, var(--color-brand-500) 35%, transparent), var(--color-brand-500)); }
+
+  /* 2. Operação: categorias e três fotos pequenas */
+  .opvis { display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md); }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+  .chips li { padding: var(--spacing-2xs) var(--spacing-md); border: var(--border-width-thin) solid var(--color-brand-500); border-radius: var(--radius-pill);
+    color: var(--color-brand-400); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); text-transform: uppercase; }
+  .trio { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-xs); }
+  .ph { position: relative; display: block; overflow: hidden; border-radius: var(--radius-control-sm); background: var(--color-gray-800); }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) contrast(1.08) saturate(0.95); }
+
+  /* 3. White label: janela de navegador com o topo da página */
+  .browser { display: flex; flex-direction: column; background: var(--color-gray-white); }
+  .bar { flex: none; display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-gray-800); }
+  .bar i { width: var(--spacing-xs); height: var(--spacing-xs); border-radius: var(--radius-full); background: var(--color-gray-600); }
+  .page { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  .page img { position: absolute; inset: 0 0 auto 0; width: 100%; height: auto; }
+
+  /* 4. Pagamento aprovado → repasse automático */
+  .flow { padding: var(--spacing-md); }
+  .step { flex: 1; min-width: 0; display: grid; gap: var(--spacing-xs); align-content: center; padding: var(--spacing-sm) var(--spacing-md); border: var(--border-width-thin) solid var(--scene-line);
+    border-radius: var(--radius-control); background: var(--color-gray-900); }
+  .s-top { display: flex; align-items: center; gap: var(--spacing-xs); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--scene-fg-muted); }
+  .s-ic { font-size: var(--spacing-lg); color: var(--color-brand-500); }
+  .amount { font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); color: var(--color-gray-50); font-variant-numeric: tabular-nums; }
+  .badge { justify-self: start; display: inline-flex; align-items: center; gap: var(--spacing-2xs); padding: var(--spacing-2xs) var(--spacing-sm); border-radius: var(--radius-pill);
+    font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); }
+  .badge .material-symbols-outlined { font-size: var(--spacing-md); }
+  .badge.ok { color: var(--color-green-400); background: color-mix(in oklab, var(--color-green-400) 14%, transparent); }
+  .badge.go { color: var(--color-brand-400); background: color-mix(in oklab, var(--color-brand-500) 16%, transparent); }
+  .flow { display: grid; grid-template-columns: 1fr auto 1fr; align-content: center; gap: var(--spacing-sm) var(--spacing-md); }
+  .tile .why { grid-column: 1 / -1; margin: 0; max-width: none; padding-bottom: var(--spacing-sm); text-align: center; font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); color: var(--color-gray-300); }
+  .arrow { align-self: center; flex: none; color: var(--color-brand-500); font-size: var(--spacing-xl); }
+  .flow .sample { bottom: var(--spacing-2xs); }
+  @media (max-width: 520px) {
+    .vis.flow { height: auto; grid-template-columns: 1fr; padding-bottom: var(--spacing-xl); }
+    .arrow { justify-self: center; transform: rotate(90deg); }
+    .tile .why { text-align: left; }
+    .dash { height: auto; grid-template-columns: 1fr; }
+    .chart { height: 72px; padding-bottom: 0; }
+  }
+</style>

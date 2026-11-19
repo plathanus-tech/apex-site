@@ -1,0 +1,85 @@
+---
+import { Button } from '@ds';
+import { nav as allNav, DEMO_URL } from '../data/site';
+const nav = allNav.filter((item) => item.header !== false);
+---
+<header class="site-header" data-header>
+  <div class="bar">
+    <a class="logo" href="/" aria-label="Apex Hub, página inicial">
+      <img src="/brand/logo-apex-branco.svg" alt="Apex" width="1141" height="510" />
+    </a>
+
+    <div class="actions">
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+      <Button href={DEMO_URL}>Solicitar demonstração</Button>
+      <details class="menu">
+        <summary aria-label="Abrir menu"><span class="material-symbols-outlined" aria-hidden="true">menu</span></summary>
+        <ul>
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: var(--z-sticky);
+    transition: background-color var(--transition-normal), backdrop-filter var(--transition-normal);
+  }
+  .site-header[data-scrolled="true"] {
+    background: color-mix(in oklab, var(--scene-bg) 78%, transparent);
+    backdrop-filter: blur(var(--spacing-md));
+  }
+  .bar {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-lg);
+    height: var(--site-header-h); padding-inline: var(--site-gutter);
+    max-width: var(--site-max); margin-inline: auto;
+  }
+  .logo img { height: var(--spacing-2xl); width: auto; }
+  .nav ul, .menu ul { list-style: none; margin: 0; padding: 0; }
+  .nav ul { display: flex; gap: var(--spacing-xl); }
+  .nav a, .menu a {
+    font: var(--text-button-m); letter-spacing: var(--text-button-m-tracking);
+    text-transform: uppercase; text-decoration: none; color: var(--scene-fg-muted);
+    transition: color var(--transition-fast);
+  }
+  .nav a:hover, .menu a:hover { color: var(--scene-fg); }
+  .nav a:focus-visible, .menu a:focus-visible, .logo:focus-visible, summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset);
+  }
+  /* Desktop: links e botão juntos, à direita */
+  .actions { display: flex; align-items: center; gap: var(--spacing-xl); }
+  .menu { display: none; position: relative; }
+  .menu summary {
+    list-style: none; cursor: pointer; display: grid; place-items: center;
+    width: var(--control-height-md); height: var(--control-height-md); color: var(--scene-fg);
+    border-radius: var(--radius-control);
+  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu ul {
+    position: absolute; right: 0; top: calc(100% + var(--spacing-sm)); min-width: 220px;
+    display: grid; gap: var(--spacing-xs); padding: var(--spacing-md);
+    background: var(--color-bg-raised); border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line);
+  }
+  .menu li a { display: block; padding: var(--spacing-sm); }
+  @media (max-width: 900px) {
+    .nav { display: none; }
+    .menu { display: block; }
+    .actions { gap: var(--spacing-md); }
+  }
+  @media (max-width: 480px) {
+    .actions :global(.btn), .actions > :global(a) { display: none; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const update = () => header?.setAttribute('data-scrolled', String(window.scrollY > 24));
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>

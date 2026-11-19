@@ -1,0 +1,61 @@
+@import '@ds/tokens/tokens.css';
+@import './site-tokens.css';
+@import './light-scope.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; }
+body {
+  margin: 0;
+  background: var(--scene-bg);
+  color: var(--scene-fg);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.skip-link {
+  position: absolute; left: var(--spacing-md); top: -100px; z-index: var(--z-tooltip);
+  padding: var(--spacing-sm) var(--spacing-md); background: var(--color-bg-surface); color: var(--color-text-primary);
+  border-radius: var(--radius-control);
+}
+.skip-link:focus { top: var(--spacing-md); }
+
+.wrap { width: 100%; max-width: var(--site-max); margin-inline: auto; padding-inline: var(--site-gutter); }
+.kicker {
+  font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase;
+  color: var(--color-brand-400); margin: 0 0 var(--spacing-md);
+}
+.title { font: var(--site-title); letter-spacing: var(--site-title-tracking); margin: 0; text-wrap: balance; }
+.lead { font: var(--site-lead); color: var(--scene-fg-muted); margin: var(--spacing-lg) 0 0; max-width: 56ch; }
+.accent { color: var(--color-brand-500); }
+.placeholder-tag {
+  display: inline-block; margin-top: var(--spacing-lg);
+  font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking);
+  color: var(--scene-fg-muted); border: 1px dashed var(--scene-line); border-radius: var(--radius-pill);
+  padding: var(--spacing-xs) var(--spacing-md);
+}
+.section { position: relative; padding-block: clamp(64px, 12vw, 180px); }
+@media (min-width: 900px) { .section { padding-block: 100px; } }
+
+/* Telas grandes com movimento: os benefícios vêm na cena do vídeo, então a grade sai do fluxo */
+.has-pov-benefits #beneficios { display: none; }
+
+/* Com a cena do Hero fixa, a seção seguinte sobe por cima dela enquanto o vídeo se dissolve (sem trecho vazio):
+   Soluções (benefícios no vídeo) ou, quando os benefícios vêm em grade logo abaixo do Hero, a grade de benefícios */
+.has-pov-benefits #solucoes {
+  position: relative; z-index: 2; margin-top: -60vh; padding-top: clamp(72px, 9vw, 120px);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 72px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 72px);
+}
+/* Benefícios logo abaixo do Hero (celular/tablet): sobem por cima do vídeo e o fundo escurece aos poucos até ficar sólido, para o texto ter contraste */
+.intro-pinned:not(.has-pov-benefits) #beneficios {
+  position: relative; z-index: 2; margin-top: -85vh; padding-top: clamp(72px, 9vw, 120px);
+  background: linear-gradient(180deg, transparent 0, color-mix(in oklab, var(--scene-bg) 88%, transparent) 110px, var(--scene-bg) 42vh, var(--scene-bg) 100%);
+}
+
+/* Sem a cena dos benefícios no vídeo (celular/tablet), a frase da transição some para não colidir com o título da seção que sobe */
+.intro-pinned:not(.has-pov-benefits) .cockpit-copy { display: none; }

@@ -1,0 +1,59 @@
+---
+---
+<section class="plat" id="plataforma" data-plat aria-labelledby="plat-title">
+  <div class="wrap plat-head">
+    <h2 id="plat-title" class="title">Tudo o que sua operação precisa, em uma plataforma</h2>
+    <p class="lead">Gerencie eventos e reservas em um só lugar, com ferramentas pensadas para simplificar a operação e dar mais controle ao seu negócio.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="duo">
+      <figure class="win w-eventos" data-plat-card="eventos">
+        <figcaption class="win-bar"><i></i><i></i><i></i><span class="tag">Apex Eventos</span></figcaption>
+        <div class="shot"><img src="/images/hero-eventos.webp" width="1912" height="902" loading="lazy" decoding="async"
+          alt="Painel do Apex Eventos: lista de eventos, com a imagem, as datas, o local e a situação das inscrições de cada um" /></div>
+      </figure>
+      <figure class="win w-reservas" data-plat-card="reservas">
+        <figcaption class="win-bar"><i></i><i></i><i></i><span class="tag">Apex Reservas</span></figcaption>
+        <div class="shot"><img src="/images/rv-agenda-hero.webp" width="1400" height="693" loading="lazy" decoding="async"
+          alt="Agenda de reservas do Apex: menu com pistas, categorias, baterias e horário de funcionamento, e o calendário do mês com as sessões de cada dia" /></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .plat { position: relative; background: var(--color-gray-800); padding-block: clamp(64px, 10vw, 140px); overflow: clip; }
+  .plat::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(50vmax 28vmax at 50% 62%, color-mix(in oklab, var(--color-brand-500) 14%, transparent), transparent 70%); }
+  /* Desktop: espaço reduzido até a seção "Do kart ao automobilismo virtual" (100 + 100px viraram 20 + 20px) */
+  @media (min-width: 900px) { .plat { padding-block: 100px 20px; } }
+  .plat-head { position: relative; display: grid; gap: var(--spacing-md); margin-bottom: var(--spacing-3xl); }
+  .plat-head .title { font-size: clamp(32px, 4.2vw, 64px); max-width: 18ch; }
+  .plat-head .lead { margin: 0; max-width: 58ch; }
+
+  .duo { position: relative; perspective: 1600px; aspect-ratio: 1 / 1.05; }
+  /* Celular/tablet: as duas telas se sobrepõem em diagonal, ocupando bem menos altura que empilhadas */
+  .win { position: absolute; width: 82%; }
+  .w-eventos { left: 0; top: 0; z-index: 1; }
+  .w-reservas { right: 0; top: 34%; z-index: 2; }
+  .win { margin: 0; overflow: hidden; border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line);
+    background: var(--color-gray-white); box-shadow: var(--shadow-2xl); will-change: transform; }
+  .win-bar { display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-sm) var(--spacing-md); background: var(--color-gray-800); }
+  .win-bar i { width: var(--spacing-sm); height: var(--spacing-sm); border-radius: var(--radius-full); background: var(--color-gray-600); }
+  .tag { margin-left: var(--spacing-sm); padding: var(--spacing-2xs) var(--spacing-sm); border-radius: var(--radius-pill); background: var(--color-brand-500); color: var(--color-gray-50);
+    font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); font-weight: var(--font-weight-label); text-transform: uppercase; }
+  .shot { aspect-ratio: 16 / 11; overflow: hidden; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  /* As duas telas são largas: cada janela segue a proporção da própria imagem */
+  .w-eventos .shot { aspect-ratio: 16 / 8.6; }
+  .w-reservas .shot { aspect-ratio: 16 / 7.9; }
+
+  /* Lado a lado com sobreposição e profundidade (telas largas) */
+  @media (min-width: 900px) {
+    .duo { aspect-ratio: auto; height: clamp(420px, 46vw, 700px); }
+    .win { width: 60%; }
+    .w-eventos { left: 0; top: 0; transform: rotateY(9deg) rotateZ(-1deg); transform-origin: left center; z-index: 1; }
+    .w-reservas { right: 0; top: 14%; transform: rotateY(-9deg) rotateZ(1deg); transform-origin: right center; z-index: 2; }
+  }
+</style>

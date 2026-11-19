@@ -1,0 +1,151 @@
+---
+import Win from './Win.astro';
+import { journey } from '../../data/eventos';
+const [s1, s2, s3] = journey.steps;
+// O que o painel acompanha (representação conceitual, sem números reais)
+const track = [
+  { icon: 'how_to_reg', label: 'Inscrições', fill: 78 },
+  { icon: 'shopping_bag', label: 'Itens adicionais', fill: 46 },
+  { icon: 'local_shipping', label: 'Fornecedores', fill: 62 },
+  { icon: 'payments', label: 'Financeiro', fill: 86 },
+];
+// Nomes das abas e dos campos do painel real (usados só para representar a configuração, sem repetir a tela da hero)
+const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicionais', 'Atividades de pista', 'Financeiro'];
+---
+<section class="jr section" aria-labelledby="jr-title">
+  <div class="wrap">
+    <h2 id="jr-title" class="title">{journey.title}</h2>
+
+    <!-- 1. Configure seu evento: representação conceitual da configuração (campos e abas do painel) -->
+    <div class="row">
+      <div class="copy">
+        <p class="n" aria-hidden="true">{s1.n}</p>
+        <h3>{s1.title}</h3>
+        <p class="txt">{s1.text}</p>
+      </div>
+      <div class="vis">
+        <Win label="Configuração do evento (representação)">
+          <div class="cfg">
+            <ul class="tabs" aria-hidden="true">
+              {tabs.map((t, i) => (<li class={i === 0 ? 'on' : ''}>{t}</li>))}
+            </ul>
+            <div class="form" aria-hidden="true">
+              <p class="h">Preencha as informações do evento</p>
+              <div class="field"><span class="lb">Nome do evento</span><span class="sk w70"></span></div>
+              <div class="field"><span class="lb">Slug do evento</span><span class="sk w55"></span></div>
+              <div class="two">
+                <div class="field"><span class="lb">Modalidade</span><span class="sel"><span class="sk w40"></span><span class="material-symbols-outlined">expand_more</span></span></div>
+                <div class="field"><span class="lb">Categorias</span><span class="sel"><span class="sk w50"></span><span class="material-symbols-outlined">expand_more</span></span></div>
+              </div>
+              <div class="banner"><span class="material-symbols-outlined">image</span>Imagem do banner do evento</div>
+            </div>
+          </div>
+        </Win>
+      </div>
+    </div>
+
+    <!-- 2. Divulgue e gerencie inscrições: a página pública real (Landing page) rola devagar quando entra na tela -->
+    <div class="row flip">
+      <div class="copy">
+        <p class="n" aria-hidden="true">{s2.n}</p>
+        <h3>{s2.title}</h3>
+        <p class="txt">{s2.text}</p>
+      </div>
+      <div class="vis">
+        <Win label="Página pública criada no Apex (exemplo)">
+          <div class="pub" data-pub>
+            <img src="/images/landing-page-1367.webp" width="1367" height="4929" loading="lazy" decoding="async" data-pub-img
+              alt="Exemplo de página pública criada no Apex: abertura, apresentação, reservas, próximos eventos e campeonatos" />
+          </div>
+        </Win>
+      </div>
+    </div>
+
+    <!-- 3. Acompanhe tudo pelo painel: representação conceitual (inscrições, itens adicionais, fornecedores e financeiro) -->
+    <div class="row">
+      <div class="copy">
+        <p class="n" aria-hidden="true">{s3.n}</p>
+        <h3>{s3.title}</h3>
+        <p class="txt">{s3.text}</p>
+      </div>
+      <div class="vis">
+        <ul class="track" aria-hidden="true">
+          {track.map((t) => (
+            <li>
+              <span class="material-symbols-outlined t-ic">{t.icon}</span>
+              <span class="t-name">{t.label}</span>
+              <span class="t-bar"><i style={`width:${t.fill}%`}></i></span>
+            </li>
+          ))}
+        </ul>
+        <p class="note">Representação conceitual do painel</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Seção clara (gray-50): textos escuros e linhas claras só aqui dentro */
+  .jr { background: var(--color-gray-50); color: var(--color-gray-900);
+    --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-200); }
+  .jr .wrap { display: grid; gap: var(--spacing-4xl); }
+  .row { display: grid; gap: var(--spacing-xl); align-items: center; }
+  .row > * { min-width: 0; }
+  @media (min-width: 960px) { .row { grid-template-columns: 0.8fr 1.2fr; gap: var(--spacing-3xl); } .row.flip { grid-template-columns: 1.2fr 0.8fr; } .row.flip .copy { order: 2; } }
+  @media (max-width: 959px) { .row.flip .copy { order: 0; } }
+
+  .copy { display: grid; gap: var(--spacing-md); align-content: center; }
+  .n { margin: 0; font: var(--site-display); font-size: clamp(56px, 7vw, 96px); line-height: 0.9; letter-spacing: var(--site-display-tracking);
+    color: transparent; -webkit-text-stroke: 2px var(--color-brand-500); }
+  .copy h3 { margin: 0; font: var(--text-heading-4); letter-spacing: var(--text-heading-4-tracking); }
+  .txt { margin: 0; font: var(--site-lead); color: var(--scene-fg-muted); max-width: 40ch; }
+
+  .vis :global(.win) { box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.35); border-color: var(--color-gray-200); }
+  .vis :global(.lbl) { color: var(--color-gray-300); }
+  .note { margin: var(--spacing-md) 0 0; color: var(--color-gray-600); font: var(--text-caption-s); color: var(--scene-fg-muted); }
+
+  /* 1. Configuração (claro, como o painel real) */
+  .cfg { background: var(--color-gray-white); color: var(--color-gray-700); }
+  .tabs { list-style: none; margin: 0; padding: 0 var(--spacing-md); display: flex; gap: var(--spacing-lg); overflow: hidden; border-bottom: var(--border-width-thin) solid var(--color-gray-200); }
+  .tabs li { padding: var(--spacing-md) 0; white-space: nowrap; font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); text-transform: uppercase; color: var(--color-gray-500); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs li.on { color: var(--color-brand-600); border-bottom-color: var(--color-brand-500); }
+  .form { padding: var(--spacing-lg); display: grid; gap: var(--spacing-md); }
+  .h { margin: 0; font: var(--text-heading-6); color: var(--color-gray-700); }
+  .two { display: grid; gap: var(--spacing-md); }
+  @media (min-width: 560px) { .two { grid-template-columns: 1fr 1fr; } }
+  .field { position: relative; display: grid; border: var(--border-width-thin) solid var(--color-gray-300); border-radius: var(--radius-control); padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm); min-height: 56px; }
+  .lb { position: absolute; top: -9px; left: var(--spacing-sm); padding-inline: var(--spacing-xs); background: var(--color-gray-white); font: var(--text-caption-s); color: var(--color-gray-500); }
+  .sel { display: flex; align-items: center; justify-content: space-between; }
+  .sel .material-symbols-outlined { color: var(--color-gray-500); }
+  .banner { display: flex; align-items: center; justify-content: center; gap: var(--spacing-sm); min-height: 96px; border: 2px dashed var(--color-gray-300); border-radius: var(--radius-control); color: var(--color-gray-500); font: var(--text-body-s); }
+  .banner .material-symbols-outlined { color: var(--color-brand-500); }
+  .sk { display: block; height: 10px; border-radius: var(--radius-pill); background: var(--color-gray-200); }
+  .w70 { width: 70%; } .w60 { width: 60%; } .w55 { width: 55%; } .w50 { width: 50%; } .w45 { width: 45%; } .w40 { width: 40%; }
+
+  /* 2. Página pública: trecho real (próximos eventos), amplo */
+  .pub { height: clamp(300px, 42vw, 500px); overflow: hidden; background: var(--color-gray-white); }
+  .pub img { width: 100%; height: auto; will-change: transform; }
+
+  /* 3. Acompanhamento: representação conceitual do painel */
+  .track { list-style: none; margin: 0; padding: clamp(var(--spacing-lg), 3vw, var(--spacing-2xl)); display: grid; gap: var(--spacing-md); border: var(--border-width-thin) solid var(--color-gray-800); border-radius: var(--radius-card); background: var(--color-gray-900); }
+  .track li { display: grid; grid-template-columns: auto minmax(0, 11rem) 1fr; align-items: center; gap: var(--spacing-md); padding: var(--spacing-md); border: var(--border-width-thin) solid var(--color-gray-700); border-radius: var(--radius-control); }
+  .t-ic { font-size: var(--spacing-xl); color: var(--color-brand-500); }
+  .t-name { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); color: var(--color-gray-50); }
+  .t-bar { height: 10px; border-radius: var(--radius-pill); background: var(--color-gray-700); overflow: hidden; }
+  .t-bar i { display: block; height: 100%; border-radius: inherit; background: var(--color-brand-500); }
+  @media (max-width: 559px) { .track li { grid-template-columns: auto 1fr; } .t-bar { grid-column: 1 / -1; } }
+</style>
+
+<script>
+  import { animate, inView } from 'motion';
+
+  // A página pública rola devagar, uma vez, quando entra na tela (sem movimento reduzido). Depois fica parada.
+  const pub = document.querySelector<HTMLElement>('[data-pub]');
+  const img = document.querySelector<HTMLElement>('[data-pub-img]');
+  if (pub && img && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    inView(pub, () => {
+      const distance = Math.min(img.clientHeight - pub.clientHeight, pub.clientWidth * 1.9);
+      if (distance > 0) animate(img, { y: [0, -distance] }, { duration: 14, ease: 'easeInOut', delay: 0.6 });
+    }, { amount: 0.5 });
+  }
+</script>

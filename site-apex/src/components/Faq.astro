@@ -1,0 +1,19 @@
+---
+import FaqAccordion from './FaqAccordion';
+import { faq } from '../data/site';
+---
+<section class="faq section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap grid">
+    <div>
+      <h2 id="faq-title" class="title">Perguntas frequentes</h2>
+      <p class="placeholder-tag">Respostas comerciais marcadas como "a confirmar" dependem do time do Apex</p>
+    </div>
+    <FaqAccordion client:visible items={faq} />
+  </div>
+</section>
+
+<style>
+  .faq { background: var(--color-gray-800); }
+  .grid { display: grid; gap: var(--spacing-2xl); align-items: start; }
+  @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.6fr; gap: var(--spacing-4xl); } }
+</style>

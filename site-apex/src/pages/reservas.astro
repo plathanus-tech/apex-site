@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqAccordion from '../components/FaqAccordion';
+import RvHero from '../components/reservas/RvHero.astro';
+import RvBooking from '../components/reservas/RvBooking.astro';
+import RvOperation from '../components/reservas/RvOperation.astro';
+import RvModalities from '../components/reservas/RvModalities.astro';
+import RvPayments from '../components/reservas/RvPayments.astro';
+import RvPricing from '../components/reservas/RvPricing.astro';
+import RvProof from '../components/reservas/RvProof.astro';
+import RvCta from '../components/reservas/RvCta.astro';
+import { faq } from '../data/reservas';
+---
+<Base
+  title="Apex Reservas | Gestão e reservas para pistas e experiências de pilotagem"
+  description="Gerencie veículos, pistas, horários e reservas em uma única plataforma, do kartódromo às experiências com carros e outros veículos. Com site para os clientes reservarem online."
+>
+  <RvHero />
+  <!-- Prova social logo após o hero. Se for removida, basta apagar esta linha: as demais seções alternam o fundo e continuam completas -->
+  <RvProof />
+  <RvBooking />
+  <RvOperation />
+  <RvModalities />
+  <RvPayments />
+  <RvPricing />
+
+  <section class="faq section" id="faq" aria-labelledby="rv-faq-title">
+    <div class="wrap grid">
+      <h2 id="rv-faq-title" class="title">Perguntas frequentes</h2>
+      <FaqAccordion client:visible items={faq} />
+    </div>
+  </section>
+
+  <RvCta />
+</Base>
+
+<style>
+  .faq { background: var(--color-gray-800); }
+  /* Títulos das seções, como na página de Eventos: até 48px */
+  :global(main .title), :global(main .cta-title) { font-size: clamp(28px, 3.4vw, 48px); }
+  .grid { display: grid; gap: var(--spacing-2xl); align-items: start; }
+  @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.6fr; gap: var(--spacing-4xl); } }
+</style>
+
+<script>
+  import '../scripts/micro';
+</script>

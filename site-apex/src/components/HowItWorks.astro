@@ -1,0 +1,48 @@
+---
+import { howItWorks } from '../data/site';
+---
+<section class="how section" id="como-funciona" aria-labelledby="how-title">
+  <div class="wrap">
+    <p class="kicker">Como funciona</p>
+    <h2 id="how-title" class="title">Da configuração à operação, em três passos</h2>
+
+    {howItWorks.map((flow) => (
+      <div class="flow">
+        <h3 class="flow-title">{flow.kicker}</h3>
+        <ol class="steps">
+          {flow.steps.map((s) => (
+            <li class="step" data-reveal>
+              <div class="mock" aria-hidden="true">
+                {s.mock === 'form' && (<div class="m-form"><span class="bar w60"></span><span class="bar w80"></span><span class="bar w40"></span><span class="m-btn"></span></div>)}
+                {s.mock === 'page' && (<div class="m-page"><span class="m-top"></span><span class="m-hero"></span><span class="m-btn"></span></div>)}
+                {s.mock === 'list' && (<div class="m-list"><span class="bar w80"></span><span class="bar w60"></span><span class="bar w70"></span><span class="bar w50"></span></div>)}
+              </div>
+              <p class="n">{s.n}</p>
+              <h4>{s.title}</h4>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+    <p class="placeholder-tag">Representações ilustrativas da interface. Substituir por telas reais do Apex</p>
+  </div>
+</section>
+
+<style>
+  .flow { margin-top: var(--spacing-3xl); }
+  .flow-title { font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--color-brand-400); margin: 0 0 var(--spacing-lg); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-xl); }
+  @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+  .step h4 { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); margin: var(--spacing-xs) 0 var(--spacing-sm); }
+  .step p { margin: 0; color: var(--scene-fg-muted); }
+  .step .n { font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); color: var(--color-brand-500); margin-top: var(--spacing-lg); }
+
+  .mock { height: 180px; border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line); background: var(--color-gray-900); padding: var(--spacing-lg); display: grid; align-content: center; }
+  .m-form, .m-list, .m-page { display: grid; gap: var(--spacing-md); }
+  .bar { display: block; height: var(--spacing-md); border-radius: var(--radius-pill); background: var(--color-gray-800); }
+  .w40 { width: 40%; } .w50 { width: 50%; } .w60 { width: 60%; } .w70 { width: 70%; } .w80 { width: 80%; }
+  .m-btn { display: block; width: 36%; height: var(--spacing-xl); border-radius: var(--radius-control); background: var(--color-brand-500); }
+  .m-top { display: block; height: var(--spacing-md); width: 100%; border-radius: var(--radius-pill); background: var(--color-gray-800); }
+  .m-hero { display: block; height: 64px; border-radius: var(--radius-control); background: linear-gradient(135deg, color-mix(in oklab, var(--brand-primary) 40%, var(--color-gray-800)), var(--color-gray-800)); }
+</style>
