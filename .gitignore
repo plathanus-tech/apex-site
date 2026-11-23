@@ -2,6 +2,7 @@
 /*
 !/.gitignore
 !/README.md
+!/.github
 !/site-apex
 !/storybook-apex
 
