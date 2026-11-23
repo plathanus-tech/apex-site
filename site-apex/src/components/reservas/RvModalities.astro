@@ -15,7 +15,7 @@ const { main, others } = modalities;
     <div class="board">
       <figure class="card main">
         <img src={`/images/${main.image}-1000.webp`} srcset={`/images/${main.image}-640.webp 640w, /images/${main.image}-1000.webp 1000w`}
-          sizes="(min-width: 900px) 58vw, 100vw" width="1000" height="563" loading="lazy" decoding="async" alt={main.alt} />
+          sizes="(min-width: 900px) 58vw, 100vw" width="1000" height="665" loading="lazy" decoding="async" alt={main.alt} />
         <figcaption>
           <span class="name">{main.name}</span>
           <span class="txt">{main.text}</span>
@@ -39,11 +39,13 @@ const { main, others } = modalities;
 
 <style>
   .md { background: var(--color-gray-800); }
-  .head { display: grid; gap: var(--spacing-lg); align-items: end; }
-  .head .lead { margin: 0; max-width: 44ch; }
-  @media (min-width: 900px) { .head { grid-template-columns: 1.2fr 1fr; gap: var(--spacing-3xl); } }
+  /* Título e subtítulo um embaixo do outro, como nas demais páginas (antes, no desktop, ficavam lado a lado) */
+  .head { display: grid; gap: var(--spacing-md); }
+  .head .lead { margin: 0; }
 
-  .board { margin-top: var(--spacing-3xl); display: grid; gap: var(--spacing-md); }
+  .board { margin-top: var(--spacing-lg); display: grid; gap: var(--spacing-md); }
+  /* Celular: 16px entre o subtítulo e os cards */
+  @media (max-width: 599px) { .board { margin-top: var(--spacing-md); } }
   @media (min-width: 900px) { .board { grid-template-columns: 1.6fr 1fr; gap: var(--spacing-lg); } }
   .side { display: grid; gap: var(--spacing-md); }
   @media (min-width: 900px) { .side { gap: var(--spacing-lg); grid-template-rows: 1fr 1fr; } }
@@ -59,6 +61,8 @@ const { main, others } = modalities;
   figcaption { position: absolute; z-index: 1; left: var(--spacing-lg); right: var(--spacing-lg); bottom: var(--spacing-lg); display: grid; gap: var(--spacing-2xs); }
   .name { font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); }
   .name.sm { font: var(--text-body-m); font-weight: var(--font-weight-label); }
+  /* Celular: o título do card principal (Kartódromos) tem o mesmo tamanho dos outros */
+  @media (max-width: 899px) { .name { font: var(--text-body-m); font-weight: var(--font-weight-label); letter-spacing: normal; } }
   .name::before { content: ''; display: block; width: var(--spacing-lg); height: var(--spacing-2xs); margin-bottom: var(--spacing-xs); background: var(--color-brand-500); }
   .txt { color: var(--color-gray-300); max-width: 44ch; font: var(--text-body-s); }
   .tags { display: flex; gap: var(--spacing-xs); margin-top: var(--spacing-xs); }

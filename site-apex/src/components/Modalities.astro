@@ -55,6 +55,7 @@ const { compact = false } = Astro.props;
   .compact { padding-block: 64px; }
   @media (min-width: 900px) { .compact { padding-block: 72px; } }
   .compact .grid { margin-top: var(--spacing-2xl); }
+  @media (max-width: 599px) { .compact .grid { margin-top: calc(var(--spacing-md) + 12px); } } /* Celular (Eventos): 28px entre o subtítulo e os cards (16px + 12px) */
   .compact .card { aspect-ratio: 16 / 9; }
   @media (min-width: 1100px) { .compact .card { aspect-ratio: 4 / 3; } }
   @media (max-width: 599px) { .compact .card { aspect-ratio: 2 / 1; } }

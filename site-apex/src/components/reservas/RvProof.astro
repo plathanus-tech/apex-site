@@ -19,12 +19,17 @@ const real = proof.logos.length > 0;
   .pf { background: var(--color-gray-800); }
   @media (min-width: 900px) { .pf { padding-top: calc(100px + var(--rv-overlap, 0px)); } }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .logos { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
-  @media (min-width: 700px) { .logos { grid-template-columns: repeat(3, 1fr); } }
+  /* Celular: título menor, com o token font-size-lg do DS */
+  @media (max-width: 599px) { .pf .title { font-size: var(--font-size-lg); } }
+  .logos { list-style: none; margin: var(--spacing-lg) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-sm); }
+  @media (min-width: 700px) { .logos { gap: var(--spacing-md); margin-top: 44px; } }
+  /* Celular: 16px entre o título e as logos (como nas demais seções) */
+  @media (max-width: 599px) { .logos { margin-top: var(--spacing-md); } }
   @media (min-width: 1000px) { .logos { grid-template-columns: repeat(6, 1fr); } }
-  .logos li { display: grid; justify-items: center; align-content: center; gap: var(--spacing-sm); min-height: 96px; padding: var(--spacing-md);
+  .logos li { display: grid; justify-items: center; align-content: center; gap: var(--spacing-sm); min-height: 64px; padding: var(--spacing-sm);
     border: var(--border-width-thin) solid var(--scene-line); border-radius: var(--radius-control); background: var(--color-gray-900); }
   .logos li.ph { border-style: dashed; border-color: var(--color-gray-600); background: transparent; }
+  @media (min-width: 700px) { .logos li { min-height: 96px; padding: var(--spacing-md); } }
   .logos img { display: block; max-width: 100%; max-height: 48px; width: auto; height: auto; object-fit: contain; }
   .nm { font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); color: var(--scene-fg-muted); text-align: center; }
   .lg { font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); text-transform: uppercase; color: var(--scene-fg-muted); }

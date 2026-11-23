@@ -26,11 +26,13 @@ import { operation } from '../../data/reservas';
   /* Seção clara (gray-50): textos escuros */
   .op { background: var(--color-gray-50); color: var(--color-gray-900);
     --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-300); }
-  .head { display: grid; gap: var(--spacing-lg); align-items: end; }
-  .head .lead { margin: 0; max-width: 46ch; }
-  @media (min-width: 900px) { .head { grid-template-columns: 1.1fr 1fr; gap: var(--spacing-3xl); } }
+  /* Título e subtítulo um embaixo do outro, como nas demais páginas (antes, no desktop, ficavam lado a lado) */
+  .head { display: grid; gap: var(--spacing-md); }
+  .head .lead { margin: 0; }
 
   .chain { list-style: none; margin: var(--spacing-3xl) 0 0; padding: 0; display: grid; gap: var(--spacing-xl); }
+  /* Celular: 16px entre o subtítulo e a lista */
+  @media (max-width: 599px) { .chain { margin-top: var(--spacing-md); } }
   .chain li { position: relative; display: grid; gap: var(--spacing-2xs); align-content: start; padding-left: calc(16px + var(--spacing-md)); }
   .node { position: absolute; left: 0; top: 4px; z-index: 1; width: 16px; height: 16px; border-radius: 50%; background: var(--color-gray-50); border: 3px solid var(--color-brand-500); }
   .nm { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }

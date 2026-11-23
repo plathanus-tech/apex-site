@@ -9,14 +9,12 @@ const track = [
   { icon: 'local_shipping', label: 'Fornecedores', fill: 62 },
   { icon: 'payments', label: 'Financeiro', fill: 86 },
 ];
-// Nomes das abas e dos campos do painel real (usados só para representar a configuração, sem repetir a tela da hero)
-const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicionais', 'Atividades de pista', 'Financeiro'];
 ---
 <section class="jr section" aria-labelledby="jr-title">
   <div class="wrap">
     <h2 id="jr-title" class="title">{journey.title}</h2>
 
-    <!-- 1. Configure seu evento: representação conceitual da configuração (campos e abas do painel) -->
+    <!-- 1. Configure seu evento: a tela real "Novo evento" do painel (formulário vazio, sem dados) -->
     <div class="row">
       <div class="copy">
         <p class="n" aria-hidden="true">{s1.n}</p>
@@ -24,21 +22,11 @@ const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicio
         <p class="txt">{s1.text}</p>
       </div>
       <div class="vis">
-        <Win label="Configuração do evento (representação)">
+        <Win label="Tela Novo evento do painel">
           <div class="cfg">
-            <ul class="tabs" aria-hidden="true">
-              {tabs.map((t, i) => (<li class={i === 0 ? 'on' : ''}>{t}</li>))}
-            </ul>
-            <div class="form" aria-hidden="true">
-              <p class="h">Preencha as informações do evento</p>
-              <div class="field"><span class="lb">Nome do evento</span><span class="sk w70"></span></div>
-              <div class="field"><span class="lb">Slug do evento</span><span class="sk w55"></span></div>
-              <div class="two">
-                <div class="field"><span class="lb">Modalidade</span><span class="sel"><span class="sk w40"></span><span class="material-symbols-outlined">expand_more</span></span></div>
-                <div class="field"><span class="lb">Categorias</span><span class="sel"><span class="sk w50"></span><span class="material-symbols-outlined">expand_more</span></span></div>
-              </div>
-              <div class="banner"><span class="material-symbols-outlined">image</span>Imagem do banner do evento</div>
-            </div>
+            <img src="/images/novo-evento-1400.webp" srcset="/images/novo-evento-900.webp 900w, /images/novo-evento-1400.webp 1400w"
+              sizes="(min-width: 960px) 56vw, 100vw" width="1400" height="819" loading="lazy" decoding="async"
+              alt="Tela Novo evento do painel do Apex, na aba Info: campos de nome e slug do evento, área da imagem do banner e seletor de modalidade" />
           </div>
         </Win>
       </div>
@@ -50,6 +38,7 @@ const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicio
         <p class="n" aria-hidden="true">{s2.n}</p>
         <h3>{s2.title}</h3>
         <p class="txt">{s2.text}</p>
+        <a class="quote-link" href="#contato">Solicitar orçamento</a>
       </div>
       <div class="vis">
         <Win label="Página pública criada no Apex (exemplo)">
@@ -89,6 +78,8 @@ const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicio
   .jr { background: var(--color-gray-50); color: var(--color-gray-900);
     --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-200); }
   .jr .wrap { display: grid; gap: var(--spacing-4xl); }
+  /* Celular: o primeiro passo ("1") fica 24px mais perto do título da seção (12px + mais 12px) */
+  @media (max-width: 599px) { .jr .title + .row { margin-top: -24px; } }
   .row { display: grid; gap: var(--spacing-xl); align-items: center; }
   .row > * { min-width: 0; }
   @media (min-width: 960px) { .row { grid-template-columns: 0.8fr 1.2fr; gap: var(--spacing-3xl); } .row.flip { grid-template-columns: 1.2fr 0.8fr; } .row.flip .copy { order: 2; } }
@@ -99,28 +90,19 @@ const tabs = ['Info', 'Data do evento', 'Endereço', 'Categorias', 'Itens adicio
     color: transparent; -webkit-text-stroke: 2px var(--color-brand-500); }
   .copy h3 { margin: 0; font: var(--text-heading-4); letter-spacing: var(--text-heading-4-tracking); }
   .txt { margin: 0; font: var(--site-lead); color: var(--scene-fg-muted); max-width: 40ch; }
+  /* Só um link (não um botão): o foco desta etapa não é a página sob medida */
+  .quote-link { justify-self: start; display: inline-flex; align-items: center; min-height: var(--spacing-xl); font: var(--text-body-m); font-weight: var(--font-weight-label);
+    color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 0.2em; }
+  .quote-link:hover { color: var(--color-brand-800); }
+  .quote-link:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 
   .vis :global(.win) { box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.35); border-color: var(--color-gray-200); }
   .vis :global(.lbl) { color: var(--color-gray-300); }
   .note { margin: var(--spacing-md) 0 0; color: var(--color-gray-600); font: var(--text-caption-s); color: var(--scene-fg-muted); }
 
-  /* 1. Configuração (claro, como o painel real) */
-  .cfg { background: var(--color-gray-white); color: var(--color-gray-700); }
-  .tabs { list-style: none; margin: 0; padding: 0 var(--spacing-md); display: flex; gap: var(--spacing-lg); overflow: hidden; border-bottom: var(--border-width-thin) solid var(--color-gray-200); }
-  .tabs li { padding: var(--spacing-md) 0; white-space: nowrap; font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); text-transform: uppercase; color: var(--color-gray-500); border-bottom: 2px solid transparent; margin-bottom: -1px; }
-  .tabs li.on { color: var(--color-brand-600); border-bottom-color: var(--color-brand-500); }
-  .form { padding: var(--spacing-lg); display: grid; gap: var(--spacing-md); }
-  .h { margin: 0; font: var(--text-heading-6); color: var(--color-gray-700); }
-  .two { display: grid; gap: var(--spacing-md); }
-  @media (min-width: 560px) { .two { grid-template-columns: 1fr 1fr; } }
-  .field { position: relative; display: grid; border: var(--border-width-thin) solid var(--color-gray-300); border-radius: var(--radius-control); padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm); min-height: 56px; }
-  .lb { position: absolute; top: -9px; left: var(--spacing-sm); padding-inline: var(--spacing-xs); background: var(--color-gray-white); font: var(--text-caption-s); color: var(--color-gray-500); }
-  .sel { display: flex; align-items: center; justify-content: space-between; }
-  .sel .material-symbols-outlined { color: var(--color-gray-500); }
-  .banner { display: flex; align-items: center; justify-content: center; gap: var(--spacing-sm); min-height: 96px; border: 2px dashed var(--color-gray-300); border-radius: var(--radius-control); color: var(--color-gray-500); font: var(--text-body-s); }
-  .banner .material-symbols-outlined { color: var(--color-brand-500); }
-  .sk { display: block; height: 10px; border-radius: var(--radius-pill); background: var(--color-gray-200); }
-  .w70 { width: 70%; } .w60 { width: 60%; } .w55 { width: 55%; } .w50 { width: 50%; } .w45 { width: 45%; } .w40 { width: 40%; }
+  /* 1. Tela real "Novo evento" (formulário vazio) */
+  .cfg { background: var(--color-gray-white); }
+  .cfg img { display: block; width: 100%; height: auto; }
 
   /* 2. Página pública: trecho real (próximos eventos), amplo */
   .pub { height: clamp(300px, 42vw, 500px); overflow: hidden; background: var(--color-gray-white); }

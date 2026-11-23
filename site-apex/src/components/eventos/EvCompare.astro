@@ -35,6 +35,8 @@ import { compare } from '../../data/eventos';
   @media (min-width: 1000px) { .cmp { padding-top: calc(100px + var(--ev-overlap)); } }
   .duo { margin-top: var(--spacing-3xl); display: grid; gap: var(--spacing-lg); align-items: stretch; }
   @media (min-width: 900px) { .duo { grid-template-columns: 1fr auto 1.1fr; gap: var(--spacing-xl); align-items: center; } }
+  /* Celular: 16px entre o título e os blocos */
+  @media (max-width: 599px) { .duo { margin-top: var(--spacing-md); } }
   .arrow { display: none; color: var(--color-brand-500); }
   .arrow .material-symbols-outlined { font-size: 40px; }
   @media (min-width: 900px) { .arrow { display: block; } }

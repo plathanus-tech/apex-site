@@ -17,8 +17,8 @@ import { athlete } from '../../data/eventos';
     <div class="mock">
       <div class="desk">
         <Win label="Página do campeonato (exemplo)">
-          <img src="/images/landing-pista.webp" width="1366" height="1500" loading="lazy" decoding="async"
-            alt="Exemplo de página pública de um campeonato criada no Apex: apresentação, etapas com a situação das inscrições e ranking" />
+          <img src="/images/landing-campeonato.webp" width="1366" height="1500" loading="lazy" decoding="async"
+            alt="Exemplo de página pública de um campeonato criada no Apex: abertura com o número de etapas, categorias e pilotos inscritos, etapas com a situação das inscrições, progresso da temporada e ranking" />
         </Win>
       </div>
       <div class="phone">
@@ -33,6 +33,14 @@ import { athlete } from '../../data/eventos';
 <style>
   .grid { display: grid; gap: var(--spacing-3xl); align-items: center; }
   @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.15fr; gap: var(--spacing-4xl); } }
+  /* Celular: a imagem vem logo depois do título (16px de distância), e a lista e o aviso ficam abaixo dela */
+  @media (max-width: 599px) {
+    .grid { gap: 0; }
+    .copy { display: contents; }
+    .mock { order: 1; margin-top: calc(var(--spacing-md) + 12px); }
+    .list { order: 2; }
+    .note { order: 3; }
+  }
   .list { list-style: none; margin: var(--spacing-xl) 0 0; padding: 0; display: grid; gap: var(--spacing-md); }
   .list li { display: flex; align-items: center; gap: var(--spacing-md); font: var(--text-heading-6); font-size: var(--font-size-xl); letter-spacing: var(--text-heading-6-tracking); }
   .ico { font-size: var(--font-size-2xl); color: var(--color-brand-500); }

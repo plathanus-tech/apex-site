@@ -10,7 +10,7 @@ export const hero = {
   cta: 'Quero organizar meu evento',
   differentials: [
     { icon: 'account_balance_wallet', label: 'Painel financeiro para acompanhar seus recebimentos' },
-    { icon: 'payments', label: 'Você só paga quando vende' },
+    { icon: 'payments', label: 'Comece sem custo fixo' },
     { icon: 'dashboard', label: 'Gestão de eventos em uma única plataforma' },
   ],
 };
@@ -36,8 +36,8 @@ export const compare = {
 export const journey = {
   title: 'Do primeiro cadastro ao encerramento do evento',
   steps: [
-    { n: 1, title: 'Configure seu evento', text: 'Cadastre as informações principais e a modalidade do evento. Defina também as categorias e as inscrições.' },
-    { n: 2, title: 'Divulgue e gerencie inscrições', text: 'O evento ganha uma página pública, com a identidade da sua marca. O participante conhece o evento e se inscreve, e você acompanha as inscrições pelo painel.' },
+    { n: 1, title: 'Configure seu evento', text: 'Configure categorias, inscrições, pagamentos, atividades de pista e outros detalhes para estruturar seu evento de acordo com suas necessidades.' },
+    { n: 2, title: 'Divulgue e gerencie inscrições', text: 'Tenha uma página própria para divulgar seu evento e receber inscrições online, com opções que se adaptam à identidade da sua marca ou às necessidades da sua operação.' },
     { n: 3, title: 'Acompanhe tudo pelo painel', text: 'Acompanhe as inscrições, as compras de itens adicionais, os fornecedores e o financeiro do seu evento em um só lugar.' },
   ],
 };
@@ -57,8 +57,8 @@ export const features = {
   title: 'Tudo o que seu evento precisa para acontecer',
   items: [
     { id: 'gestao', icon: 'monitoring', title: 'Gestão e resultados', text: 'Acompanhe vendas, inscrições, desempenho e resultados dos seus eventos.' },
-    { id: 'operacao', icon: 'build', title: 'Controle operacional', text: 'Gerencie pneus, abastecimento, fornecedores e outros recursos da operação.' },
-    { id: 'marca', icon: 'palette', title: 'White label', text: 'Tenha sua própria identidade visual e um site personalizado para seus eventos.' },
+    { id: 'operacao', icon: 'build', title: 'Controle operacional', text: 'Organize o credenciamento, a entrega de pneus, o abastecimento de combustível, o sorteio de motores e os fornecedores do evento.' },
+    { id: 'marca', icon: 'palette', title: 'Sua marca em destaque', text: 'Personalize sua página de eventos com seu logo, cores e imagens, sem custo adicional. Se precisar de algo exclusivo, desenvolvemos uma página sob medida para sua operação, mediante orçamento.' },
     { id: 'pagamentos', icon: 'account_balance_wallet', title: 'Pagamentos e repasses', text: 'Receba pagamentos pela plataforma e acompanhe tudo no painel financeiro: o que está a receber e o que já está disponível para saque.' },
   ],
 };
@@ -189,7 +189,7 @@ export const pricing = {
 export const faq = [
   { title: 'Preciso organizar um campeonato ou posso criar apenas um evento?', content: 'Você pode criar apenas um evento. O Apex atende eventos independentes e também campeonatos com várias etapas.' },
   { title: 'Posso personalizar a página do meu evento?', content: 'Sim. A página do evento pode levar a identidade visual da sua marca, e também é possível ter um site totalmente personalizado, desenvolvido sob orçamento.', link: { label: 'Falar sobre um site personalizado', href: '#contato' } },
-  { title: 'Como funcionam os repasses?', content: 'Os valores das vendas vão para o painel financeiro, já sem as taxas. Pagamentos em Pix entram em até 24 horas e os de cartão, depois de 30 dias. No painel você vê o que já foi retirado no mês, o que está a receber e o que já está disponível para saque.' },
+  { title: 'Como funcionam os repasses?', content: 'Os valores das vendas vão para o painel financeiro, já sem as taxas. Pagamentos em Pix entram em até 24 horas e os de cartão, depois de 30 dias: esses prazos são definidos pela plataforma de pagamento. No painel você vê o que já foi retirado no mês, o que está a receber e o que já está disponível para saque.' },
   { title: 'Existe mensalidade ou custo para começar?', content: 'Depende de como você contrata. Por evento, você só paga quando vende e pode começar sem custo fixo; os planos Ilimitado e Evento + Reservas são cobrados por mensalidade. [Valores e condições a confirmar]' },
   { title: 'Quais modalidades posso cadastrar?', content: 'O Apex atende qualquer modalidade de automobilismo, como kart, track day e automobilismo virtual.' },
   { title: 'Como funciona o controle de inscrições?', content: 'As inscrições ficam centralizadas no painel, onde você acompanha vendas, pagamentos e os participantes, com a categoria de cada um.' },

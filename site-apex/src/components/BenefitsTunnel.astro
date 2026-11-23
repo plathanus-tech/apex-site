@@ -38,7 +38,7 @@ const rays = Array.from({ length: 150 }, () => {
         <p class="kicker">Por que o Apex</p>
         <h2 id="ben-title" class="title">Uma plataforma para eventos e reservas com mais controle.</h2>
       </div>
-      <p class="lead">Eventos e reservas em um só lugar, com a identidade da sua empresa.</p>
+      <p class="lead">Mais praticidade para organizar sua operação e oferecer uma experiência própria ao seu público.</p>
     </header>
 
     <!-- Cada benefício vem de encontro à câmera, em profundidade -->
@@ -54,7 +54,6 @@ const rays = Array.from({ length: 150 }, () => {
     </ol>
 
     <p class="hint" data-hint aria-hidden="true">Role para avançar</p>
-    <p class="placeholder-tag note wrap">Texto-base a validar com o time do Apex</p>
   </div>
 </section>
 
@@ -78,7 +77,6 @@ const rays = Array.from({ length: 150 }, () => {
   .card h3 { margin: 0; font: var(--text-heading-5); letter-spacing: var(--text-heading-5-tracking); }
   .text { margin: 0; color: var(--scene-fg-muted); }
   .hint { display: none; }
-  .note { margin-top: var(--spacing-2xl); }
 
   /* Modo túnel (desktop com movimento): a câmera avança e os benefícios vêm de encontro */
   .approach.is-animated .stage { height: 100svh; padding: 0; }
@@ -99,5 +97,4 @@ const rays = Array.from({ length: 150 }, () => {
   @media (min-width: 960px) { .approach.is-animated .head { grid-template-columns: 1.2fr 1fr; } .approach.is-animated .head .lead { justify-self: end; max-width: 32ch; } }
   .approach.is-animated .head .title { font: var(--site-title); letter-spacing: var(--site-title-tracking); max-width: 14ch; }
   .approach.is-animated .hint { display: block; position: absolute; z-index: 3; left: 50%; bottom: var(--spacing-lg); transform: translateX(-50%); margin: 0; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-transform: uppercase; color: var(--scene-fg-muted); }
-  .approach.is-animated .note { display: none; }
 </style>

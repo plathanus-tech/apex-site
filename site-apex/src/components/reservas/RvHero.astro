@@ -2,6 +2,8 @@
 import { Button } from '@ds';
 import Win from '../eventos/Win.astro';
 import { hero } from '../../data/reservas';
+// Cada frase do subtítulo vira uma linha no desktop (a primeira termina em "plataforma.")
+const sentences = hero.lead.split(/(?<=\.)\s+/);
 ---
 <section class="hero" aria-labelledby="rv-hero-title">
   <div class="glow" aria-hidden="true"></div>
@@ -9,8 +11,7 @@ import { hero } from '../../data/reservas';
   <div class="wrap">
     <div class="copy">
       <h1 id="rv-hero-title" class="h1">{hero.title}</h1>
-      <p class="lead">{hero.lead}</p>
-      <div class="cta"><Button href="#contato">{hero.cta}</Button></div>
+      <p class="lead">{sentences.map((t, i) => (<><span class="s">{t}</span>{i < sentences.length - 1 ? ' ' : ''}</>))}</p>
     </div>
 
     <!-- Só o sistema: a tela real da agenda de reservas, grande -->
@@ -22,6 +23,9 @@ import { hero } from '../../data/reservas';
         </Win>
       </div>
     </div>
+
+    <!-- Ordem no código: texto, tela, botão (celular). No desktop o botão sobe para logo abaixo do texto, via "order" -->
+    <div class="cta"><Button href="#contato">{hero.cta}</Button></div>
   </div>
 </section>
 
@@ -34,20 +38,51 @@ import { hero } from '../../data/reservas';
     padding: calc(var(--site-header-h) + var(--spacing-3xl)) 0 var(--spacing-3xl); background: var(--scene-bg); isolation: isolate; }
   .glow { position: absolute; inset: 0; z-index: -1; pointer-events: none;
     background: radial-gradient(52vmax 28vmax at 50% 70%, color-mix(in oklab, var(--color-brand-500) 16%, transparent), transparent 70%); }
+  .wrap { display: flex; flex-direction: column; align-items: center; }
   .copy { display: grid; justify-items: center; }
   .h1 { margin: 0; max-width: 30ch; font: var(--site-title); font-size: clamp(32px, 4.4vw, 60px); letter-spacing: var(--site-title-tracking); text-wrap: balance; }
   .lead { max-width: 52ch; }
+  /* Desktop: o subtítulo é mais largo, para a primeira linha terminar em "plataforma." */
+  @media (min-width: 900px) { .lead { max-width: 76ch; } .lead .s { display: block; } }
   .cta { margin-top: var(--spacing-xl); }
+  /* Celular: botão na largura toda do conteúdo (respeita o padding da tela) */
+  @media (max-width: 599px) { .cta { width: 100%; } .cta :global(a) { display: flex; width: 100%; justify-content: center; } }
 
-  .stage { position: relative; max-width: 1120px; margin: var(--spacing-3xl) auto 0; text-align: left; }
-  .screen { position: relative; width: 92%; margin: 0 auto; }
+  .stage { position: relative; width: 100%; max-width: 1120px; margin: var(--spacing-xl) auto 0; text-align: left; }
+  /* Desktop: o botão fica logo abaixo do texto, antes da tela (no código ele vem depois) */
+  @media (min-width: 900px) { .cta { order: 1; } .stage { order: 2; margin-top: var(--spacing-3xl); } }
+  .screen { position: relative; width: 100%; margin: 0 auto; }
   .screen :global(.win) { aspect-ratio: auto; }
   .screen :global(.body img) { height: auto; }
+
+  /* Celular: degradê curto no pé do hero, até a cor da seção seguinte */
+  @media (max-width: 899px) {
+    .hero { padding-bottom: calc(var(--spacing-3xl) - var(--spacing-lg)); }
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, transparent, var(--color-gray-800)); }
+  }
 
   /* Desktop: a tela avança sobre a seção de baixo, e o fundo desce em gradiente até a cor dela */
   @media (min-width: 900px) {
     .screen { width: 88%; margin-bottom: calc(var(--rv-overlap) * -1); }
-    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--rv-overlap) + 140px); z-index: -1; pointer-events: none;
-      background: linear-gradient(180deg, transparent, var(--color-gray-800)); }
+    /* Quanto "Categorias" (a ~74% da altura da imagem) fica abaixo do fim do hero */
+    .hero { --cat-off: max(0px, calc(var(--rv-overlap) * 0.434 - var(--spacing-3xl))); }
+    /* O fundo escurece levemente em direção ao preto e só chega ao gray-800 na altura de "Categorias" na imagem (um pouco abaixo do fim do hero) */
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: calc(var(--cat-off) * -1); height: calc(var(--rv-overlap) + 220px + var(--cat-off)); z-index: -1; pointer-events: none;
+      /* Curva suave (smoothstep) até o gray-800, com um leve toque de preto no meio do caminho */
+      background:
+        linear-gradient(180deg, transparent 0%, color-mix(in oklab, black 30%, transparent) 45%, transparent 100%),
+        linear-gradient(180deg,
+        color-mix(in oklab, var(--color-gray-800) 0%, transparent) 0%,
+        color-mix(in oklab, var(--color-gray-800) 2.8%, transparent) 10%,
+        color-mix(in oklab, var(--color-gray-800) 10.4%, transparent) 20%,
+        color-mix(in oklab, var(--color-gray-800) 21.6%, transparent) 30%,
+        color-mix(in oklab, var(--color-gray-800) 35.2%, transparent) 40%,
+        color-mix(in oklab, var(--color-gray-800) 50%, transparent) 50%,
+        color-mix(in oklab, var(--color-gray-800) 64.8%, transparent) 60%,
+        color-mix(in oklab, var(--color-gray-800) 78.4%, transparent) 70%,
+        color-mix(in oklab, var(--color-gray-800) 89.6%, transparent) 80%,
+        color-mix(in oklab, var(--color-gray-800) 97.2%, transparent) 90%,
+        color-mix(in oklab, var(--color-gray-800) 100%, transparent) 100%); }
   }
 </style>

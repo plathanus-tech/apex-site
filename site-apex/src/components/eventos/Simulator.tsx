@@ -214,6 +214,7 @@ export default function Simulator({ lowVolumePercent, highVolumePercent, volumeT
           </div>
           <div className={styles.row}><dt>Recebimento no painel</dt><dd>{method === 'pix' ? 'Em até 24 horas' : 'Em 30 dias'}</dd></div>
         </dl>
+        <p className={styles.hint}>O prazo de recebimento é definido pela plataforma de pagamento.</p>
         <p className={styles.hint}>
           {mode === 'receber' && `Para receber ${typed === 0 ? 'esse valor' : brl.format(typed)} por ${copy.unit} depois das taxas, cobre ${typed === 0 ? 'um pouco mais' : brl.format(chargeUnit)}.`}
           {mode === 'cobrar' && `Você absorve as taxas: elas saem do valor cobrado, e o participante paga apenas ${copy.itemValue}.`}

@@ -6,32 +6,59 @@ import Win from '../eventos/Win.astro';
   <Win label="Site de reservas do estabelecimento">
     <video
       muted loop playsinline preload="metadata" poster="/videos/reservas-online-poster.webp"
-      width="1600" height="912" aria-label="Gravação do site de reservas: o cliente escolhe o dia e o horário, informa os participantes, paga e recebe a confirmação da reserva"
+      width="1600" height="912" aria-label="Vídeo do fluxo de reserva no site de uma marca fictícia, mostrando o fluxo real: da escolha da data e do horário até a finalização do pagamento"
     >
       <source src="/videos/reservas-online.mp4" type="video/mp4" />
     </video>
   </Win>
+  <button type="button" class="toggle" data-video-toggle aria-label="Pausar vídeo">
+    <span class="material-symbols-outlined" aria-hidden="true">pause</span>
+  </button>
 </div>
 
 <style>
+  .vid { position: relative; }
+  .toggle { position: absolute; right: var(--spacing-md); bottom: var(--spacing-md); z-index: 1; display: grid; place-items: center; cursor: pointer;
+    width: var(--control-height-md); height: var(--control-height-md); padding: 0; border-radius: var(--radius-full);
+    border: var(--border-width-thin) solid var(--color-gray-600); background: color-mix(in oklab, var(--color-gray-900) 60%, transparent); color: var(--color-gray-white); }
+  .toggle[hidden] { display: none; }
+  .toggle:hover { background: var(--color-gray-900); }
+  .toggle:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
   .vid :global(.win) { box-shadow: var(--shadow-2xl); }
   .vid video { display: block; width: 100%; height: auto; aspect-ratio: 1600 / 912; background: var(--color-gray-white); }
 </style>
 
 <script>
-  // Toca só enquanto está visível; com "reduzir movimento" fica parado no quadro de abertura, com controles
+  // Toca só enquanto está visível; quem pausar no botão não tem o vídeo retomado sozinho.
+  // Com "reduzir movimento" fica parado no quadro de abertura, com os controles do navegador.
   const root = document.querySelector<HTMLElement>('[data-booking-video]');
   const video = root?.querySelector('video');
-  if (root && video) {
+  const toggle = root?.querySelector<HTMLButtonElement>('[data-video-toggle]');
+  if (root && video && toggle) {
+    const icon = toggle.querySelector('.material-symbols-outlined');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let userPaused = false;
+    const sync = () => {
+      const playing = !video.paused;
+      toggle.setAttribute('aria-label', playing ? 'Pausar vídeo' : 'Reproduzir vídeo');
+      if (icon) icon.textContent = playing ? 'pause' : 'play_arrow';
+    };
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    toggle.addEventListener('click', () => {
+      if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+      else { userPaused = true; video.pause(); }
+    });
     if (reduce) {
       video.controls = true;
+      toggle.hidden = true;
     } else {
       const io = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
+        if (entry.isIntersecting) { if (!userPaused) video.play().catch(() => {}); }
         else video.pause();
       }, { threshold: 0.4 });
       io.observe(video);
     }
+    sync();
   }
 </script>

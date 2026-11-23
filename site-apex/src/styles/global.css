@@ -30,7 +30,7 @@ a { color: inherit; }
   color: var(--color-brand-400); margin: 0 0 var(--spacing-md);
 }
 .title { font: var(--site-title); letter-spacing: var(--site-title-tracking); margin: 0; text-wrap: balance; }
-.lead { font: var(--site-lead); color: var(--scene-fg-muted); margin: var(--spacing-lg) 0 0; max-width: 56ch; }
+.lead { font: var(--site-lead); color: var(--scene-fg-muted); margin: var(--spacing-md) 0 0; max-width: 56ch; }
 .accent { color: var(--color-brand-500); }
 .placeholder-tag {
   display: inline-block; margin-top: var(--spacing-lg);

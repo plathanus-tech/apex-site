@@ -23,12 +23,11 @@ import { proof } from '../data/site';
     <dl class="stats">
       {proof.stats.map((s) => (
         <div class="stat" data-reveal>
-          <dd><span data-count={s.value}>{s.value}</span>{s.suffix}</dd>
+          <dd>{s.prefix}<span data-count={s.value}>{s.value.toLocaleString('pt-BR')}</span>{s.suffix}</dd>
           <dt>{s.label}</dt>
         </div>
       ))}
     </dl>
-    <p class="placeholder-tag">Números de exemplo (fictícios)</p>
   </div>
 </section>
 
@@ -52,7 +51,9 @@ import { proof } from '../data/site';
   .by span { color: var(--scene-fg-muted); }
 
   .stats { margin: var(--spacing-3xl) 0 0; display: grid; gap: 0; }
-  @media (min-width: 800px) { .stats { grid-template-columns: repeat(3, 1fr); column-gap: var(--spacing-xl); } }
+  /* Celular: números 20px mais perto dos depoimentos */
+  @media (max-width: 799px) { .stats { margin-top: calc(var(--spacing-3xl) - 20px); } }
+  @media (min-width: 800px) { .stats { grid-template-columns: repeat(2, 1fr); column-gap: var(--spacing-xl); } }
   .stat { display: flex; flex-direction: column-reverse; padding-block: var(--spacing-xl); }
   .stat dd { margin: 0; font: var(--site-title); letter-spacing: var(--site-title-tracking); color: var(--color-brand-500); font-variant-numeric: tabular-nums; }
   .stat dt { color: var(--scene-fg-muted); text-transform: uppercase; font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); margin-bottom: var(--spacing-sm); }

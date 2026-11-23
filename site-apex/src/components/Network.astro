@@ -18,7 +18,7 @@ import { network } from '../data/site';
       ))}
     </ul>
     <p class="more">e muitos outros eventos e estabelecimentos</p>
-    <p class="placeholder-tag">Lista de exemplo (fictícia). Em eventos, o link leva à página do evento; em kartódromos, ao site do estabelecimento (white label ou próprio), onde também é possível reservar.</p>
+    <p class="placeholder-tag">Lista de exemplo (fictícia), exceto o 1º JCI Kart Rental, que é real. Em eventos, o link leva à página do evento; em kartódromos, ao site do estabelecimento (white label ou próprio), onde também é possível reservar.</p>
   </div>
 </section>
 
@@ -43,5 +43,7 @@ import { network } from '../data/site';
   @media (max-width: 720px) {
     .item { grid-template-columns: 1fr; gap: var(--spacing-sm); }
     .name { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
+    /* Celular: a lista é mais curta, para a página não ficar longa (o 6º item some) */
+    .item:nth-child(6) { display: none; }
   }
 </style>

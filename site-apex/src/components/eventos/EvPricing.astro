@@ -5,7 +5,7 @@ import { pricing } from '../../data/eventos';
 <section class="pr section" aria-labelledby="pr-title">
   <div class="wrap">
     <h2 id="pr-title" class="title">{pricing.title}</h2>
-    <PricingPlans client:visible plans={pricing.plans} />
+    <div class="plans"><PricingPlans client:visible plans={pricing.plans} /></div>
   </div>
 </section>
 
@@ -13,4 +13,6 @@ import { pricing } from '../../data/eventos';
   /* Seção clara (gray-50); o conteúdo das abas define as cores escuras */
   .pr { background: var(--color-gray-50); color: var(--color-gray-900);
     --scene-fg: var(--color-gray-900); --scene-fg-muted: var(--color-gray-600); --scene-line: var(--color-gray-300); }
+  /* Celular: 28px entre o título e as abas (16px + 12px; o componente traz 64px de margem própria, que aqui é descontada) */
+  @media (max-width: 599px) { .plans { margin-top: calc(var(--spacing-md) + 12px - var(--spacing-3xl)); } }
 </style>

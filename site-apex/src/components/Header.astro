@@ -20,6 +20,8 @@ const nav = allNav.filter((item) => item.header !== false);
         <summary aria-label="Abrir menu"><span class="material-symbols-outlined" aria-hidden="true">menu</span></summary>
         <ul>
           {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <!-- Celular pequeno: o botão do cabeçalho some, então o pedido de demonstração fica no menu -->
+          <li class="menu-cta"><Button href={DEMO_URL}>Solicitar demonstração</Button></li>
         </ul>
       </details>
     </div>
@@ -46,6 +48,7 @@ const nav = allNav.filter((item) => item.header !== false);
   .nav a, .menu a {
     font: var(--text-button-m); letter-spacing: var(--text-button-m-tracking);
     text-transform: uppercase; text-decoration: none; color: var(--scene-fg-muted);
+    display: inline-flex; align-items: center; min-height: var(--spacing-xl); /* área de toque de 32px, sem mudar o texto */
     transition: color var(--transition-fast);
   }
   .nav a:hover, .menu a:hover { color: var(--scene-fg); }
@@ -66,14 +69,21 @@ const nav = allNav.filter((item) => item.header !== false);
     display: grid; gap: var(--spacing-xs); padding: var(--spacing-md);
     background: var(--color-bg-raised); border-radius: var(--radius-card); border: var(--border-width-thin) solid var(--scene-line);
   }
-  .menu li a { display: block; padding: var(--spacing-sm); }
+  .menu li:not(.menu-cta) a { display: block; padding: var(--spacing-sm); }
   @media (max-width: 900px) {
     .nav { display: none; }
     .menu { display: block; }
     .actions { gap: var(--spacing-md); }
   }
+  /* TESTE: texto preto nos botões "Solicitar demonstração" do cabeçalho (desktop e tablet) e do menu do celular */
+  .site-header .actions > :global(a), .site-header .actions > :global(a:hover) { color: var(--scene-bg); }
+  .menu-cta { display: none; margin-top: var(--spacing-xs); }
   @media (max-width: 480px) {
-    .actions :global(.btn), .actions > :global(a) { display: none; }
+    .actions > :global(.btn), .actions > :global(a) { display: none; }
+    .menu-cta { display: block; }
+    /* O botão do menu mantém a cor e o espaçamento normais do botão (sem a cor "apagada" dos links do menu) */
+    .menu .menu-cta :global(a) { display: flex; width: 100%; justify-content: center; white-space: nowrap; color: var(--scene-bg); } /* TESTE: texto preto só neste botão */
+    .menu .menu-cta :global(a:hover) { color: var(--scene-bg); }
   }
 </style>
 
@@ -82,4 +92,8 @@ const nav = allNav.filter((item) => item.header !== false);
   const update = () => header?.setAttribute('data-scrolled', String(window.scrollY > 24));
   update();
   window.addEventListener('scroll', update, { passive: true });
+
+  // Ao tocar num link do menu (inclusive links de âncora na mesma página), o menu fecha
+  const menu = document.querySelector<HTMLDetailsElement>('.menu');
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.open = false; }));
 </script>

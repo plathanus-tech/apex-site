@@ -1,5 +1,5 @@
 ---
-import { Badge, Button } from '@ds';
+import { Button } from '@ds';
 import { QUOTE_URL } from '../data/site';
 ---
 <section class="wl" id="sua-marca" data-wl aria-labelledby="wl-title">
@@ -34,10 +34,10 @@ import { QUOTE_URL } from '../data/site';
         <p class="options-title">Duas formas de ter a página da sua marca</p>
         <article class="opt">
           <h3>Modelo pronto com a sua marca</h3>
-          <p>O modelo do Apex se adapta ao seu logo, à sua cor e à imagem de capa que você escolher.</p>
+          <p>O Apex se adapta à identidade da sua empresa, com seu logo, suas cores e as imagens que você escolher.</p>
         </article>
         <article class="opt">
-          <div class="opt-head"><h3>Página sob medida</h3><Badge status="brand">Sob orçamento</Badge></div>
+          <h3>Página sob medida</h3>
           <p>Precisa de algo diferente? Desenvolvemos páginas personalizadas para a sua operação. Fale com a gente para receber um orçamento.</p>
           <Button href={QUOTE_URL} variant="outline">Solicitar orçamento</Button>
         </article>
@@ -88,7 +88,6 @@ import { QUOTE_URL } from '../data/site';
     border: var(--border-width-thin) solid var(--scene-line); border-radius: var(--radius-card); background: var(--color-gray-800); }
   .opt h3 { margin: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
   .opt p { margin: 0; color: var(--scene-fg-muted); }
-  .opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-sm); }
   .opt :global(.btn) { margin-top: var(--spacing-md); }
 
   /* Modo animado (desktop com movimento): a página da marca rola sozinha; as opções dela entram depois */

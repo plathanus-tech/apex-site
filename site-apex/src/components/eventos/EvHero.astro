@@ -83,11 +83,21 @@ const screens = [
   .h1 { margin: 0; font: var(--site-subtitle); font-size: clamp(28px, 7vw, 40px); letter-spacing: var(--site-subtitle-tracking); text-wrap: balance; }
   .h1 span { display: block; }
   .s2 { color: var(--color-brand-500); }
-  .lead { max-width: 44ch; margin-top: var(--spacing-lg); }
+  .lead { max-width: 44ch; margin-top: var(--spacing-md); }
   .cta { margin-top: var(--spacing-xl); }
 
   .diffs { list-style: none; margin: var(--spacing-2xl) 0 0; padding: var(--spacing-xl) 0 0; display: grid; gap: var(--spacing-lg); border-top: var(--border-width-thin) solid var(--scene-line); }
   @media (min-width: 700px) and (max-width: 999px) { .diffs { grid-template-columns: repeat(3, 1fr); } }
+  /* Celular e tablet (igual à página de Reservas): título e subtítulo, o painel (vídeo), o botão e, por último, os três pontos, sem a linha de cima */
+  @media (max-width: 999px) {
+    .inner { gap: 0; }
+    .copy { display: contents; }
+    .product { order: 1; margin-top: calc(var(--spacing-xl) - var(--spacing-md)); }
+    .cta { order: 2; margin-top: 0; }
+    .diffs { order: 3; margin-top: var(--spacing-2xl); padding-top: 0; border-top: 0; }
+  }
+  /* Celular: botão na largura toda do conteúdo (respeita o padding da tela) */
+  @media (max-width: 599px) { .cta :global(a) { display: flex; width: 100%; justify-content: center; } }
   .diffs li { display: flex; align-items: center; gap: var(--spacing-md); }
   .ibox { flex: none; width: var(--spacing-2xl); height: var(--spacing-2xl); border-radius: var(--radius-control); display: grid; place-items: center;
     background: color-mix(in oklab, var(--color-brand-500) 14%, transparent); border: var(--border-width-thin) solid color-mix(in oklab, var(--color-brand-500) 40%, transparent); }

@@ -8,7 +8,6 @@ export const QUOTE_URL = '#demonstracao'; // pendente: destino real do pedido de
 export const nav = [
   { label: 'Eventos', href: '/eventos' },
   { label: 'Reservas', href: '/reservas' },
-  { label: 'FAQ', href: '/#faq', header: false }, // fica só no rodapé
 ];
 
 export const solutions = [
@@ -42,18 +41,18 @@ export const proof = {
     { solution: 'Apex Reservas', quote: '[Depoimento real de um cliente ou estabelecimento que usa o Apex Reservas]', author: '[Nome do cliente ou responsável]', role: '[Empresa ou kartódromo]' },
   ],
   stats: [
-    { value: 120, suffix: '+', label: 'eventos realizados' },
-    { value: 8, suffix: ' mil', label: 'pilotos alcançados' },
-    { value: 25, suffix: '', label: 'clientes atendidos' },
+    { value: 28, prefix: '', suffix: '', label: 'eventos realizados' },
+    { value: 1500, prefix: '+', suffix: '', label: 'pilotos alcançados' },
   ],
 };
 
-// FICTÍCIO
+// FICTÍCIO, exceto o primeiro item (1º JCI Kart Rental, evento real)
 export const network = {
   placeholder: true,
   // kind: 'evento' (link para a página do evento) · 'kartodromo' (link para o site, que pode ser white label ou próprio, e também permite reservar)
   items: [
-    { name: 'Copa Exemplo de Kart', kind: 'evento', status: 'Evento ativo', href: '#' },
+    // Evento real (o mesmo de /eventos): 1º JCI Kart Rental
+    { name: '1º JCI Kart Rental', kind: 'evento', status: 'Evento ativo', href: 'https://www.apexhub.com.br/junior-kart-clube/events/1-jci-kart-rental' },
     { name: 'Track Day Exemplo', kind: 'evento', status: 'Evento ativo', href: '#' },
     { name: 'Kart Arena Exemplo', kind: 'kartodromo', status: 'Kartódromo', href: '#' },
     { name: 'Endurance Exemplo', kind: 'evento', status: 'Evento encerrado', href: '#' },
@@ -67,11 +66,11 @@ export const network = {
  * Nenhuma capacidade ou resultado foi confirmado pelo time do Apex.
  */
 export const generalBenefits = [
-  { icon: 'dashboard', title: 'Mais organização e controle', text: 'A operação acompanhada em uma única plataforma.' },
-  { icon: 'task_alt', title: 'Menos processos manuais', text: 'Menos planilhas e controles paralelos no dia a dia.' },
-  { icon: 'hub', title: 'Informações centralizadas', text: 'Dados do evento ou da operação reunidos em um só lugar.' },
-  { icon: 'groups', title: 'Melhor experiência para o público', text: 'Participantes e clientes acessam tudo em páginas claras e próprias.' },
-  { icon: 'palette', title: 'Com a identidade da sua empresa', text: 'A experiência do seu público leva a sua marca, não a do Apex.' },
+  { icon: 'dashboard', title: 'Mais controle da operação', text: 'Acompanhe o andamento dos eventos e das reservas sem perder informações importantes.' },
+  { icon: 'hub', title: 'Informação centralizada', text: 'Dados do evento ou da operação reunidos em um só lugar.' },
+  { icon: 'task_alt', title: 'Menos processos manuais', text: 'Reduza tarefas repetitivas e controles paralelos no dia a dia.' },
+  { icon: 'groups', title: 'Melhor experiência para o público', text: 'Participantes e clientes acessam informações e realizam suas ações em páginas claras e intuitivas.' },
+  { icon: 'palette', title: 'Sua marca em destaque', text: 'A experiência do seu público leva a identidade da sua empresa, não a do Apex.' },
 ];
 
 export const howItWorks = [
@@ -96,7 +95,7 @@ export const howItWorks = [
 // Exemplos ilustrativos: a lista NÃO é exaustiva e o último card indica que há outras modalidades
 export const modalities = {
   items: [
-    { name: 'Kart', image: 'mod-kart' },
+    { name: 'Kart', image: 'mod-kart-1', position: '35% 50%' }, // mantém o kart inteiro no corte quadrado
     { name: 'Track day', image: 'mod-track-day', position: '100% 50%' }, // enquadra o carro inteiro quando a foto é cortada
     { name: 'Automobilismo virtual', image: 'mod-automobilismo-virtual' },
     { name: 'E outras modalidades', image: 'mod-outras-modalidades' },

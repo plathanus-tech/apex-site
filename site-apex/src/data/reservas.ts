@@ -5,20 +5,23 @@
 import { gatewayFees } from './eventos';
 
 export const hero = {
-  title: 'Gestão e reservas para pistas e experiências de pilotagem',
+  title: 'Simplifique as reservas da sua operação',
   lead: 'Gerencie veículos, pistas, horários e reservas em uma única plataforma. Do kartódromo às experiências com carros e outros veículos.',
   cta: 'Solicitar demonstração',
 };
 
 export const booking = {
-  title: 'Reservas online para seus clientes',
-  lead: 'Seu estabelecimento ganha um site para que os clientes vejam os horários disponíveis, reservem e paguem sozinhos, sem depender de telefone ou WhatsApp.',
+  title: 'Suas experiências disponíveis para reserva online',
+  lead: 'Ofereça um site com a cor e o logo da sua marca, onde seus clientes consultam horários, escolhem a experiência e pagam online. Tudo organizado em uma única plataforma.',
+  note: 'As reservas também podem ser feitas presencialmente, pelo próprio estabelecimento.',
   points: [
-    { title: 'Disponibilidade na hora', text: 'O cliente consulta o que está livre antes de decidir.' },
-    { title: 'Escolha do horário', text: 'Ele escolhe o horário que prefere, no próprio site.' },
-    { title: 'Reserva e pagamento no site', text: 'O cliente reserva e paga no mesmo lugar, sem esperar resposta.' },
-    { title: 'Reserva direto na agenda', text: 'Cada reserva feita no site entra automaticamente no seu sistema.' },
+    { title: 'Horários em tempo real', text: 'Seu cliente vê o que está livre e reserva na hora, sem esperar o atendimento.' },
+    { title: 'Escolha pela disponibilidade', text: 'Ele seleciona experiência, data e horário entre as opções disponíveis.' },
+    { title: 'Reserva e pagamento no site', text: 'Tudo concluído online, com pagamento integrado.' },
+    { title: 'Tudo organizado na sua agenda', text: 'As reservas confirmadas entram automaticamente na plataforma.' },
+    { title: 'Financeiro no painel', text: 'Acompanhe seus recebimentos e valores disponíveis para saque, conforme os prazos de processamento do pagamento.' },
   ],
+  cta: 'Solicitar demonstração',
 };
 
 export const operation = {
@@ -37,38 +40,14 @@ export const operation = {
 export const modalities = {
   title: 'Do kartódromo a outras experiências de pilotagem',
   lead: 'Diferentes pistas, veículos e experiências. Uma só plataforma.',
-  main: { name: 'Kartódromos', text: 'Indoor ou outdoor, a gestão de pistas, karts e reservas em um só lugar.', image: 'mod-kart', alt: 'Piloto de kart em uma curva do kartódromo' },
+  main: { name: 'Kartódromos', text: 'Indoor ou outdoor, a gestão de pistas, karts e reservas em um só lugar.', image: 'rv-kartodromo', alt: 'Três karts disputando posição em uma curva do kartódromo' },
   others: [
-    { name: 'Experiências com carros', image: 'mod-track-day', alt: 'Carro esportivo em uma curva de circuito' },
-    { name: 'Outros veículos e experiências de pilotagem', image: 'mod-outras-modalidades', alt: 'Carros disputando posição em um circuito' },
+    { name: 'Experiências com carros', image: 'rv-carros', alt: 'Carro esportivo azul em uma curva de circuito, com o piloto ao volante' },
+    { name: 'Outros veículos e experiências de pilotagem', image: 'rv-outros', alt: 'Piloto de quadriciclo em uma pista de terra com curvas e pneus na borda' },
   ],
   sizes: 'De operações pequenas a grandes: a plataforma acompanha o tamanho do seu negócio.',
 };
 
-export const payments = {
-  title: 'Pagamentos integrados às reservas',
-  lead: 'O cliente paga a reserva na própria plataforma e o valor vai para o painel financeiro do estabelecimento, no mesmo lugar em que você administra a operação.',
-  steps: [
-    { icon: 'event_available', title: 'O cliente reserva', text: 'Escolhe o horário no site e faz a reserva.' },
-    { icon: 'credit_card', title: 'Paga na plataforma', text: 'O pagamento é feito junto com a reserva.' },
-    { icon: 'account_balance', title: 'Cai no painel financeiro', text: 'O valor entra no painel do estabelecimento, já sem as taxas.' },
-  ],
-  /** Quando o valor chega ao painel financeiro, por forma de pagamento. */
-  timing: [
-    { label: 'Pix', value: 'até 24 horas' },
-    { label: 'Cartão', value: '30 dias' },
-  ],
-  /** O que o painel financeiro mostra. */
-  panel: { title: 'No painel financeiro você vê', items: ['O que já foi retirado no mês', 'O que está a receber', 'O que já está disponível para saque'] },
-  fee: {
-    title: 'Como funciona a taxa',
-    text: 'A cobrança é sempre um percentual sobre cada reserva.',
-    payers: ['Estabelecimento', 'Cliente'],
-    payersTitle: 'Quem assume a taxa',
-    payersCaption: 'A escolha é do estabelecimento',
-  },
-  pending: 'O percentual da taxa ainda não foi confirmado',
-};
 
 /**
  * Como a empresa contrata o Apex Reservas. As formas seguem o formato da página de Eventos (abas).
@@ -141,11 +120,13 @@ export const faq = [
   { title: 'O Apex funciona para kartódromos indoor e outdoor?', content: 'Sim. O Apex atende kartódromos indoor e outdoor.' },
   { title: 'É possível gerenciar diferentes pistas e veículos?', content: 'Sim. Você gerencia pistas, veículos e karts, além de horários, sessões e reservas, em um só lugar.' },
   { title: 'Os clientes conseguem fazer reservas pelo próprio site?', content: 'Sim. O estabelecimento tem um site em que os clientes consultam os horários disponíveis e fazem a reserva online.' },
-  { title: 'Como funcionam os pagamentos das reservas?', content: 'O pagamento é feito junto com a reserva, dentro da plataforma, e o valor vai para o painel financeiro do estabelecimento: pagamentos em Pix entram em até 24 horas e os de cartão, depois de 30 dias. No painel você vê o que já foi retirado no mês, o que está a receber e o que já está disponível para saque. A cobrança é um percentual sobre cada reserva. [Percentual a confirmar com o time do Apex]' },
+  { title: 'Como funcionam os pagamentos das reservas?', content: 'O pagamento é realizado no momento da reserva, dentro da plataforma, e os valores são direcionados ao painel financeiro do estabelecimento. O recebimento ocorre em até 24 horas para pagamentos via Pix e em 30 dias para cartão, conforme os prazos da plataforma de pagamento.\nNo painel, você acompanha os valores recebidos, a receber, disponíveis para saque e já retirados no mês.\nA plataforma cobra um percentual sobre cada reserva realizada.' },
   { title: 'O sistema atende operações de diferentes tamanhos?', content: 'Sim. A plataforma serve de operações pequenas a grandes.' },
   { title: 'É possível usar o Apex para experiências com carros e outros veículos?', content: 'Sim. Os kartódromos são o foco principal, mas o Apex também atende operações com carros e outros veículos e experiências de pilotagem.' },
   { title: 'Como contratar o Apex?', content: 'Preencha o formulário no fim desta página e fale com a nossa equipe.', link: { label: 'Ir para o formulário', href: '#contato' } },
 ];
+
+export const faqCta = { text: 'Ainda tem dúvidas? Fale com a nossa equipe.', label: 'Falar com a equipe' };
 
 export const cta = {
   title: 'Centralize a gestão e as reservas da sua operação',

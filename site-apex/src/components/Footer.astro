@@ -17,7 +17,8 @@ import { nav } from '../data/site';
   /* Logo: altura da escala (spacing-2xl) mais 32px */
   img { height: calc(var(--spacing-2xl) + var(--spacing-xl)); width: auto; }
   ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--spacing-lg); }
-  a { text-decoration: none; color: var(--scene-fg-muted); font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); }
+  a { display: inline-flex; align-items: center; min-height: var(--spacing-xl); /* área de toque de 32px, sem mudar o texto */
+    text-decoration: none; color: var(--scene-fg-muted); font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); }
   a:hover { color: var(--scene-fg); }
   a:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
   p { margin: 0; color: var(--scene-fg-muted); font: var(--text-caption-s); letter-spacing: var(--text-caption-s-tracking); }

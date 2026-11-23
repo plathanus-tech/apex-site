@@ -11,6 +11,13 @@ export default function FaqAccordion({ items }: { items: FaqItem[] }) {
         {i.content}{' '}
         <a href={i.link.href} style={{ color: 'var(--color-brand-400)', textDecoration: 'underline', textUnderlineOffset: '0.2em' }}>{i.link.label}</a>
       </>
+    ) : i.content.includes('\n') ? (
+      // Respostas com mais de um parágrafo: uma linha em branco entre eles
+      <>
+        {i.content.split('\n').map((t, n) => (
+          <p key={n} style={{ margin: n === 0 ? 0 : 'var(--spacing-sm) 0 0' }}>{t}</p>
+        ))}
+      </>
     ) : i.content,
   }));
   return <Accordion items={mapped} headingLevel={3} defaultOpenIndex={[0]} />;

@@ -63,6 +63,8 @@ const tone = (e: EventItem) => (e.status === 'abertas' ? 'success' : e.status ==
   .pn { background: var(--scene-bg); }
   /* Transição em gradiente vinda da seção anterior (gray-800) para o fundo da cena */
   .pn.gradient { background: linear-gradient(180deg, var(--color-gray-800) 0%, var(--scene-bg) 260px); }
+  /* Celular: 12px a menos de espaço acima de "Próximos eventos" (lado de baixo da linha que separa das estatísticas) */
+  @media (max-width: 599px) { .pn.gradient { padding-top: calc(var(--spacing-3xl) - 12px); } }
   .nhead { display: grid; gap: var(--spacing-md); align-items: end; }
   @media (min-width: 800px) { .nhead { grid-template-columns: 1fr minmax(320px, 440px); gap: var(--spacing-xl); } .nhead.solo { grid-template-columns: 1fr; } }
   .nhead .nh { margin: 0; font: var(--text-heading-4); letter-spacing: var(--text-heading-4-tracking); }

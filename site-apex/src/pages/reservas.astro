@@ -1,15 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Button } from '@ds';
 import FaqAccordion from '../components/FaqAccordion';
 import RvHero from '../components/reservas/RvHero.astro';
 import RvBooking from '../components/reservas/RvBooking.astro';
 import RvOperation from '../components/reservas/RvOperation.astro';
 import RvModalities from '../components/reservas/RvModalities.astro';
-import RvPayments from '../components/reservas/RvPayments.astro';
 import RvPricing from '../components/reservas/RvPricing.astro';
 import RvProof from '../components/reservas/RvProof.astro';
 import RvCta from '../components/reservas/RvCta.astro';
-import { faq } from '../data/reservas';
+import { faq, faqCta } from '../data/reservas';
 ---
 <Base
   title="Apex Reservas | Gestão e reservas para pistas e experiências de pilotagem"
@@ -21,12 +21,15 @@ import { faq } from '../data/reservas';
   <RvBooking />
   <RvOperation />
   <RvModalities />
-  <RvPayments />
   <RvPricing />
 
   <section class="faq section" id="faq" aria-labelledby="rv-faq-title">
     <div class="wrap grid">
-      <h2 id="rv-faq-title" class="title">Perguntas frequentes</h2>
+      <div class="faq-head">
+        <h2 id="rv-faq-title" class="title">Perguntas frequentes</h2>
+        <p class="faq-more">{faqCta.text}</p>
+        <Button href="#contato">{faqCta.label}</Button>
+      </div>
       <FaqAccordion client:visible items={faq} />
     </div>
   </section>
@@ -38,7 +41,11 @@ import { faq } from '../data/reservas';
   .faq { background: var(--color-gray-800); }
   /* Títulos das seções, como na página de Eventos: até 48px */
   :global(main .title), :global(main .cta-title) { font-size: clamp(28px, 3.4vw, 48px); }
+  .faq-head { display: grid; justify-items: start; gap: var(--spacing-md); }
+  .faq-head .title { margin: 0; }
+  .faq-more { margin: 0; color: var(--scene-fg-muted); }
   .grid { display: grid; gap: var(--spacing-2xl); align-items: start; }
+  @media (max-width: 599px) { .grid { gap: var(--spacing-md); } } /* Celular: 16px entre o cabeçalho do FAQ e as perguntas */
   @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.6fr; gap: var(--spacing-4xl); } }
 </style>
 

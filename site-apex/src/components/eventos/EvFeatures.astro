@@ -81,7 +81,7 @@ const bars = [38, 52, 44, 66, 58, 80, 72, 92];
             <strong class="amount">R$ 145,50</strong>
             <span class="badge go"><span class="material-symbols-outlined">schedule</span>Pix: em até 24 h</span>
           </div>
-          <p class="why" aria-hidden="true">Repasse menor por causa da taxa de 3%: R$ 150,00 − R$ 4,50 = R$ 145,50</p>
+          <p class="why" aria-hidden="true">Taxa de 3%: R$ 150,00 − R$ 4,50 = R$ 145,50. Prazo da plataforma de pagamento.</p>
           <span class="sample">Exemplo ilustrativo</span>
         </div>
       </article>
@@ -93,6 +93,8 @@ const bars = [38, 52, 44, 66, 58, 80, 72, 92];
   /* Fim da seção: o gradiente para "Do kart ao automobilismo virtual" começa aqui (180px) e termina do outro lado, no meio dele */
   .ft { background: linear-gradient(180deg, var(--color-gray-800) calc(100% - 180px), color-mix(in oklab, var(--scene-bg) 15.6%, var(--color-gray-800)) calc(100% - 90px), color-mix(in oklab, var(--scene-bg) 50%, var(--color-gray-800)) 100%); }
   .bento { margin-top: var(--spacing-3xl); display: grid; gap: var(--spacing-md); grid-template-columns: 1fr; }
+  /* Celular: 28px entre o título e os cards (16px + 12px) */
+  @media (max-width: 599px) { .bento { margin-top: calc(var(--spacing-md) + 12px); } }
   @media (min-width: 900px) {
     .bento { grid-template-columns: repeat(12, 1fr); gap: var(--spacing-lg); }
     .t-gestao { grid-column: span 7; }

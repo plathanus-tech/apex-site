@@ -15,7 +15,7 @@ import { faq } from '../data/eventos';
 ---
 <Base
   title="Apex Eventos | Gestão de eventos automobilísticos"
-  description="Organize inscrições, acompanhe vendas e gerencie a operação dos seus eventos automobilísticos com o Apex. Você só paga quando vende."
+  description="Organize inscrições, acompanhe vendas e gerencie a operação dos seus eventos automobilísticos com o Apex. Comece sem custo fixo."
 >
   <EvHero />
   <EvCompare />
@@ -42,6 +42,7 @@ import { faq } from '../data/eventos';
   /* Títulos das seções desta página: um pouco menores que na Home (até 48px, antes até 64px) */
   :global(main .title), :global(main .cta-title) { font-size: clamp(28px, 3.4vw, 48px); }
   .grid { display: grid; gap: var(--spacing-2xl); align-items: start; }
+  @media (max-width: 599px) { .grid { gap: calc(var(--spacing-md) + 12px); } } /* Celular: 28px entre o título e as perguntas (16px + 12px) */
   @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1.6fr; gap: var(--spacing-4xl); } }
 </style>
 

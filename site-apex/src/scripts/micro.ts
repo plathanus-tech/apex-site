@@ -39,7 +39,7 @@ export function initMicroMotion() {
     const target = Number(el.dataset.count);
     el.textContent = '0';
     const stop = inView(el, () => {
-      animate(0, target, { duration: 1.6, ease: 'easeOut', onUpdate: (v) => { el.textContent = String(Math.round(v)); } });
+      animate(0, target, { duration: 1.6, ease: 'easeOut', onUpdate: (v) => { el.textContent = Math.round(v).toLocaleString('pt-BR'); } });
       stop();
     });
   });

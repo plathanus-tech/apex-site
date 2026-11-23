@@ -1,31 +1,54 @@
 ---
+import { Button } from '@ds';
 import BookingVideo from './BookingVideo.astro';
 import { booking } from '../../data/reservas';
 ---
 <section class="bk section" aria-labelledby="bk-title">
-  <div class="wrap grid">
-    <div class="copy">
-      <h2 id="bk-title" class="title">{booking.title}</h2>
-      <p class="lead">{booking.lead}</p>
+  <div class="wrap">
+    <div class="grid">
+      <div class="copy">
+        <h2 id="bk-title" class="title">{booking.title}</h2>
+        <p class="lead">{booking.lead}</p>
+        <p class="note">{booking.note}</p>
 
-      <ol class="points">
-        {booking.points.map((p) => (
-          <li><strong>{p.title}</strong><span>{p.text}</span></li>
-        ))}
-      </ol>
+        <ol class="points">
+          {booking.points.map((p) => (
+            <li><strong>{p.title}</strong><span>{p.text}</span></li>
+          ))}
+        </ol>
+
+        <div class="cta"><Button href="#contato">{booking.cta}</Button></div>
+      </div>
+
+      <div class="demo"><BookingVideo /></div>
     </div>
-
-    <div class="demo"><BookingVideo /></div>
   </div>
 </section>
 
 <style>
   .bk { background: var(--scene-bg); }
-  .grid { display: grid; gap: var(--spacing-3xl); align-items: center; }
-  @media (min-width: 960px) { .grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.25fr); gap: var(--spacing-3xl); } }
+  .grid { display: grid; gap: var(--spacing-3xl); align-items: start; }
+  @media (min-width: 960px) { .grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--spacing-3xl); } }
+  .copy .title { max-width: 34ch; font-size: clamp(28px, 2.9vw, 42px); }
+  .copy .lead { max-width: 54ch; }
+  .note { margin: var(--spacing-sm) 0 0; max-width: 56ch; color: var(--scene-fg-muted); font: var(--text-body-s); letter-spacing: var(--text-body-s-tracking); }
+  /* Celular: o vídeo vem logo depois do subtítulo, antes dos tópicos */
+  @media (max-width: 959px) {
+    .grid { gap: 0; }
+    .copy { display: contents; }
+    .demo { order: 1; margin-top: var(--spacing-xl); }
+    .points { order: 2; margin-top: var(--spacing-xl); }
+    .cta { order: 3; }
+  }
+  @media (max-width: 599px) { .cta :global(a) { display: flex; width: 100%; justify-content: center; } }
+  /* Celular: 16px entre o texto e o vídeo */
+  @media (max-width: 599px) { .demo { margin-top: var(--spacing-md); } }
+  @media (min-width: 960px) { .demo { position: sticky; top: calc(var(--site-header-h) + var(--spacing-xl)); } }
   .points { list-style: none; margin: var(--spacing-2xl) 0 0; padding: 0; display: grid; }
-  .points li { display: grid; gap: var(--spacing-2xs); padding-block: var(--spacing-md); border-top: var(--border-width-thin) solid var(--scene-line); }
-  .points li:last-child { border-bottom: var(--border-width-thin) solid var(--scene-line); }
+  .points li { display: grid; gap: var(--spacing-2xs); padding-block: var(--spacing-md); }
+  .points li + li { border-top: var(--border-width-thin) solid var(--scene-line); }
+  .cta { margin-top: var(--spacing-xl); }
   .points strong { font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
   .points span { color: var(--scene-fg-muted); font: var(--text-body-m); }
+
 </style>
