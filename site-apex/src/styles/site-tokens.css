@@ -22,3 +22,12 @@
   --scene-line: color-mix(in oklab, var(--color-gray-50) 16%, transparent);
   --scene-glow: color-mix(in oklab, var(--brand-primary) 55%, transparent);
 }
+
+/* Botão primário do site: texto preto (gray-950) em todos os botões, como no Hero.
+   Mesma especificidade do brand.css do design system, mas vem depois dele na ordem de importação. */
+:root:root,
+[data-theme][data-theme] {
+  --color-on-action-primary:         var(--color-gray-950);
+  --color-on-action-primary-hover:   var(--color-gray-950);
+  --color-on-action-primary-pressed: var(--color-gray-950);
+}

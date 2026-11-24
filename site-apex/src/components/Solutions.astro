@@ -59,7 +59,9 @@ import { solutions } from '../data/site';
   }
   .panel:hover { border-color: var(--color-brand-500); }
   .copy { display: flex; flex-direction: column; flex: 1; align-items: flex-start; }
-  .copy :global(.btn) { margin-top: auto; }
+  .copy :global(a[class*="_btn_"]) { margin-top: auto; }
+  /* Celular: os botões preenchem a largura do cartão (respeitando o padding dele) */
+  @media (max-width: 720px) { .copy { align-items: stretch; } .copy :global(a[class*="_btn_"]) { width: 100%; } }
 
   .visual {
     position: relative; aspect-ratio: 16 / 5; border-radius: var(--radius-card); overflow: hidden;

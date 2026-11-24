@@ -92,7 +92,7 @@ if (root) {
           start: 'top top',
           // Celular/tablet: a seção de benefícios (sobe 85vh por cima do Hero, ver global.css) já começa a entrar com 100px de rolagem
           end: () => `+=${rich ? Math.round(window.innerHeight * END * perUnit) : Math.round(window.innerHeight * 0.85 + 100)}`,
-          pin: true,
+          pin: rich, // celular/tablet: a cena é fixada por um ScrollTrigger à parte (abaixo), durante toda a seção de benefícios
           scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
@@ -161,6 +161,24 @@ if (root) {
         // Telas pequenas: o vídeo termina com o volante à frente e a seção de benefícios já sobe por cima
         // (ver global.css); sem arrancada nem pausa, para não cansar a rolagem
         tl.set(stage, {}, END);
+
+        // A imagem fica fixa atrás dos benefícios até o fim da seção (sem espaçador: os benefícios já têm
+        // a própria posição no fluxo, ver global.css) e a seção seguinte entra por cima dela
+        const benefits = document.querySelector<HTMLElement>('#beneficios');
+        if (benefits) {
+          ScrollTrigger.create({
+            trigger: stage,
+            start: 'top top',
+            end: () => {
+              const bottom = benefits.getBoundingClientRect().bottom + window.scrollY;
+              return `+=${Math.max(0, Math.round(bottom - window.innerHeight))}`;
+            },
+            pin: stage,
+            pinSpacing: false,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          });
+        }
       }
 
       return () => {

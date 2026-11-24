@@ -29,4 +29,9 @@ import { generalBenefits } from '../data/site';
   .ico { font-size: var(--spacing-2xl); color: var(--color-brand-500); }
   .card h3 { margin: 0; font: var(--text-heading-6); letter-spacing: var(--text-heading-6-tracking); }
   .text { margin: 0; color: var(--scene-fg-muted); }
+  /* Celular: ícone ao lado do título e do texto */
+  @media (max-width: 720px) {
+    .card { grid-template-columns: auto 1fr; column-gap: var(--spacing-md); row-gap: var(--spacing-xs); align-items: start; }
+    .ico { grid-row: 1 / span 2; }
+  }
 </style>

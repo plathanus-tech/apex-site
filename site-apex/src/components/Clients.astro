@@ -1,0 +1,42 @@
+---
+const clients = [
+  { name: 'Kartódromo Internacional Beto Carrero (KBC)', src: '/images/clientes/kbc.webp', w: 738, h: 204, invert: true },
+  { name: 'Kart Clube de Pato Branco', src: '/images/clientes/kart-clube-pato-branco.webp', w: 800, h: 240 },
+  { name: 'Federação Gaúcha de Automobilismo (FGA)', src: '/images/clientes/fga.webp', w: 600, h: 200 },
+  { name: 'Júnior Kart Clube', src: '/images/clientes/junior-kart-clube.webp', w: 225, h: 225 },
+  { name: 'Federação de Automobilismo de Santa Catarina (FAUESC)', src: '/images/clientes/fauesc.webp', w: 350, h: 105 },
+];
+---
+<section class="clients" id="clientes" aria-labelledby="clients-title">
+  <div class="wrap">
+    <h2 id="clients-title" class="title">Empresas que usam o Apex</h2>
+    <ul class="logos">
+      {clients.map((c) => (
+        <li data-reveal>
+          <img
+            class:list={['logo', c.invert && 'invert']}
+            src={c.src} alt={c.name} width={c.w} height={c.h} loading="lazy" decoding="async"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Fundo preto, igual às seções vizinhas; os logos ficam em cartões claros */
+  .clients { background: var(--scene-bg); color: var(--color-gray-50); padding-block: clamp(32px, 4vw, 64px);
+    --scene-fg-muted: var(--color-gray-300); }
+  .title { font: var(--site-kicker); letter-spacing: var(--site-kicker-tracking); text-align: center; margin: 0 0 var(--spacing-lg);
+    color: var(--scene-fg-muted); text-transform: uppercase; }
+  .logos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+  .logos li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  @media (min-width: 900px) { .logos { grid-template-columns: repeat(5, 1fr); } .logos li:last-child:nth-child(odd) { grid-column: auto; } }
+  .logos li { display: grid; place-items: center; height: 112px; padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-gray-50); border-radius: var(--radius-card); }
+  .logo { display: block; height: 64px; width: auto; max-width: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  /* KBC é branco sobre preto: inverte para ficar escuro sobre fundo claro */
+  .logo.invert { filter: invert(1); }
+  /* Logo quadrado (com bastante respiro): precisa de mais altura para equilibrar */
+  .logo[width="225"] { height: 96px; }
+</style>
